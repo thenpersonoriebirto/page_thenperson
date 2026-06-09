@@ -20,7 +20,14 @@ import {
   Award, 
   TrendingUp, 
   Smartphone,
-  Info
+  Info,
+  Search,
+  Bell,
+  Play,
+  ThumbsUp,
+  ThumbsDown,
+  Home,
+  Zap
 } from 'lucide-react';
 import { db, isSupabaseConfigured } from './supabaseClient';
 import type { AgendaItem, NewsItem } from './supabaseClient';
@@ -152,7 +159,7 @@ function App() {
   const [scrolled, setScrolled] = useState<boolean>(false);
   
   // Mobile UI Tab and Stories States
-  const [mobileTab, setMobileTab] = useState<'grid' | 'feed' | 'message'>('grid');
+  const [mobileTab, setMobileTab] = useState<'home' | 'videos' | 'community' | 'participate'>('home');
   const [activeStoryIndex, setActiveStoryIndex] = useState<number | null>(null);
   const [storyProgress, setStoryProgress] = useState<number>(0);
   const [storyPaused, setStoryPaused] = useState<boolean>(false);
@@ -309,9 +316,9 @@ function App() {
   const handleStoryCTA = (id: string) => {
     setActiveStoryIndex(null);
     if (id === 'contato') {
-      setMobileTab('message');
+      setMobileTab('participate');
     } else {
-      setMobileTab('feed');
+      setMobileTab('community');
       setTimeout(() => {
         const element = document.getElementById(`ig-post-${id}`);
         if (element) {
@@ -351,661 +358,37 @@ function App() {
   const activeVideo = PLAYLIST[activeVideoIndex];
 
   if (deviceSpecs.isMobile) {
-    const GRID_ITEMS = [
-      { id: 'bio', image: '/images/foto02.png', title: 'Origens', targetId: 'ig-post-bio', icon: <Heart size={16} /> },
-      { id: 'educacao', image: '/images/estudantes.png', title: 'Educação', targetId: 'ig-post-educacao', icon: <Award size={16} /> },
-      { id: 'agenda', image: '/images/fotovalecima.png', title: 'Agenda', targetId: 'ig-post-agenda', icon: <Calendar size={16} /> },
-      { id: 'videos', image: '/images/imagempequena.png', title: 'Podcasts', targetId: 'ig-post-videos', icon: <Video size={16} /> },
-      { id: 'noticias', image: '/images/foto04vale.png', title: 'Notícias', targetId: 'ig-post-noticias', icon: <Info size={16} /> },
-      { id: 'contato', image: '/images/foto05perfil.png', title: 'Contato', targetId: 'ig-post-contato', icon: <MessageSquare size={16} /> }
-    ];
-
     return (
-      <div id="ig-mobile-top" className={`ig-mobile-container device-mobile orientation-${deviceSpecs.isPortrait ? 'portrait' : 'landscape'}`}>
-        {/* Background Glows (Gemini Palette) */}
-        <div className="bg-glow-container" aria-hidden="true">
-          <div className="bg-glow-1"></div>
-          <div className="bg-glow-2"></div>
-        </div>
-
-        {/* Custom Web App Top Header */}
-        <header className="ig-header">
-          <div className="ig-header-logo">Thenperson Oriebir</div>
-          <div className="ig-header-actions">
-            <button onClick={() => setMobileTab('message')} className="ig-header-icon-btn" aria-label="Enviar Mensagem">
-              <svg viewBox="0 0 24 24" width="22" height="22" stroke="currentColor" strokeWidth="2.2" fill="none" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
-              </svg>
-            </button>
-          </div>
-        </header>
-
-        {/* Customized Profile Section */}
-        <section className="ig-profile">
-          <div className="ig-profile-top">
-            <button onClick={() => { setActiveStoryIndex(0); setStoryProgress(0); }} className="ig-profile-avatar-wrapper" aria-label="Ver Destaques">
-              <div className="ig-avatar-gradient"></div>
-              <img src="/images/foto01.jpg" alt="Thenperson Oriebir" className="ig-profile-avatar" />
-            </button>
-            <div className="ig-profile-stats">
-              <button onClick={() => setMobileTab('grid')} className="ig-stat-card" aria-label="Ver postagens">
-                <span className="ig-stat-num">6</span>
-                <span className="ig-stat-label">Tópicos</span>
-              </button>
-              <div className="ig-stat-card">
-                <span className="ig-stat-num">10.4k</span>
-                <span className="ig-stat-label">Apoios</span>
-              </div>
-              <div className="ig-stat-card">
-                <span className="ig-stat-num">Almenara</span>
-                <span className="ig-stat-label">MG</span>
-              </div>
-            </div>
-          </div>
-
-          <div className="ig-profile-bio">
-            <h1 className="ig-bio-name">Thenperson Oriebir Costa</h1>
-            <p className="ig-bio-tag">Pré-Candidato a Deputado Federal • Almenara/MG</p>
-            <div className="ig-bio-desc">
-              <p>📱 Proprietário da Multicell Almenara</p>
-              <p>📍 Presente diariamente no Vale de Jequitinhonha, não apenas em época eleitoral!</p>
-              <p>⚡ Renovação política de verdade fundamentada no comércio, trabalho e diálogo.</p>
-            </div>
-          </div>
-
-          <div className="ig-profile-actions">
-            <a href="https://wa.me/5533999999999" target="_blank" rel="noopener noreferrer" className="ig-btn ig-btn-primary">Apoiar pelo WhatsApp</a>
-            <button onClick={() => setMobileTab('message')} className="ig-btn ig-btn-secondary">Enviar Mensagem</button>
-          </div>
-        </section>
-
-        {/* Custom website horizontal tag pills instead of circle stories */}
-        <section className="ig-highlights-nav">
-          <span className="ig-highlights-title">Tópicos:</span>
-          <div className="ig-highlights-scroll">
-            {STORIES.map((story, index) => (
-              <button 
-                key={story.id} 
-                onClick={() => { setActiveStoryIndex(index); setStoryProgress(0); }}
-                className="ig-highlight-pill"
-              >
-                <span className="ig-pill-indicator"></span>
-                <span className="ig-pill-text">{story.title}</span>
-              </button>
-            ))}
-          </div>
-        </section>
-
-        {/* Segmented control style Tab switcher */}
-        <div className="ig-tabs">
-          <div className="ig-tabs-pill">
-            <button 
-              onClick={() => setMobileTab('grid')} 
-              className={`ig-tab-btn ${mobileTab === 'grid' ? 'active' : ''}`}
-            >
-              Grade Visual
-            </button>
-            <button 
-              onClick={() => setMobileTab('feed')} 
-              className={`ig-tab-btn ${mobileTab === 'feed' ? 'active' : ''}`}
-            >
-              Linha do Tempo
-            </button>
-            <button 
-              onClick={() => setMobileTab('message')} 
-              className={`ig-tab-btn ${mobileTab === 'message' ? 'active' : ''}`}
-            >
-              Fale Conosco
-            </button>
-          </div>
-        </div>
-
-        {/* Grid View Tab */}
-        {mobileTab === 'grid' && (
-          <div className="ig-grid-layout">
-            {GRID_ITEMS.map((item) => (
-              <button 
-                key={item.id} 
-                onClick={() => {
-                  setMobileTab('feed');
-                  setTimeout(() => {
-                    const element = document.getElementById(`ig-post-${item.id}`);
-                    if (element) {
-                      element.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                    }
-                  }, 120);
-                }}
-                className="ig-grid-item"
-              >
-                <img src={item.image} alt={item.title} className="ig-grid-img" />
-                <div className="ig-grid-overlay">
-                  {item.icon}
-                </div>
-              </button>
-            ))}
-          </div>
-        )}
-
-        {/* Feed View Tab */}
-        {mobileTab === 'feed' && (
-          <div className="ig-feed">
-            {/* Post 4: Vídeos / Podcast */}
-            <article id="ig-post-videos" className="ig-post">
-              <header className="ig-post-header">
-                <img src="/images/foto01.jpg" alt="" className="ig-post-avatar" />
-                <div className="ig-post-header-info">
-                  <span className="ig-post-username">thenperson</span>
-                  <span className="ig-post-location">Janela do Vale Podcast</span>
-                </div>
-                <span className="post-category-badge">Podcast</span>
-              </header>
-              <div className="ig-post-video-player" style={{ aspectRatio: '16/9', background: '#000' }}>
-                <iframe 
-                  width="100%" 
-                  height="100%" 
-                  src={`https://www.youtube.com/embed/${activeVideo.youtubeId}?autoplay=0&rel=0`}
-                  title={activeVideo.title}
-                  frameBorder="0"
-                  allowFullScreen
-                  style={{ border: 'none' }}
-                ></iframe>
-              </div>
-              <div className="ig-post-horizontal-playlist" style={{ display: 'flex', overflowX: 'auto', gap: '8px', padding: '10px 16px', background: 'rgba(11, 15, 25, 0.5)' }}>
-                {PLAYLIST.map((video, idx) => (
-                  <button 
-                    key={video.id} 
-                    onClick={() => setActiveVideoIndex(idx)}
-                    style={{ 
-                      flex: '0 0 140px', 
-                      background: idx === activeVideoIndex ? 'rgba(59, 130, 246, 0.15)' : 'rgba(255,255,255,0.02)', 
-                      border: idx === activeVideoIndex ? '1px solid var(--color-primary)' : '1px solid rgba(255,255,255,0.05)',
-                      borderRadius: '8px', 
-                      padding: '6px',
-                      textAlign: 'left',
-                      color: '#fff',
-                      font: 'inherit',
-                      cursor: 'pointer'
-                    }}
-                  >
-                    <h4 style={{ fontSize: '0.7rem', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{video.title}</h4>
-                    <p style={{ fontSize: '0.6rem', color: 'var(--text-secondary)', marginTop: '2px' }}>⏱️ {video.duration}</p>
-                  </button>
-                ))}
-              </div>
-              <div className="ig-post-actions">
-                <Heart size={22} className="ig-post-action-icon" />
-                <button onClick={() => setMobileTab('message')} className="ig-post-action-btn-svg" aria-label="Enviar Mensagem">
-                  <svg viewBox="0 0 24 24" width="22" height="22" stroke="currentColor" strokeWidth="2.2" fill="none" strokeLinecap="round" strokeLinejoin="round">
-                    <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
-                  </svg>
-                </button>
-              </div>
-              <div className="ig-post-caption">
-                <p>
-                  <strong>thenperson</strong> O Janela do Vale Podcast dá voz à nossa cultura, lideranças e aos desafios de inclusão (como o autismo) e educação da nossa região. Dê o play nos cortes! 🎙️📲 #JanelaDoVale #Podcast #VozDoVale
-                </p>
-              </div>
-            </article>
-
-            {/* Post 1: Biografia */}
-            <article id="ig-post-bio" className="ig-post">
-              <header className="ig-post-header">
-                <img src="/images/foto01.jpg" alt="" className="ig-post-avatar" />
-                <div className="ig-post-header-info">
-                  <span className="ig-post-username">thenperson</span>
-                  <span className="ig-post-location">Origens e Família</span>
-                </div>
-                <span className="post-category-badge">Biografia</span>
-              </header>
-              <div className="ig-post-image-box">
-                <img src="/images/foto02.png" alt="Thenperson com família" className="ig-post-image" />
-              </div>
-              <div className="ig-post-actions">
-                <Heart size={22} className="ig-post-action-icon" />
-                <button onClick={() => setMobileTab('message')} className="ig-post-action-btn-svg" aria-label="Enviar Mensagem">
-                  <svg viewBox="0 0 24 24" width="22" height="22" stroke="currentColor" strokeWidth="2.2" fill="none" strokeLinecap="round" strokeLinejoin="round">
-                    <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
-                  </svg>
-                </button>
-              </div>
-              <div className="ig-post-likes">Apoiado por milhares de cidadãos do Jequitinhonha</div>
-              <div className="ig-post-caption">
-                <p>
-                  <strong>thenperson</strong> Com o carinho da família e a força do trabalho diário no comércio em Almenara, estamos construindo a verdadeira renovação do Vale do Jequitinhonha, olho no olho e sem promessas vazias. 💙✨ #Familia #Trabalho #Renovação
-                </p>
-              </div>
-            </article>
-
-            {/* Post 2: Educação */}
-            <article id="ig-post-educacao" className="ig-post">
-              <header className="ig-post-header">
-                <img src="/images/foto01.jpg" alt="" className="ig-post-avatar" />
-                <div className="ig-post-header-info">
-                  <span className="ig-post-username">thenperson</span>
-                  <span className="ig-post-location">Aliança Pela Educação</span>
-                </div>
-                <span className="post-category-badge">Educação</span>
-              </header>
-              <div className="ig-post-image-box">
-                <img src="/images/estudantes.png" alt="Thenperson com estudantes" className="ig-post-image" style={{ objectPosition: 'top' }} />
-              </div>
-              <div className="ig-post-actions">
-                <Heart size={22} className="ig-post-action-icon" />
-                <button onClick={() => setMobileTab('message')} className="ig-post-action-btn-svg" aria-label="Enviar Mensagem">
-                  <svg viewBox="0 0 24 24" width="22" height="22" stroke="currentColor" strokeWidth="2.2" fill="none" strokeLinecap="round" strokeLinejoin="round">
-                    <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
-                  </svg>
-                </button>
-              </div>
-              <div className="ig-post-likes">Curtido por alunos do IFNMG e escolas públicas</div>
-              <div className="ig-post-caption">
-                <p>
-                  <strong>thenperson</strong> Nossos alunos do IFNMG Almenara são premiados e cheios de potencial, mas sofrem com a falta de transporte escolar de qualidade e apoio do poder público. Estamos com eles na luta por respeito! 🎓✊ #IFNMG #Educação #Juventude
-                </p>
-              </div>
-            </article>
-
-            {/* Post 3: Agenda */}
-            <article id="ig-post-agenda" className="ig-post">
-              <header className="ig-post-header">
-                <img src="/images/foto01.jpg" alt="" className="ig-post-avatar" />
-                <div className="ig-post-header-info">
-                  <span className="ig-post-username">thenperson</span>
-                  <span className="ig-post-location">Encontros e Presença Regional</span>
-                </div>
-                <span className="post-category-badge">Agenda</span>
-              </header>
-              <div className="ig-post-content-box" style={{ padding: '16px', background: 'rgba(11, 15, 25, 0.4)', borderTop: '1px solid rgba(59, 130, 246, 0.1)', borderBottom: '1px solid rgba(59, 130, 246, 0.1)' }}>
-                {loadingAgenda ? (
-                  <p style={{ textAlign: 'center', fontSize: '0.85rem' }}>Carregando agenda...</p>
-                ) : (
-                  <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-                    {agenda.slice(0, 4).map(item => (
-                      <div key={item.id} style={{ borderBottom: '1px solid rgba(255,255,255,0.05)', paddingBottom: '6px' }}>
-                        <div style={{ display: 'flex', gap: '6px', fontSize: '0.75rem', color: 'var(--color-accent)', fontWeight: 700 }}>
-                          <span>{item.date.split('-').reverse().join('/')}</span>
-                          <span>•</span>
-                          <span>{item.time}h</span>
-                        </div>
-                        <h4 style={{ fontSize: '0.85rem', margin: '2px 0' }}>{item.title}</h4>
-                        <p style={{ fontSize: '0.75rem', color: 'var(--text-secondary)' }}>📍 {item.location}</p>
-                      </div>
-                    ))}
-                  </div>
-                )}
-              </div>
-              <div className="ig-post-actions">
-                <Heart size={22} className="ig-post-action-icon" />
-                <button onClick={() => setMobileTab('message')} className="ig-post-action-btn-svg" aria-label="Enviar Mensagem">
-                  <svg viewBox="0 0 24 24" width="22" height="22" stroke="currentColor" strokeWidth="2.2" fill="none" strokeLinecap="round" strokeLinejoin="round">
-                    <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
-                  </svg>
-                </button>
-              </div>
-              <div className="ig-post-caption">
-                <p>
-                  <strong>thenperson</strong> Diálogo aberto com a nossa gente. Veja onde estaremos nos próximos dias para debater o futuro da nossa região. 🗓️🤝 #OlhoNoOlho #Jequitinhonha #Agenda
-                </p>
-              </div>
-            </article>
-
-            {/* Post 5: Notícias e Informativos */}
-            <article id="ig-post-noticias" className="ig-post">
-              <header className="ig-post-header">
-                <img src="/images/foto01.jpg" alt="" className="ig-post-avatar" />
-                <div className="ig-post-header-info">
-                  <span className="ig-post-username">thenperson</span>
-                  <span className="ig-post-location">Informativos Regionais</span>
-                </div>
-                <span className="post-category-badge">Desenvolvimento</span>
-              </header>
-              <div className="ig-post-content-box" style={{ padding: '12px 16px', background: 'rgba(11, 15, 25, 0.4)' }}>
-                {loadingNews ? (
-                  <p style={{ textAlign: 'center', fontSize: '0.85rem' }}>Carregando notícias...</p>
-                ) : (
-                  <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-                    {news.slice(0, 3).map(item => (
-                      <div 
-                        key={item.id} 
-                        onClick={() => setSelectedNews(item)}
-                        style={{ 
-                          display: 'flex', 
-                          gap: '10px', 
-                          alignItems: 'center', 
-                          background: 'rgba(255,255,255,0.02)', 
-                          border: '1px solid rgba(255,255,255,0.05)', 
-                          borderRadius: '8px', 
-                          padding: '8px',
-                          cursor: 'pointer'
-                        }}
-                      >
-                        <img src={item.image_url || '/images/fotovalebaixo.png'} alt="" style={{ width: '48px', height: '48px', borderRadius: '6px', objectFit: 'cover' }} />
-                        <div style={{ flex: 1, overflow: 'hidden' }}>
-                          <span style={{ fontSize: '0.6rem', color: 'var(--color-accent)', fontWeight: 700 }}>{item.category}</span>
-                          <h4 style={{ fontSize: '0.78rem', margin: '1px 0', lineHeight: 1.2, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{item.title}</h4>
-                          <span style={{ fontSize: '0.65rem', color: 'var(--text-muted)' }}>Toque para ver...</span>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                )}
-              </div>
-              <div className="ig-post-actions">
-                <Heart size={22} className="ig-post-action-icon" />
-                <button onClick={() => setMobileTab('message')} className="ig-post-action-btn-svg" aria-label="Enviar Mensagem">
-                  <svg viewBox="0 0 24 24" width="22" height="22" stroke="currentColor" strokeWidth="2.2" fill="none" strokeLinecap="round" strokeLinejoin="round">
-                    <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
-                  </svg>
-                </button>
-              </div>
-              <div className="ig-post-caption">
-                <p>
-                  <strong>thenperson</strong> Trabalhando por atração de indústrias, tecnologia e incentivos fiscais para o Norte e Nordeste de Minas Gerais. O povo almenarense tem carisma, energia e merece oportunidades! 🚀🏭 #Desenvolvimento #Emprego #ValeForte
-                </p>
-              </div>
-            </article>
-
-            {/* Post 6: Contato / Envie Mensagem */}
-            <article id="ig-post-contato" className="ig-post" style={{ marginBottom: '80px' }}>
-              <header className="ig-post-header">
-                <img src="/images/foto01.jpg" alt="" className="ig-post-avatar" />
-                <div className="ig-post-header-info">
-                  <span className="ig-post-username">thenperson</span>
-                  <span className="ig-post-location">Fale Diretamente Conosco</span>
-                </div>
-                <span className="post-category-badge">Contato</span>
-              </header>
-              <div className="ig-post-image-box">
-                <img src="/images/foto05perfil.png" alt="Cartão de contato" className="ig-post-image" />
-              </div>
-              
-              {/* Embedded Mini Form */}
-              <div className="ig-post-form-box" style={{ padding: '20px 16px', background: 'rgba(11, 15, 25, 0.6)', borderTop: '1px solid var(--border-color)' }}>
-                <h3 style={{ fontSize: '1.05rem', marginBottom: '12px', fontWeight: 800 }}>Envie sua Mensagem</h3>
-                <form onSubmit={handleSubmitMessage} style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-                  <input 
-                    type="text" 
-                    name="name" 
-                    value={contactForm.name}
-                    onChange={handleInputChange}
-                    placeholder="Nome Completo *" 
-                    className="form-input" 
-                    style={{ fontSize: '0.8rem', padding: '8px 12px' }}
-                    required
-                  />
-                  <input 
-                    type="tel" 
-                    name="phone" 
-                    value={contactForm.phone}
-                    onChange={handleInputChange}
-                    placeholder="WhatsApp" 
-                    className="form-input" 
-                    style={{ fontSize: '0.8rem', padding: '8px 12px' }}
-                  />
-                  <textarea 
-                    name="message" 
-                    value={contactForm.message}
-                    onChange={handleInputChange}
-                    placeholder="Sua mensagem de apoio ou sugestão... *" 
-                    className="form-textarea" 
-                    style={{ minHeight: '60px', fontSize: '0.8rem', padding: '8px 12px' }}
-                    required
-                  ></textarea>
-                  <button 
-                    type="submit" 
-                    className="btn-submit"
-                    disabled={isSubmitting}
-                    style={{ padding: '8px', fontSize: '0.8rem' }}
-                  >
-                    {isSubmitting ? 'Enviando...' : 'Enviar Mensagem'}
-                  </button>
-                </form>
-              </div>
-              
-              <div className="ig-post-actions">
-                <Heart size={22} className="ig-post-action-icon" />
-                <button onClick={() => setMobileTab('message')} className="ig-post-action-btn-svg" aria-label="Enviar Mensagem">
-                  <svg viewBox="0 0 24 24" width="22" height="22" stroke="currentColor" strokeWidth="2.2" fill="none" strokeLinecap="round" strokeLinejoin="round">
-                    <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
-                  </svg>
-                </button>
-              </div>
-              <div className="ig-post-caption">
-                <p>
-                  <strong>thenperson</strong> Queremos te ouvir! Envie sua mensagem, sugestão ou apoio diretamente para o Thenperson. Juntos faremos a diferença na política da nossa região. 💬📩 #FaleConosco #Participação #Renovação
-                </p>
-              </div>
-            </article>
-          </div>
-        )}
-
-        {/* IG Chat / DM View Tab */}
-        {mobileTab === 'message' && (
-          <div className="ig-chat-container">
-            <div className="ig-chat-header">
-              <div className="ig-chat-profile">
-                <div className="ig-chat-avatar-wrapper">
-                  <img src="/images/foto01.jpg" alt="" className="ig-chat-avatar" />
-                  <span className="ig-chat-status-dot"></span>
-                </div>
-                <div className="ig-chat-profile-info">
-                  <span className="ig-chat-name">thenperson</span>
-                  <span className="ig-chat-status-text">Canal de Diálogo Direto</span>
-                </div>
-              </div>
-            </div>
-
-            <div className="ig-chat-messages">
-              {/* Message 1 (Thenperson Greeting) */}
-              <div className="ig-msg-bubble ig-msg-left">
-                <p>Olá! Sou o Thenperson. Fico muito feliz em dialogar com você. Deixe sua sugestão ou mensagem de apoio no formulário abaixo! 👇</p>
-              </div>
-
-              {/* If message submitted, show user message and auto-reply */}
-              {chatSubmitted && (
-                <>
-                  <div className="ig-msg-bubble ig-msg-right animate-slide-in">
-                    <p>{chatSubmittedMessage}</p>
-                  </div>
-                  <div className="ig-msg-bubble ig-msg-left animate-slide-in" style={{ animationDelay: '0.6s' }}>
-                    <p>Mensagem enviada com sucesso! Muito obrigado pelo apoio. Vou analisar sua sugestão e te responder o quanto antes. Abraços! 🚀</p>
-                  </div>
-                </>
-              )}
-            </div>
-
-            <div className="ig-chat-input-area">
-              <h3 style={{ fontSize: '0.82rem', marginBottom: '8px', color: 'var(--color-accent)', fontWeight: 700 }}>Escreva para o canal de diálogo:</h3>
-              <form onSubmit={handleSubmitMessage} style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-                <input 
-                  type="text" 
-                  name="name" 
-                  value={contactForm.name}
-                  onChange={handleInputChange}
-                  placeholder="Seu Nome *" 
-                  className="form-input" 
-                  style={{ fontSize: '0.75rem', padding: '6px 10px', background: 'rgba(255,255,255,0.03)' }}
-                  required
-                />
-                <input 
-                  type="tel" 
-                  name="phone" 
-                  value={contactForm.phone}
-                  onChange={handleInputChange}
-                  placeholder="Seu WhatsApp" 
-                  className="form-input" 
-                  style={{ fontSize: '0.75rem', padding: '6px 10px', background: 'rgba(255,255,255,0.03)' }}
-                />
-                <div style={{ display: 'flex', gap: '6px' }}>
-                  <textarea 
-                    name="message" 
-                    value={contactForm.message}
-                    onChange={handleInputChange}
-                    placeholder="Escreva sua mensagem..." 
-                    className="form-textarea" 
-                    style={{ flex: 1, minHeight: '38px', fontSize: '0.75rem', padding: '8px 10px', borderRadius: '18px', background: 'rgba(255,255,255,0.03)' }}
-                    required
-                  ></textarea>
-                  <button 
-                    type="submit" 
-                    className="btn-submit"
-                    disabled={isSubmitting}
-                    style={{ padding: '0 14px', borderRadius: '18px', fontSize: '0.75rem', height: '38px', whiteSpace: 'nowrap' }}
-                  >
-                    {isSubmitting ? '...' : 'Enviar'}
-                  </button>
-                </div>
-              </form>
-            </div>
-          </div>
-        )}
-
-        {/* Custom floating dock navigation menu instead of standard Instagram footer bar */}
-        <nav className="ig-floating-dock">
-          <button 
-            onClick={() => { setMobileTab('grid'); window.scrollTo(0, 0); }} 
-            className={`ig-nav-item-btn ${mobileTab === 'grid' ? 'active' : ''}`}
-            aria-label="Grade"
-          >
-            <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" strokeWidth="2.2" fill="none" strokeLinecap="round" strokeLinejoin="round">
-              <rect x="3" y="3" width="7" height="7"></rect>
-              <rect x="14" y="3" width="7" height="7"></rect>
-              <rect x="14" y="14" width="7" height="7"></rect>
-              <rect x="3" y="14" width="7" height="7"></rect>
-            </svg>
-            <span style={{ fontSize: '0.62rem', fontWeight: 700, marginTop: '2px' }}>Painel</span>
-          </button>
-          <button 
-            onClick={() => { setMobileTab('feed'); window.scrollTo(0, 0); }} 
-            className={`ig-nav-item-btn ${mobileTab === 'feed' ? 'active' : ''}`}
-            aria-label="Feed"
-          >
-            <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" strokeWidth="2.2" fill="none" strokeLinecap="round" strokeLinejoin="round">
-              <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
-              <polyline points="9 22 9 12 15 12 15 22"></polyline>
-            </svg>
-            <span style={{ fontSize: '0.62rem', fontWeight: 700, marginTop: '2px' }}>Linha Tempo</span>
-          </button>
-          <button 
-            onClick={() => { setMobileTab('message'); window.scrollTo(0, 0); }} 
-            className={`ig-nav-item-btn ${mobileTab === 'message' ? 'active' : ''}`}
-            aria-label="Mensagens"
-          >
-            <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" strokeWidth="2.2" fill="none" strokeLinecap="round" strokeLinejoin="round">
-              <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
-            </svg>
-            <span style={{ fontSize: '0.62rem', fontWeight: 700, marginTop: '2px' }}>Fale Conosco</span>
-          </button>
-        </nav>
-
-        {/* Floating Story Card Overlay Modal */}
-        {activeStoryIndex !== null && (
-          <div 
-            className="story-viewer"
-            onTouchStart={() => setStoryPaused(true)}
-            onTouchEnd={() => setStoryPaused(false)}
-            onMouseDown={() => setStoryPaused(true)}
-            onMouseUp={() => setStoryPaused(false)}
-            role="dialog"
-            aria-modal="true"
-          >
-            {/* Progress Bar Container */}
-            <div className="story-progress-container">
-              {STORIES.map((_, idx) => (
-                <div key={idx} className="story-progress-bar-bg">
-                  <div 
-                    className="story-progress-bar-fill"
-                    style={{ 
-                      width: idx < activeStoryIndex ? '100%' : idx === activeStoryIndex ? `${storyProgress}%` : '0%' 
-                    }}
-                  ></div>
-                </div>
-              ))}
-            </div>
-
-            {/* Story Header */}
-            <div className="story-header">
-              <div className="story-header-profile">
-                <img src="/images/foto01.jpg" alt="" className="story-header-avatar" />
-                <span className="story-header-username">thenperson</span>
-                <span className="story-header-time">• Destaque</span>
-              </div>
-              <button 
-                className="story-close-btn" 
-                onClick={(e) => {
-                  e.stopPropagation();
-                  setActiveStoryIndex(null);
-                }}
-                aria-label="Fechar story"
-              >
-                <X size={22} />
-              </button>
-            </div>
-
-            {/* Story Image */}
-            <div className="story-image-wrapper">
-              <img src={STORIES[activeStoryIndex].image} alt="" className="story-image" />
-            </div>
-
-            {/* Click Navigation Taps */}
-            <div className="story-click-regions">
-              <div className="story-click-left" onClick={(e) => { e.stopPropagation(); handlePrevStory(); }} aria-label="Anterior"></div>
-              <div className="story-click-right" onClick={(e) => { e.stopPropagation(); handleNextStory(); }} aria-label="Próximo"></div>
-            </div>
-
-            {/* Story Content Overlay Card */}
-            <div className="story-content-overlay" onClick={(e) => e.stopPropagation()}>
-              <h3 className="story-headline">{STORIES[activeStoryIndex].headline}</h3>
-              <p className="story-text">{STORIES[activeStoryIndex].text}</p>
-              <button 
-                className="story-cta-btn" 
-                onClick={(e) => {
-                  e.stopPropagation();
-                  handleStoryCTA(STORIES[activeStoryIndex].id);
-                }}
-              >
-                <span>{STORIES[activeStoryIndex].actionLabel}</span>
-                <ArrowRight size={15} style={{ marginLeft: '6px' }} />
-              </button>
-            </div>
-          </div>
-        )}
-
-        {/* Toast / Modals for Mobile */}
-        {selectedNews && (
-          <div className="modal-overlay" onClick={() => setSelectedNews(null)} role="dialog" aria-modal="true">
-            <div className="modal-content" onClick={(e) => e.stopPropagation()} style={{ width: '90%' }}>
-              <button className="modal-close-btn" onClick={() => setSelectedNews(null)}>
-                <X size={18} />
-              </button>
-              <div className="modal-img-wrapper" style={{ aspectRatio: '16/10' }}>
-                <img src={selectedNews.image_url || '/images/fotovalebaixo.png'} alt="" className="modal-img" />
-              </div>
-              <div className="modal-body" style={{ padding: '20px' }}>
-                <div className="modal-header-meta">
-                  <span className="modal-category">{selectedNews.category}</span>
-                  <span className="modal-date">{selectedNews.date}</span>
-                </div>
-                <h3 className="modal-title" style={{ fontSize: '1.2rem', marginBottom: '10px' }}>{selectedNews.title}</h3>
-                <div className="modal-text" style={{ fontSize: '0.85rem' }}>
-                  {selectedNews.content.split('\n\n').map((paragraph, idx) => (
-                    <p key={idx} style={{ marginBottom: '10px' }}>{paragraph}</p>
-                  ))}
-                </div>
-              </div>
-            </div>
-          </div>
-        )}
-
-        {toast.show && (
-          <div className={`toast ${toast.type === 'success' ? 'toast-success' : 'toast-error'}`} role="status">
-            <div className="toast-icon">
-              {toast.type === 'success' ? <CheckCircle size={20} /> : <AlertCircle size={20} />}
-            </div>
-            <span className="toast-text">{toast.message}</span>
-          </div>
-        )}
-      </div>
+      <MobileApp 
+        activeVideo={activeVideo}
+        activeStoryIndex={activeStoryIndex}
+        setActiveStoryIndex={setActiveStoryIndex}
+        storyProgress={storyProgress}
+        setStoryProgress={setStoryProgress}
+        storyPaused={storyPaused}
+        setStoryPaused={setStoryPaused}
+        chatSubmitted={chatSubmitted}
+        chatSubmittedMessage={chatSubmittedMessage}
+        contactForm={contactForm}
+        handleInputChange={handleInputChange}
+        handleSubmitMessage={handleSubmitMessage}
+        activeVideoIndex={activeVideoIndex}
+        setActiveVideoIndex={setActiveVideoIndex}
+        selectedNews={selectedNews}
+        setSelectedNews={setSelectedNews}
+        toast={toast}
+        agenda={agenda}
+        news={news}
+        loadingAgenda={loadingAgenda}
+        loadingNews={loadingNews}
+        deviceSpecs={deviceSpecs}
+        mobileTab={mobileTab}
+        setMobileTab={setMobileTab}
+        handlePrevStory={handlePrevStory}
+        handleNextStory={handleNextStory}
+        handleStoryCTA={handleStoryCTA}
+        isSubmitting={isSubmitting}
+      />
     );
   }
 
@@ -1742,5 +1125,590 @@ function App() {
     </div>
   );
 }
+
+interface MobileAppProps {
+  activeVideo: any;
+  activeStoryIndex: number | null;
+  setActiveStoryIndex: (index: number | null) => void;
+  storyProgress: number;
+  setStoryProgress: (progress: number) => void;
+  storyPaused: boolean;
+  setStoryPaused: (paused: boolean) => void;
+  chatSubmitted: boolean;
+  chatSubmittedMessage: string;
+  contactForm: any;
+  handleInputChange: (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
+  handleSubmitMessage: (e: React.FormEvent) => void;
+  activeVideoIndex: number;
+  setActiveVideoIndex: (index: number) => void;
+  selectedNews: any;
+  setSelectedNews: (news: any) => void;
+  toast: any;
+  agenda: any[];
+  news: any[];
+  loadingAgenda: boolean;
+  loadingNews: boolean;
+  deviceSpecs: any;
+  mobileTab: 'home' | 'videos' | 'community' | 'participate';
+  setMobileTab: (tab: 'home' | 'videos' | 'community' | 'participate') => void;
+  handlePrevStory: () => void;
+  handleNextStory: () => void;
+  handleStoryCTA: (id: string) => void;
+  isSubmitting: boolean;
+}
+
+const MobileApp: React.FC<MobileAppProps> = ({
+  activeVideo,
+  activeStoryIndex,
+  setActiveStoryIndex,
+  storyProgress,
+  setStoryProgress,
+  setStoryPaused,
+  chatSubmitted,
+  chatSubmittedMessage,
+  contactForm,
+  handleInputChange,
+  handleSubmitMessage,
+  setActiveVideoIndex,
+  selectedNews,
+  setSelectedNews,
+  toast,
+  agenda,
+  news,
+  loadingAgenda,
+  loadingNews,
+  deviceSpecs,
+  mobileTab,
+  setMobileTab,
+  handlePrevStory,
+  handleNextStory,
+  handleStoryCTA,
+  isSubmitting
+}) => {
+  return (
+    <div id="yt-mobile-top" className={`yt-mobile-container device-mobile orientation-${deviceSpecs.isPortrait ? 'portrait' : 'landscape'}`}>
+      {/* Background Glows */}
+      <div className="bg-glow-container" aria-hidden="true">
+        <div className="bg-glow-1"></div>
+        <div className="bg-glow-2"></div>
+      </div>
+
+      {/* YouTube Style Header */}
+      <header className="yt-header">
+        <div className="yt-header-left">
+          <span className="yt-logo-icon">
+            <Play size={16} fill="#FF0000" color="#FF0000" />
+          </span>
+          <span className="yt-logo-text">Janela do Vale</span>
+        </div>
+        <div className="yt-header-right">
+          <button className="yt-icon-btn" aria-label="Pesquisar"><Search size={18} /></button>
+          <button className="yt-icon-btn" aria-label="Notificações"><Bell size={18} /></button>
+          <button onClick={() => setMobileTab('participate')} className="yt-avatar-btn">
+            <img src="/images/foto01.jpg" alt="Perfil" className="yt-top-avatar" />
+          </button>
+        </div>
+      </header>
+
+      {/* Scrollable Container */}
+      <div className="yt-mobile-scrollable">
+        {/* Channel Info */}
+        <div className="yt-channel-banner">
+          <img src="/images/fotovalecima.png" alt="Vale do Jequitinhonha" className="yt-banner-img" />
+        </div>
+
+        <section className="yt-channel-header">
+          <div className="yt-channel-main">
+            <img src="/images/foto01.jpg" alt="Thenperson Oriebir Costa" className="yt-channel-avatar" />
+            <div className="yt-channel-details">
+              <h1 className="yt-channel-name">Thenperson Oriebir Costa</h1>
+              <p className="yt-channel-handle">@thenperson • 15 mil inscritos</p>
+              <p className="yt-channel-meta">6 publicações • Almenara/MG</p>
+            </div>
+          </div>
+          
+          <div className="yt-channel-description">
+            <p>Empresário, fundador da Multicell Almenara, pré-candidato a Deputado Federal pelo Vale do Jequitinhonha.</p>
+          </div>
+
+          <div className="yt-channel-actions">
+            <a href="https://wa.me/5533999999999" target="_blank" rel="noopener noreferrer" className="yt-subscribe-btn">
+              <Heart size={14} fill="currentColor" />
+              <span>Apoiar Canal</span>
+            </a>
+            <button onClick={() => setMobileTab('participate')} className="yt-msg-btn">
+              Enviar Mensagem
+            </button>
+          </div>
+        </section>
+
+        {/* YouTube Navigation Tabs */}
+        <div className="yt-tabs-bar">
+          <button 
+            onClick={() => setMobileTab('home')} 
+            className={`yt-tab-link ${mobileTab === 'home' ? 'active' : ''}`}
+          >
+            Início
+          </button>
+          <button 
+            onClick={() => setMobileTab('videos')} 
+            className={`yt-tab-link ${mobileTab === 'videos' ? 'active' : ''}`}
+          >
+            Vídeos
+          </button>
+          <button 
+            onClick={() => setMobileTab('community')} 
+            className={`yt-tab-link ${mobileTab === 'community' ? 'active' : ''}`}
+          >
+            Comunidade
+          </button>
+          <button 
+            onClick={() => setMobileTab('participate')} 
+            className={`yt-tab-link ${mobileTab === 'participate' ? 'active' : ''}`}
+          >
+            Participe
+          </button>
+        </div>
+
+        {/* TAB CONTENTS */}
+        
+        {/* TAB 1: INÍCIO */}
+        {mobileTab === 'home' && (
+          <div className="yt-tab-content yt-home-tab">
+            {/* Featured Video Player */}
+            <div className="yt-video-card-featured">
+              <div className="yt-video-player-wrapper">
+                <iframe 
+                  width="100%" 
+                  height="100%" 
+                  src={`https://www.youtube.com/embed/${activeVideo.youtubeId}?autoplay=0&rel=0`}
+                  title={activeVideo.title}
+                  frameBorder="0"
+                  allowFullScreen
+                ></iframe>
+              </div>
+              <div className="yt-video-info-block">
+                <img src="/images/foto01.jpg" alt="" className="yt-video-avatar" />
+                <div className="yt-video-text">
+                  <h3 className="yt-video-title">{activeVideo.title}</h3>
+                  <p className="yt-video-stats">Janela do Vale Podcast • 3.5k visualizações • há 2 dias</p>
+                </div>
+              </div>
+              <div className="yt-featured-badge">Destaque do Canal</div>
+            </div>
+
+            {/* Shorts Shelf */}
+            <div className="yt-shorts-shelf">
+              <h3 className="yt-shelf-title">
+                <Zap size={15} fill="#FF0000" color="#FF0000" />
+                Cortes / Shorts
+              </h3>
+              <div className="yt-shorts-scroll">
+                {STORIES.map((story, index) => (
+                  <button 
+                    key={story.id} 
+                    onClick={() => { setActiveStoryIndex(index); setStoryProgress(0); }}
+                    className="yt-short-card"
+                  >
+                    <div className="yt-short-thumb-wrapper">
+                      <img src={story.image} alt={story.title} className="yt-short-thumb" />
+                      <div className="yt-short-overlay">
+                        <Play size={12} fill="#ffffff" color="#ffffff" />
+                      </div>
+                    </div>
+                    <span className="yt-short-title">{story.title}</span>
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            {/* Recommended Community Post Preview */}
+            <div className="yt-home-recommended">
+              <h3 className="yt-shelf-title">Publicações Recentes</h3>
+              <div className="yt-comm-post" onClick={() => setMobileTab('community')}>
+                <header className="yt-comm-header">
+                  <img src="/images/foto01.jpg" alt="" className="yt-comm-avatar" />
+                  <div className="yt-comm-header-text">
+                    <h4>Thenperson Oriebir Costa</h4>
+                    <span>há 1 dia</span>
+                  </div>
+                </header>
+                <div className="yt-comm-content">
+                  <p style={{ display: '-webkit-box', WebkitLineClamp: 3, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>
+                    Com o carinho da família e a força do trabalho diário no comércio em Almenara, estamos construindo a verdadeira renovação do Vale do Jequitinhonha, olho no olho e sem promessas vazias. 💙✨ #Familia #Trabalho #Renovação
+                  </p>
+                  <img src="/images/foto02.png" alt="História do Vale" className="yt-comm-img" />
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* TAB 2: VÍDEOS */}
+        {mobileTab === 'videos' && (
+          <div className="yt-tab-content yt-videos-tab">
+            <div className="yt-videos-list">
+              {PLAYLIST.map((video, idx) => (
+                <div key={video.id} className="yt-video-card">
+                  <div 
+                    className="yt-video-thumb-container"
+                    onClick={() => {
+                      setActiveVideoIndex(idx);
+                      setMobileTab('home');
+                    }}
+                  >
+                    <img src="/images/imagempequena.png" alt={video.title} className="yt-video-thumb" />
+                    <span className="yt-video-duration-badge">{video.duration}</span>
+                  </div>
+                  <div className="yt-video-details-row">
+                    <img src="/images/foto01.jpg" alt="" className="yt-video-channel-avatar" />
+                    <div className="yt-video-meta-info">
+                      <h4 className="yt-video-card-title">{video.title}</h4>
+                      <p className="yt-video-card-stats">Janela do Vale • {10 + idx * 5}k visualizações • há {idx + 1} semanas</p>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {/* TAB 3: COMUNIDADE */}
+        {mobileTab === 'community' && (
+          <div className="yt-tab-content yt-community-tab">
+            <div className="yt-community-list">
+              {/* Post 1: Biografia */}
+              <div id="ig-post-bio" className="yt-comm-post">
+                <header className="yt-comm-header">
+                  <img src="/images/foto01.jpg" alt="" className="yt-comm-avatar" />
+                  <div className="yt-comm-header-text">
+                    <h4>Thenperson Oriebir Costa</h4>
+                    <span>há 1 dia</span>
+                  </div>
+                </header>
+                <div className="yt-comm-content">
+                  <p>
+                    <strong>Biografia:</strong> Com o carinho da família e a força do trabalho diário no comércio em Almenara, estamos construindo a verdadeira renovação do Vale do Jequitinhonha, olho no olho e sem promessas vazias. 💙✨ #Familia #Trabalho #Renovação
+                  </p>
+                  <img src="/images/foto02.png" alt="História do Vale" className="yt-comm-img" />
+                </div>
+                <div className="yt-comm-actions">
+                  <button className="yt-comm-action-btn"><ThumbsUp size={15} /> <span>1.2k</span></button>
+                  <button className="yt-comm-action-btn"><ThumbsDown size={15} /></button>
+                  <button className="yt-comm-action-btn"><MessageSquare size={15} /> <span>48</span></button>
+                </div>
+              </div>
+
+              {/* Post 2: Educação */}
+              <div id="ig-post-educacao" className="yt-comm-post">
+                <header className="yt-comm-header">
+                  <img src="/images/foto01.jpg" alt="" className="yt-comm-avatar" />
+                  <div className="yt-comm-header-text">
+                    <h4>Thenperson Oriebir Costa</h4>
+                    <span>há 3 dias</span>
+                  </div>
+                </header>
+                <div className="yt-comm-content">
+                  <p>
+                    <strong>Educação:</strong> Nossos alunos do IFNMG Almenara são premiados e cheios de potencial, mas sofrem com a falta de transporte escolar de qualidade e apoio do poder público. Estamos com eles na luta por respeito! 🎓✊ #IFNMG #Educação #Juventude
+                  </p>
+                  <img src="/images/estudantes.png" alt="Estudantes" className="yt-comm-img" />
+                </div>
+                <div className="yt-comm-actions">
+                  <button className="yt-comm-action-btn"><ThumbsUp size={15} /> <span>843</span></button>
+                  <button className="yt-comm-action-btn"><ThumbsDown size={15} /></button>
+                  <button className="yt-comm-action-btn"><MessageSquare size={15} /> <span>29</span></button>
+                </div>
+              </div>
+
+              {/* Post 3: Agenda */}
+              <div id="ig-post-agenda" className="yt-comm-post">
+                <header className="yt-comm-header">
+                  <img src="/images/foto01.jpg" alt="" className="yt-comm-avatar" />
+                  <div className="yt-comm-header-text">
+                    <h4>Thenperson Oriebir Costa</h4>
+                    <span>há 5 dias</span>
+                  </div>
+                </header>
+                <div className="yt-comm-content">
+                  <p>
+                    <strong>Agenda:</strong> Diálogo aberto com a nossa gente. Veja onde estaremos nos próximos dias para debater o futuro da nossa região. 🗓️🤝 #OlhoNoOlho #Jequitinhonha #Agenda
+                  </p>
+                  <div className="yt-comm-agenda-box">
+                    {loadingAgenda ? (
+                      <span style={{ fontSize: '0.75rem', color: '#aaa' }}>Carregando agenda...</span>
+                    ) : agenda.length === 0 ? (
+                      <span style={{ fontSize: '0.75rem', color: '#aaa' }}>Nenhum evento agendado.</span>
+                    ) : (
+                      agenda.slice(0, 4).map(item => (
+                        <div key={item.id} className="yt-comm-agenda-item">
+                          <span className="yt-agenda-date-badge">{item.date.split('-').reverse().join('/')}</span>
+                          <div className="yt-comm-agenda-item-details">
+                            <h5>{item.title}</h5>
+                            <p>📍 {item.location} • {item.time}h</p>
+                          </div>
+                        </div>
+                      ))
+                    )}
+                  </div>
+                </div>
+                <div className="yt-comm-actions">
+                  <button className="yt-comm-action-btn"><ThumbsUp size={15} /> <span>512</span></button>
+                  <button className="yt-comm-action-btn"><ThumbsDown size={15} /></button>
+                  <button className="yt-comm-action-btn"><MessageSquare size={15} /> <span>14</span></button>
+                </div>
+              </div>
+
+              {/* Post 4: Notícias */}
+              <div id="ig-post-noticias" className="yt-comm-post">
+                <header className="yt-comm-header">
+                  <img src="/images/foto01.jpg" alt="" className="yt-comm-avatar" />
+                  <div className="yt-comm-header-text">
+                    <h4>Thenperson Oriebir Costa</h4>
+                    <span>há 1 semana</span>
+                  </div>
+                </header>
+                <div className="yt-comm-content">
+                  <p>
+                    <strong>Notícias & Informativos:</strong> Trabalhando por atração de indústrias, tecnologia e incentivos fiscais para o Norte e Nordeste de Minas Gerais. O povo almenarense tem carisma, energia e merece oportunidades! 🚀🏭 #Desenvolvimento #Emprego #ValeForte
+                  </p>
+                  {loadingNews ? (
+                    <span style={{ fontSize: '0.75rem', color: '#aaa', display: 'block', marginTop: '8px' }}>Carregando notícias...</span>
+                  ) : news.length === 0 ? (
+                    <span style={{ fontSize: '0.75rem', color: '#aaa', display: 'block', marginTop: '8px' }}>Nenhum informativo disponível.</span>
+                  ) : (
+                    news.slice(0, 2).map(item => (
+                      <div 
+                        key={item.id} 
+                        onClick={() => setSelectedNews(item)}
+                        style={{ 
+                          display: 'flex', 
+                          gap: '10px', 
+                          alignItems: 'center', 
+                          background: 'rgba(255,255,255,0.03)', 
+                          border: '1px solid rgba(255,255,255,0.06)', 
+                          borderRadius: '8px', 
+                          padding: '8px',
+                          cursor: 'pointer',
+                          marginTop: '8px'
+                        }}
+                      >
+                        <img src={item.image_url || '/images/fotovalebaixo.png'} alt="" style={{ width: '40px', height: '40px', borderRadius: '4px', objectFit: 'cover' }} />
+                        <div style={{ flex: 1, overflow: 'hidden' }}>
+                          <span style={{ fontSize: '0.6rem', color: 'var(--color-accent)', fontWeight: 700 }}>{item.category}</span>
+                          <h4 style={{ fontSize: '0.75rem', margin: '1px 0', lineHeight: 1.2, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{item.title}</h4>
+                        </div>
+                      </div>
+                    ))
+                  )}
+                </div>
+                <div className="yt-comm-actions">
+                  <button className="yt-comm-action-btn"><ThumbsUp size={15} /> <span>410</span></button>
+                  <button className="yt-comm-action-btn"><ThumbsDown size={15} /></button>
+                  <button className="yt-comm-action-btn"><MessageSquare size={15} /> <span>8</span></button>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* TAB 4: PARTICIPE */}
+        {mobileTab === 'participate' && (
+          <div className="yt-tab-content yt-participate-tab">
+            <div className="yt-chat-container">
+              <div className="yt-chat-header-bar">
+                <div className="yt-chat-status">
+                  <span className="yt-status-pulse"></span>
+                  <span>Chat de Diálogo ao Vivo</span>
+                </div>
+              </div>
+
+              <div className="yt-chat-messages-stream">
+                <div className="yt-chat-bubble yt-chat-left">
+                  <span className="yt-chat-user">Thenperson Oriebir:</span>
+                  <p>Olá! Seja muito bem-vindo ao canal. Por favor, envie sua sugestão de melhoria ou mensagem de apoio no formulário abaixo! 👇</p>
+                </div>
+
+                {chatSubmitted && (
+                  <>
+                    <div className="yt-chat-bubble yt-chat-right animate-slide-in">
+                      <span className="yt-chat-user-me">Você:</span>
+                      <p>{chatSubmittedMessage}</p>
+                    </div>
+                    <div className="yt-chat-bubble yt-chat-left animate-slide-in" style={{ animationDelay: '0.5s' }}>
+                      <span className="yt-chat-user">Thenperson Oriebir:</span>
+                      <p>Recebi sua sugestão! Muito obrigado pela participação. Juntos faremos o Vale de Jequitinhonha cada vez mais forte! 🚀</p>
+                    </div>
+                  </>
+                )}
+              </div>
+
+              <div className="yt-chat-input-box">
+                <form onSubmit={handleSubmitMessage} className="yt-chat-form">
+                  <div className="yt-chat-form-row">
+                    <input 
+                      type="text" 
+                      name="name" 
+                      value={contactForm.name}
+                      onChange={handleInputChange}
+                      placeholder="Nome Completo *" 
+                      className="yt-chat-input"
+                      required
+                    />
+                    <input 
+                      type="tel" 
+                      name="phone" 
+                      value={contactForm.phone}
+                      onChange={handleInputChange}
+                      placeholder="WhatsApp" 
+                      className="yt-chat-input"
+                    />
+                  </div>
+                  <div className="yt-chat-submit-row">
+                    <textarea 
+                      name="message" 
+                      value={contactForm.message}
+                      onChange={handleInputChange}
+                      placeholder="Escreva sua sugestão..." 
+                      className="yt-chat-textarea"
+                      required
+                    ></textarea>
+                    <button 
+                      type="submit" 
+                      className="yt-chat-send-btn"
+                      disabled={isSubmitting}
+                    >
+                      {isSubmitting ? '...' : 'Enviar'}
+                    </button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        )}
+      </div>
+
+      {/* YouTube Bottom Navigation Bar */}
+      <nav className="yt-bottom-nav">
+        <button 
+          onClick={() => { setMobileTab('home'); window.scrollTo(0, 0); }} 
+          className={`yt-nav-btn ${mobileTab === 'home' ? 'active' : ''}`}
+        >
+          <Home size={20} />
+          <span>Início</span>
+        </button>
+        <button 
+          onClick={() => { setMobileTab('videos'); window.scrollTo(0, 0); }} 
+          className={`yt-nav-btn ${mobileTab === 'videos' ? 'active' : ''}`}
+        >
+          <Play size={20} />
+          <span>Vídeos</span>
+        </button>
+        <button 
+          onClick={() => { setMobileTab('community'); window.scrollTo(0, 0); }} 
+          className={`yt-nav-btn ${mobileTab === 'community' ? 'active' : ''}`}
+        >
+          <MessageSquare size={20} />
+          <span>Comunidade</span>
+        </button>
+        <button 
+          onClick={() => { setMobileTab('participate'); window.scrollTo(0, 0); }} 
+          className={`yt-nav-btn ${mobileTab === 'participate' ? 'active' : ''}`}
+        >
+          <Phone size={20} />
+          <span>Participe</span>
+        </button>
+      </nav>
+
+      {/* Floating Story Card Overlay Modal */}
+      {activeStoryIndex !== null && (
+        <div 
+          className="story-viewer"
+          onTouchStart={() => setStoryPaused(true)}
+          onTouchEnd={() => setStoryPaused(false)}
+          onMouseDown={() => setStoryPaused(true)}
+          onMouseUp={() => setStoryPaused(false)}
+        >
+          {/* Story header progress bars */}
+          <div className="story-progress-container">
+            {STORIES.map((_, idx) => (
+              <div key={idx} className="story-progress-bar-bg">
+                <div 
+                  className="story-progress-bar-fg" 
+                  style={{ 
+                    width: idx < activeStoryIndex ? '100%' : idx === activeStoryIndex ? `${storyProgress}%` : '0%' 
+                  }}
+                ></div>
+              </div>
+            ))}
+          </div>
+
+          <div className="story-header-info">
+            <div className="story-profile">
+              <img src="/images/foto01.jpg" alt="" className="story-avatar" />
+              <span className="story-username">thenperson</span>
+            </div>
+            <button className="story-close-btn" onClick={() => setActiveStoryIndex(null)} aria-label="Fechar Story">
+              <X size={20} />
+            </button>
+          </div>
+
+          {/* Tap areas to navigate */}
+          <div className="story-tap-areas">
+            <button className="story-tap-left" onClick={handlePrevStory} aria-label="Story anterior"></button>
+            <button className="story-tap-right" onClick={handleNextStory} aria-label="Próximo story"></button>
+          </div>
+
+          <div className="story-card-body">
+            <img src={STORIES[activeStoryIndex].image} alt="" className="story-image" />
+            <div className="story-content-overlay">
+              <h3 className="story-headline">{STORIES[activeStoryIndex].headline}</h3>
+              <p className="story-text">{STORIES[activeStoryIndex].text}</p>
+              <button 
+                className="story-cta-btn" 
+                onClick={() => handleStoryCTA(STORIES[activeStoryIndex].id)}
+              >
+                <span>{STORIES[activeStoryIndex].actionLabel}</span>
+                <ArrowRight size={14} style={{ marginLeft: '4px' }} />
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* News Detail Modal */}
+      {selectedNews && (
+        <div className="modal-backdrop" onClick={() => setSelectedNews(null)}>
+          <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+            <div className="modal-header">
+              <span className="modal-category">{selectedNews.category}</span>
+              <button className="modal-close" onClick={() => setSelectedNews(null)} aria-label="Fechar modal"><X size={18} /></button>
+            </div>
+            <div className="modal-body" style={{ maxHeight: '70vh', overflowY: 'auto' }}>
+              <img src={selectedNews.image_url || '/images/fotovalebaixo.png'} alt={selectedNews.title} className="modal-img" style={{ width: '100%', borderRadius: '12px', marginBottom: '16px', objectFit: 'cover' }} />
+              <span className="modal-date">{selectedNews.date}</span>
+              <h3 className="modal-title" style={{ fontSize: '1.2rem', margin: '8px 0 16px' }}>{selectedNews.title}</h3>
+              <div className="modal-text" style={{ fontSize: '0.85rem' }}>
+                {selectedNews.content.split('\n\n').map((paragraph: string, idx: number) => (
+                  <p key={idx} style={{ marginBottom: '10px' }}>{paragraph}</p>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Toast Notification */}
+      {toast.show && (
+        <div className={`toast ${toast.type === 'success' ? 'toast-success' : 'toast-error'}`} role="status">
+          <div className="toast-icon">
+            {toast.type === 'success' ? <CheckCircle size={20} /> : <AlertCircle size={20} />}
+          </div>
+          <span className="toast-text">{toast.message}</span>
+        </div>
+      )}
+    </div>
+  );
+};
 
 export default App;
