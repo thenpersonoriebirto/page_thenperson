@@ -360,7 +360,7 @@ function App() {
   if (deviceSpecs.isMobile) {
     const GRID_ITEMS = [
       { id: 'bio', image: '/images/foto02.png', title: 'Origens', targetId: 'ig-post-bio', icon: <Heart size={16} /> },
-      { id: 'educacao', image: '/images/estudantes.png', title: 'Estudantes', targetId: 'ig-post-educacao', icon: <Award size={16} /> },
+      { id: 'educacao', image: '/images/estudantes.png', title: 'Educação', targetId: 'ig-post-educacao', icon: <Award size={16} /> },
       { id: 'agenda', image: '/images/fotovalecima.png', title: 'Agenda', targetId: 'ig-post-agenda', icon: <Calendar size={16} /> },
       { id: 'videos', image: '/images/imagempequena.png', title: 'Podcasts', targetId: 'ig-post-videos', icon: <Video size={16} /> },
       { id: 'noticias', image: '/images/foto04vale.png', title: 'Notícias', targetId: 'ig-post-noticias', icon: <Info size={16} /> },
@@ -375,59 +375,58 @@ function App() {
           <div className="bg-glow-2"></div>
         </div>
 
-        {/* IG Top Header */}
+        {/* Custom Web App Top Header */}
         <header className="ig-header">
-          <div className="ig-header-logo">Thenperson</div>
+          <div className="ig-header-logo">Thenperson Oriebir</div>
           <div className="ig-header-actions">
             <button onClick={() => setMobileTab('message')} className="ig-header-icon-btn" aria-label="Enviar Mensagem">
-              <svg viewBox="0 0 24 24" width="22" height="22" stroke="currentColor" strokeWidth="2" fill="none" strokeLinecap="round" strokeLinejoin="round">
-                <line x1="22" y1="2" x2="11" y2="13"></line>
-                <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+              <svg viewBox="0 0 24 24" width="22" height="22" stroke="currentColor" strokeWidth="2.2" fill="none" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
               </svg>
             </button>
           </div>
         </header>
 
-        {/* IG Profile Section */}
+        {/* Customized Profile Section */}
         <section className="ig-profile">
           <div className="ig-profile-top">
-            <button onClick={() => { setActiveStoryIndex(0); setStoryProgress(0); }} className="ig-profile-avatar-wrapper" aria-label="Ver Stories">
+            <button onClick={() => { setActiveStoryIndex(0); setStoryProgress(0); }} className="ig-profile-avatar-wrapper" aria-label="Ver Destaques">
               <div className="ig-avatar-gradient"></div>
               <img src="/images/foto01.jpg" alt="Thenperson Oriebir" className="ig-profile-avatar" />
             </button>
             <div className="ig-profile-stats">
-              <div className="ig-stat" onClick={() => setMobileTab('grid')}>
+              <button onClick={() => setMobileTab('grid')} className="ig-stat-card" aria-label="Ver postagens">
                 <span className="ig-stat-num">6</span>
-                <span className="ig-stat-label">Posts</span>
-              </div>
-              <div className="ig-stat">
+                <span className="ig-stat-label">Tópicos</span>
+              </button>
+              <div className="ig-stat-card">
                 <span className="ig-stat-num">10.4k</span>
                 <span className="ig-stat-label">Apoios</span>
               </div>
-              <div className="ig-stat">
+              <div className="ig-stat-card">
                 <span className="ig-stat-num">Almenara</span>
-                <span className="ig-stat-label">Minas Gerais</span>
+                <span className="ig-stat-label">MG</span>
               </div>
             </div>
           </div>
 
           <div className="ig-profile-bio">
             <h1 className="ig-bio-name">Thenperson Oriebir Costa</h1>
-            <p className="ig-bio-tag">Pré-Candidato a Deputado Federal</p>
+            <p className="ig-bio-tag">Pré-Candidato a Deputado Federal • Almenara/MG</p>
             <div className="ig-bio-desc">
               <p>📱 Proprietário da Multicell Almenara</p>
-              <p>📍 Presente no Vale do Jequitinhonha todos os dias!</p>
-              <p>⚡ Renovação de verdade com trabalho, diálogo e respeito.</p>
+              <p>📍 Presente diariamente no Vale de Jequitinhonha, não apenas em época eleitoral!</p>
+              <p>⚡ Renovação política de verdade fundamentada no comércio, trabalho e diálogo.</p>
             </div>
           </div>
 
           <div className="ig-profile-actions">
-            <a href="https://wa.me/5533999999999" target="_blank" rel="noopener noreferrer" className="ig-btn ig-btn-primary">Apoiar (WhatsApp)</a>
+            <a href="https://wa.me/5533999999999" target="_blank" rel="noopener noreferrer" className="ig-btn ig-btn-primary">Apoiar pelo WhatsApp</a>
             <button onClick={() => setMobileTab('message')} className="ig-btn ig-btn-secondary">Enviar Mensagem</button>
           </div>
         </section>
 
-        {/* IG Stories Highlights */}
+        {/* Stories Destaques styled with modern rounded Squircles */}
         <section className="ig-stories">
           {STORIES.map((story, index) => (
             <button 
@@ -446,49 +445,31 @@ function App() {
           ))}
         </section>
 
-        {/* IG Tabs (Grid vs Feed vs DM) */}
+        {/* Segmented control style Tab switcher */}
         <div className="ig-tabs">
-          <button 
-            onClick={() => setMobileTab('grid')} 
-            className={`ig-tab-btn ${mobileTab === 'grid' ? 'active' : ''}`}
-            aria-label="Visualização em Grade"
-          >
-            <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" strokeWidth="2.2" fill="none" strokeLinecap="round" strokeLinejoin="round">
-              <rect x="3" y="3" width="5" height="5"></rect>
-              <rect x="11" y="3" width="5" height="5"></rect>
-              <rect x="19" y="3" width="2" height="5"></rect>
-              <rect x="3" y="11" width="5" height="5"></rect>
-              <rect x="11" y="11" width="5" height="5"></rect>
-              <rect x="19" y="11" width="2" height="5"></rect>
-              <rect x="3" y="19" width="5" height="5"></rect>
-              <rect x="11" y="19" width="5" height="5"></rect>
-              <rect x="19" y="19" width="2" height="5"></rect>
-            </svg>
-          </button>
-          <button 
-            onClick={() => setMobileTab('feed')} 
-            className={`ig-tab-btn ${mobileTab === 'feed' ? 'active' : ''}`}
-            aria-label="Visualização em Linha do Tempo"
-          >
-            <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" strokeWidth="2.2" fill="none" strokeLinecap="round" strokeLinejoin="round">
-              <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
-              <line x1="3" y1="9" x2="21" y2="9"></line>
-              <line x1="3" y1="15" x2="21" y2="15"></line>
-            </svg>
-          </button>
-          <button 
-            onClick={() => setMobileTab('message')} 
-            className={`ig-tab-btn ${mobileTab === 'message' ? 'active' : ''}`}
-            aria-label="Direct Messages"
-          >
-            <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" strokeWidth="2.2" fill="none" strokeLinecap="round" strokeLinejoin="round">
-              <line x1="22" y1="2" x2="11" y2="13"></line>
-              <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
-            </svg>
-          </button>
+          <div className="ig-tabs-pill">
+            <button 
+              onClick={() => setMobileTab('grid')} 
+              className={`ig-tab-btn ${mobileTab === 'grid' ? 'active' : ''}`}
+            >
+              Grade Visual
+            </button>
+            <button 
+              onClick={() => setMobileTab('feed')} 
+              className={`ig-tab-btn ${mobileTab === 'feed' ? 'active' : ''}`}
+            >
+              Linha do Tempo
+            </button>
+            <button 
+              onClick={() => setMobileTab('message')} 
+              className={`ig-tab-btn ${mobileTab === 'message' ? 'active' : ''}`}
+            >
+              Fale Conosco
+            </button>
+          </div>
         </div>
 
-        {/* IG Grid View Tab */}
+        {/* Grid View Tab */}
         {mobileTab === 'grid' && (
           <div className="ig-grid-layout">
             {GRID_ITEMS.map((item) => (
@@ -514,7 +495,7 @@ function App() {
           </div>
         )}
 
-        {/* IG Feed View Tab */}
+        {/* Feed View Tab */}
         {mobileTab === 'feed' && (
           <div className="ig-feed">
             {/* Post 1: Biografia */}
@@ -523,22 +504,22 @@ function App() {
                 <img src="/images/foto01.jpg" alt="" className="ig-post-avatar" />
                 <div className="ig-post-header-info">
                   <span className="ig-post-username">thenperson</span>
-                  <span className="ig-post-location">Minha Família, Minha Base</span>
+                  <span className="ig-post-location">Origens e Família</span>
                 </div>
+                <span className="post-category-badge">Biografia</span>
               </header>
               <div className="ig-post-image-box">
                 <img src="/images/foto02.png" alt="Thenperson com família" className="ig-post-image" />
               </div>
               <div className="ig-post-actions">
-                <Heart size={24} className="ig-post-action-icon" />
-                <button onClick={() => setMobileTab('message')} className="ig-post-action-btn-svg" aria-label="Enviar Direct">
-                  <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" strokeWidth="2" fill="none" strokeLinecap="round" strokeLinejoin="round">
-                    <line x1="22" y1="2" x2="11" y2="13"></line>
-                    <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+                <Heart size={22} className="ig-post-action-icon" />
+                <button onClick={() => setMobileTab('message')} className="ig-post-action-btn-svg" aria-label="Enviar Mensagem">
+                  <svg viewBox="0 0 24 24" width="22" height="22" stroke="currentColor" strokeWidth="2.2" fill="none" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
                   </svg>
                 </button>
               </div>
-              <div className="ig-post-likes">Curtido por milhares de apoiadores no Vale</div>
+              <div className="ig-post-likes">Apoiado por milhares de cidadãos do Jequitinhonha</div>
               <div className="ig-post-caption">
                 <p>
                   <strong>thenperson</strong> Com o carinho da família e a força do trabalho diário no comércio em Almenara, estamos construindo a verdadeira renovação do Vale do Jequitinhonha, olho no olho e sem promessas vazias. 💙✨ #Familia #Trabalho #Renovação
@@ -552,18 +533,18 @@ function App() {
                 <img src="/images/foto01.jpg" alt="" className="ig-post-avatar" />
                 <div className="ig-post-header-info">
                   <span className="ig-post-username">thenperson</span>
-                  <span className="ig-post-location">Aliança Pela Educação (IFNMG Almenara)</span>
+                  <span className="ig-post-location">Aliança Pela Educação</span>
                 </div>
+                <span className="post-category-badge">Educação</span>
               </header>
               <div className="ig-post-image-box">
                 <img src="/images/estudantes.png" alt="Thenperson com estudantes" className="ig-post-image" style={{ objectPosition: 'top' }} />
               </div>
               <div className="ig-post-actions">
-                <Heart size={24} className="ig-post-action-icon" />
-                <button onClick={() => setMobileTab('message')} className="ig-post-action-btn-svg" aria-label="Enviar Direct">
-                  <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" strokeWidth="2" fill="none" strokeLinecap="round" strokeLinejoin="round">
-                    <line x1="22" y1="2" x2="11" y2="13"></line>
-                    <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+                <Heart size={22} className="ig-post-action-icon" />
+                <button onClick={() => setMobileTab('message')} className="ig-post-action-btn-svg" aria-label="Enviar Mensagem">
+                  <svg viewBox="0 0 24 24" width="22" height="22" stroke="currentColor" strokeWidth="2.2" fill="none" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
                   </svg>
                 </button>
               </div>
@@ -581,8 +562,9 @@ function App() {
                 <img src="/images/foto01.jpg" alt="" className="ig-post-avatar" />
                 <div className="ig-post-header-info">
                   <span className="ig-post-username">thenperson</span>
-                  <span className="ig-post-location">Agenda de Compromissos</span>
+                  <span className="ig-post-location">Encontros e Presença Regional</span>
                 </div>
+                <span className="post-category-badge">Agenda</span>
               </header>
               <div className="ig-post-content-box" style={{ padding: '16px', background: 'rgba(11, 15, 25, 0.4)', borderTop: '1px solid rgba(59, 130, 246, 0.1)', borderBottom: '1px solid rgba(59, 130, 246, 0.1)' }}>
                 {loadingAgenda ? (
@@ -604,11 +586,10 @@ function App() {
                 )}
               </div>
               <div className="ig-post-actions">
-                <Heart size={24} className="ig-post-action-icon" />
-                <button onClick={() => setMobileTab('message')} className="ig-post-action-btn-svg" aria-label="Enviar Direct">
-                  <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" strokeWidth="2" fill="none" strokeLinecap="round" strokeLinejoin="round">
-                    <line x1="22" y1="2" x2="11" y2="13"></line>
-                    <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+                <Heart size={22} className="ig-post-action-icon" />
+                <button onClick={() => setMobileTab('message')} className="ig-post-action-btn-svg" aria-label="Enviar Mensagem">
+                  <svg viewBox="0 0 24 24" width="22" height="22" stroke="currentColor" strokeWidth="2.2" fill="none" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
                   </svg>
                 </button>
               </div>
@@ -627,6 +608,7 @@ function App() {
                   <span className="ig-post-username">thenperson</span>
                   <span className="ig-post-location">Janela do Vale Podcast</span>
                 </div>
+                <span className="post-category-badge">Podcast</span>
               </header>
               <div className="ig-post-video-player" style={{ aspectRatio: '16/9', background: '#000' }}>
                 <iframe 
@@ -662,11 +644,10 @@ function App() {
                 ))}
               </div>
               <div className="ig-post-actions">
-                <Heart size={24} className="ig-post-action-icon" />
-                <button onClick={() => setMobileTab('message')} className="ig-post-action-btn-svg" aria-label="Enviar Direct">
-                  <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" strokeWidth="2" fill="none" strokeLinecap="round" strokeLinejoin="round">
-                    <line x1="22" y1="2" x2="11" y2="13"></line>
-                    <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+                <Heart size={22} className="ig-post-action-icon" />
+                <button onClick={() => setMobileTab('message')} className="ig-post-action-btn-svg" aria-label="Enviar Mensagem">
+                  <svg viewBox="0 0 24 24" width="22" height="22" stroke="currentColor" strokeWidth="2.2" fill="none" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
                   </svg>
                 </button>
               </div>
@@ -685,6 +666,7 @@ function App() {
                   <span className="ig-post-username">thenperson</span>
                   <span className="ig-post-location">Informativos Regionais</span>
                 </div>
+                <span className="post-category-badge">Desenvolvimento</span>
               </header>
               <div className="ig-post-content-box" style={{ padding: '12px 16px', background: 'rgba(11, 15, 25, 0.4)' }}>
                 {loadingNews ? (
@@ -718,11 +700,10 @@ function App() {
                 )}
               </div>
               <div className="ig-post-actions">
-                <Heart size={24} className="ig-post-action-icon" />
-                <button onClick={() => setMobileTab('message')} className="ig-post-action-btn-svg" aria-label="Enviar Direct">
-                  <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" strokeWidth="2" fill="none" strokeLinecap="round" strokeLinejoin="round">
-                    <line x1="22" y1="2" x2="11" y2="13"></line>
-                    <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+                <Heart size={22} className="ig-post-action-icon" />
+                <button onClick={() => setMobileTab('message')} className="ig-post-action-btn-svg" aria-label="Enviar Mensagem">
+                  <svg viewBox="0 0 24 24" width="22" height="22" stroke="currentColor" strokeWidth="2.2" fill="none" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
                   </svg>
                 </button>
               </div>
@@ -741,6 +722,7 @@ function App() {
                   <span className="ig-post-username">thenperson</span>
                   <span className="ig-post-location">Fale Diretamente Conosco</span>
                 </div>
+                <span className="post-category-badge">Contato</span>
               </header>
               <div className="ig-post-image-box">
                 <img src="/images/foto05perfil.png" alt="Cartão de contato" className="ig-post-image" />
@@ -784,17 +766,16 @@ function App() {
                     disabled={isSubmitting}
                     style={{ padding: '8px', fontSize: '0.8rem' }}
                   >
-                    {isSubmitting ? 'Enviando...' : 'Enviar Direct'}
+                    {isSubmitting ? 'Enviando...' : 'Enviar Mensagem'}
                   </button>
                 </form>
               </div>
               
               <div className="ig-post-actions">
-                <Heart size={24} className="ig-post-action-icon" />
-                <button onClick={() => setMobileTab('message')} className="ig-post-action-btn-svg" aria-label="Enviar Direct">
-                  <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" strokeWidth="2" fill="none" strokeLinecap="round" strokeLinejoin="round">
-                    <line x1="22" y1="2" x2="11" y2="13"></line>
-                    <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+                <Heart size={22} className="ig-post-action-icon" />
+                <button onClick={() => setMobileTab('message')} className="ig-post-action-btn-svg" aria-label="Enviar Mensagem">
+                  <svg viewBox="0 0 24 24" width="22" height="22" stroke="currentColor" strokeWidth="2.2" fill="none" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
                   </svg>
                 </button>
               </div>
@@ -818,7 +799,7 @@ function App() {
                 </div>
                 <div className="ig-chat-profile-info">
                   <span className="ig-chat-name">thenperson</span>
-                  <span className="ig-chat-status-text">Ativo agora</span>
+                  <span className="ig-chat-status-text">Canal de Diálogo Direto</span>
                 </div>
               </div>
             </div>
@@ -826,7 +807,7 @@ function App() {
             <div className="ig-chat-messages">
               {/* Message 1 (Thenperson Greeting) */}
               <div className="ig-msg-bubble ig-msg-left">
-                <p>Olá! Sou o Thenperson. Compartilhe suas ideias e fale diretamente comigo. Deixe sua mensagem de apoio ou sugestão abaixo! 👇</p>
+                <p>Olá! Sou o Thenperson. Fico muito feliz em dialogar com você. Deixe sua sugestão ou mensagem de apoio no formulário abaixo! 👇</p>
               </div>
 
               {/* If message submitted, show user message and auto-reply */}
@@ -836,14 +817,14 @@ function App() {
                     <p>{chatSubmittedMessage}</p>
                   </div>
                   <div className="ig-msg-bubble ig-msg-left animate-slide-in" style={{ animationDelay: '0.6s' }}>
-                    <p>Mensagem enviada com sucesso! Muito obrigado pelo apoio. Vou analisar sua sugestão e te responder o quanto antes. Abraços! 🚀🇧🇷</p>
+                    <p>Mensagem enviada com sucesso! Muito obrigado pelo apoio. Vou analisar sua sugestão e te responder o quanto antes. Abraços! 🚀</p>
                   </div>
                 </>
               )}
             </div>
 
             <div className="ig-chat-input-area">
-              <h3 style={{ fontSize: '0.9rem', marginBottom: '8px', color: 'var(--color-accent)', fontWeight: 700 }}>Enviar mensagem de direct:</h3>
+              <h3 style={{ fontSize: '0.82rem', marginBottom: '8px', color: 'var(--color-accent)', fontWeight: 700 }}>Escreva para o canal de diálogo:</h3>
               <form onSubmit={handleSubmitMessage} style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
                 <input 
                   type="text" 
@@ -869,7 +850,7 @@ function App() {
                     name="message" 
                     value={contactForm.message}
                     onChange={handleInputChange}
-                    placeholder="Escreva uma mensagem..." 
+                    placeholder="Escreva sua mensagem..." 
                     className="form-textarea" 
                     style={{ flex: 1, minHeight: '38px', fontSize: '0.75rem', padding: '8px 10px', borderRadius: '18px', background: 'rgba(255,255,255,0.03)' }}
                     required
@@ -888,42 +869,45 @@ function App() {
           </div>
         )}
 
-        {/* IG Bottom Sticky Navigation */}
-        <nav className="ig-bottom-nav">
+        {/* Custom floating dock navigation menu instead of standard Instagram footer bar */}
+        <nav className="ig-floating-dock">
           <button 
             onClick={() => { setMobileTab('grid'); window.scrollTo(0, 0); }} 
             className={`ig-nav-item-btn ${mobileTab === 'grid' ? 'active' : ''}`}
             aria-label="Grade"
           >
-            <svg viewBox="0 0 24 24" width="22" height="22" stroke="currentColor" strokeWidth="2" fill="none" strokeLinecap="round" strokeLinejoin="round">
+            <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" strokeWidth="2.2" fill="none" strokeLinecap="round" strokeLinejoin="round">
               <rect x="3" y="3" width="7" height="7"></rect>
               <rect x="14" y="3" width="7" height="7"></rect>
               <rect x="14" y="14" width="7" height="7"></rect>
               <rect x="3" y="14" width="7" height="7"></rect>
             </svg>
+            <span style={{ fontSize: '0.62rem', fontWeight: 700, marginTop: '2px' }}>Painel</span>
           </button>
           <button 
             onClick={() => { setMobileTab('feed'); window.scrollTo(0, 0); }} 
             className={`ig-nav-item-btn ${mobileTab === 'feed' ? 'active' : ''}`}
             aria-label="Feed"
           >
-            <svg viewBox="0 0 24 24" width="22" height="22" stroke="currentColor" strokeWidth="2" fill="none" strokeLinecap="round" strokeLinejoin="round">
+            <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" strokeWidth="2.2" fill="none" strokeLinecap="round" strokeLinejoin="round">
               <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
               <polyline points="9 22 9 12 15 12 15 22"></polyline>
             </svg>
+            <span style={{ fontSize: '0.62rem', fontWeight: 700, marginTop: '2px' }}>Linha Tempo</span>
           </button>
           <button 
             onClick={() => { setMobileTab('message'); window.scrollTo(0, 0); }} 
             className={`ig-nav-item-btn ${mobileTab === 'message' ? 'active' : ''}`}
             aria-label="Mensagens"
           >
-            <svg viewBox="0 0 24 24" width="22" height="22" stroke="currentColor" strokeWidth="2" fill="none" strokeLinecap="round" strokeLinejoin="round">
+            <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" strokeWidth="2.2" fill="none" strokeLinecap="round" strokeLinejoin="round">
               <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
             </svg>
+            <span style={{ fontSize: '0.62rem', fontWeight: 700, marginTop: '2px' }}>Fale Conosco</span>
           </button>
         </nav>
 
-        {/* Fullscreen Story Viewer Modal */}
+        {/* Floating Story Card Overlay Modal */}
         {activeStoryIndex !== null && (
           <div 
             className="story-viewer"
@@ -953,7 +937,7 @@ function App() {
               <div className="story-header-profile">
                 <img src="/images/foto01.jpg" alt="" className="story-header-avatar" />
                 <span className="story-header-username">thenperson</span>
-                <span className="story-header-time">• stories</span>
+                <span className="story-header-time">• Destaque</span>
               </div>
               <button 
                 className="story-close-btn" 
