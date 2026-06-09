@@ -20,14 +20,7 @@ import {
   Award, 
   TrendingUp, 
   Smartphone,
-  Info,
-  Search,
-  Bell,
-  Play,
-  ThumbsUp,
-  ThumbsDown,
-  Home,
-  Zap
+  Info
 } from 'lucide-react';
 import { db, isSupabaseConfigured } from './supabaseClient';
 import type { AgendaItem, NewsItem } from './supabaseClient';
@@ -158,8 +151,7 @@ function App() {
   const [showSbBanner, setShowSbBanner] = useState<boolean>(true);
   const [scrolled, setScrolled] = useState<boolean>(false);
   
-  // Mobile UI Tab and Stories States
-  const [mobileTab, setMobileTab] = useState<'home' | 'videos' | 'community' | 'participate'>('home');
+  // Stories States
   const [activeStoryIndex, setActiveStoryIndex] = useState<number | null>(null);
   const [storyProgress, setStoryProgress] = useState<number>(0);
   const [storyPaused, setStoryPaused] = useState<boolean>(false);
@@ -316,9 +308,9 @@ function App() {
   const handleStoryCTA = (id: string) => {
     setActiveStoryIndex(null);
     if (id === 'contato') {
-      setMobileTab('participate');
+      const el = document.getElementById('yt-participate-section');
+      if (el) el.scrollIntoView({ behavior: 'smooth' });
     } else {
-      setMobileTab('community');
       setTimeout(() => {
         const element = document.getElementById(`ig-post-${id}`);
         if (element) {
@@ -382,8 +374,6 @@ function App() {
         loadingAgenda={loadingAgenda}
         loadingNews={loadingNews}
         deviceSpecs={deviceSpecs}
-        mobileTab={mobileTab}
-        setMobileTab={setMobileTab}
         handlePrevStory={handlePrevStory}
         handleNextStory={handleNextStory}
         handleStoryCTA={handleStoryCTA}
@@ -1149,8 +1139,6 @@ interface MobileAppProps {
   loadingAgenda: boolean;
   loadingNews: boolean;
   deviceSpecs: any;
-  mobileTab: 'home' | 'videos' | 'community' | 'participate';
-  setMobileTab: (tab: 'home' | 'videos' | 'community' | 'participate') => void;
   handlePrevStory: () => void;
   handleNextStory: () => void;
   handleStoryCTA: (id: string) => void;
@@ -1162,7 +1150,6 @@ const MobileApp: React.FC<MobileAppProps> = ({
   activeStoryIndex,
   setActiveStoryIndex,
   storyProgress,
-  setStoryProgress,
   setStoryPaused,
   chatSubmitted,
   chatSubmittedMessage,
@@ -1178,8 +1165,6 @@ const MobileApp: React.FC<MobileAppProps> = ({
   loadingAgenda,
   loadingNews,
   deviceSpecs,
-  mobileTab,
-  setMobileTab,
   handlePrevStory,
   handleNextStory,
   handleStoryCTA,
@@ -1193,432 +1178,269 @@ const MobileApp: React.FC<MobileAppProps> = ({
         <div className="bg-glow-2"></div>
       </div>
 
-      {/* YouTube Style Header */}
+      {/* Header */}
       <header className="yt-header">
         <div className="yt-header-left">
           <span className="yt-logo-icon">
-            <Play size={16} fill="#FF0000" color="#FF0000" />
+            <Shield size={18} color="var(--color-accent)" />
           </span>
-          <span className="yt-logo-text">Janela do Vale</span>
+          <span className="yt-logo-text" style={{ textTransform: 'uppercase', letterSpacing: '1px', fontSize: '0.9rem' }}>Thenperson</span>
         </div>
         <div className="yt-header-right">
-          <button className="yt-icon-btn" aria-label="Pesquisar"><Search size={18} /></button>
-          <button className="yt-icon-btn" aria-label="Notificações"><Bell size={18} /></button>
-          <button onClick={() => setMobileTab('participate')} className="yt-avatar-btn">
+          <button 
+            onClick={() => {
+              const el = document.getElementById('yt-participate-section');
+              if (el) el.scrollIntoView({ behavior: 'smooth' });
+            }} 
+            className="yt-avatar-btn"
+          >
             <img src="/images/foto01.jpg" alt="Perfil" className="yt-top-avatar" />
           </button>
         </div>
       </header>
 
       {/* Scrollable Container */}
-      <div className="yt-mobile-scrollable">
+      <div className="yt-mobile-scrollable" style={{ paddingBottom: '24px' }}>
         {/* Channel Info */}
         <div className="yt-channel-banner">
           <img src="/images/fotovalecima.png" alt="Vale do Jequitinhonha" className="yt-banner-img" />
         </div>
 
-        <section className="yt-channel-header">
+        <section className="yt-channel-header" style={{ borderBottom: 'none', paddingBottom: '8px' }}>
           <div className="yt-channel-main">
             <img src="/images/foto01.jpg" alt="Thenperson Oriebir Costa" className="yt-channel-avatar" />
             <div className="yt-channel-details">
               <h1 className="yt-channel-name">Thenperson Oriebir Costa</h1>
-              <p className="yt-channel-handle">@thenperson • 15 mil inscritos</p>
-              <p className="yt-channel-meta">6 publicações • Almenara/MG</p>
+              <p className="yt-channel-handle">@thenperson</p>
+              <p className="yt-channel-meta">Almenara/MG</p>
             </div>
           </div>
           
           <div className="yt-channel-description">
-            <p>Empresário, fundador da Multicell Almenara, pré-candidato a Deputado Federal pelo Vale do Jequitinhonha.</p>
-          </div>
-
-          <div className="yt-channel-actions">
-            <a href="https://wa.me/5533999999999" target="_blank" rel="noopener noreferrer" className="yt-subscribe-btn">
-              <Heart size={14} fill="currentColor" />
-              <span>Apoiar Canal</span>
-            </a>
-            <button onClick={() => setMobileTab('participate')} className="yt-msg-btn">
-              Enviar Mensagem
-            </button>
+            <p>Empresário, fundador da Multicell Almenara, trabalhando e dialogando diariamente pelo Vale do Jequitinhonha.</p>
           </div>
         </section>
 
-        {/* YouTube Navigation Tabs */}
-        <div className="yt-tabs-bar">
-          <button 
-            onClick={() => setMobileTab('home')} 
-            className={`yt-tab-link ${mobileTab === 'home' ? 'active' : ''}`}
-          >
-            Início
-          </button>
-          <button 
-            onClick={() => setMobileTab('videos')} 
-            className={`yt-tab-link ${mobileTab === 'videos' ? 'active' : ''}`}
-          >
-            Vídeos
-          </button>
-          <button 
-            onClick={() => setMobileTab('community')} 
-            className={`yt-tab-link ${mobileTab === 'community' ? 'active' : ''}`}
-          >
-            Comunidade
-          </button>
-          <button 
-            onClick={() => setMobileTab('participate')} 
-            className={`yt-tab-link ${mobileTab === 'participate' ? 'active' : ''}`}
-          >
-            Participe
-          </button>
-        </div>
-
-        {/* TAB CONTENTS */}
-        
-        {/* TAB 1: INÍCIO */}
-        {mobileTab === 'home' && (
-          <div className="yt-tab-content yt-home-tab">
-            {/* Featured Video Player */}
-            <div className="yt-video-card-featured">
-              <div className="yt-video-player-wrapper">
-                <iframe 
-                  width="100%" 
-                  height="100%" 
-                  src={`https://www.youtube.com/embed/${activeVideo.youtubeId}?autoplay=0&rel=0`}
-                  title={activeVideo.title}
-                  frameBorder="0"
-                  allowFullScreen
-                ></iframe>
-              </div>
-              <div className="yt-video-info-block">
-                <img src="/images/foto01.jpg" alt="" className="yt-video-avatar" />
-                <div className="yt-video-text">
-                  <h3 className="yt-video-title">{activeVideo.title}</h3>
-                  <p className="yt-video-stats">Janela do Vale Podcast • 3.5k visualizações • há 2 dias</p>
-                </div>
-              </div>
-              <div className="yt-featured-badge">Destaque do Canal</div>
+        {/* SECTION 1: VIDEOS & PODCAST */}
+        <section className="yt-section-videos" style={{ borderTop: '1px solid rgba(255,255,255,0.08)', paddingTop: '16px' }}>
+          {/* Featured Video Player */}
+          <div className="yt-video-card-featured" style={{ borderBottom: 'none' }}>
+            <div className="yt-video-player-wrapper">
+              <iframe 
+                width="100%" 
+                height="100%" 
+                src={`https://www.youtube.com/embed/${activeVideo.youtubeId}?autoplay=0&rel=0`}
+                title={activeVideo.title}
+                frameBorder="0"
+                allowFullScreen
+              ></iframe>
             </div>
-
-            {/* Shorts Shelf */}
-            <div className="yt-shorts-shelf">
-              <h3 className="yt-shelf-title">
-                <Zap size={15} fill="#FF0000" color="#FF0000" />
-                Cortes / Shorts
-              </h3>
-              <div className="yt-shorts-scroll">
-                {STORIES.map((story, index) => (
-                  <button 
-                    key={story.id} 
-                    onClick={() => { setActiveStoryIndex(index); setStoryProgress(0); }}
-                    className="yt-short-card"
-                  >
-                    <div className="yt-short-thumb-wrapper">
-                      <img src={story.image} alt={story.title} className="yt-short-thumb" />
-                      <div className="yt-short-overlay">
-                        <Play size={12} fill="#ffffff" color="#ffffff" />
-                      </div>
-                    </div>
-                    <span className="yt-short-title">{story.title}</span>
-                  </button>
-                ))}
-              </div>
-            </div>
-
-            {/* Recommended Community Post Preview */}
-            <div className="yt-home-recommended">
-              <h3 className="yt-shelf-title">Publicações Recentes</h3>
-              <div className="yt-comm-post" onClick={() => setMobileTab('community')}>
-                <header className="yt-comm-header">
-                  <img src="/images/foto01.jpg" alt="" className="yt-comm-avatar" />
-                  <div className="yt-comm-header-text">
-                    <h4>Thenperson Oriebir Costa</h4>
-                    <span>há 1 dia</span>
-                  </div>
-                </header>
-                <div className="yt-comm-content">
-                  <p style={{ display: '-webkit-box', WebkitLineClamp: 3, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>
-                    Com o carinho da família e a força do trabalho diário no comércio em Almenara, estamos construindo a verdadeira renovação do Vale do Jequitinhonha, olho no olho e sem promessas vazias. 💙✨ #Familia #Trabalho #Renovação
-                  </p>
-                  <img src="/images/foto02.png" alt="História do Vale" className="yt-comm-img" />
-                </div>
+            <div className="yt-video-info-block" style={{ padding: '12px 16px' }}>
+              <div className="yt-video-text">
+                <h3 className="yt-video-title" style={{ fontSize: '1rem', fontWeight: 700 }}>{activeVideo.title}</h3>
+                <p className="yt-video-stats">Janela do Vale Podcast</p>
               </div>
             </div>
           </div>
-        )}
 
-        {/* TAB 2: VÍDEOS */}
-        {mobileTab === 'videos' && (
-          <div className="yt-tab-content yt-videos-tab">
-            <div className="yt-videos-list">
-              {PLAYLIST.map((video, idx) => (
-                <div key={video.id} className="yt-video-card">
-                  <div 
-                    className="yt-video-thumb-container"
-                    onClick={() => {
-                      setActiveVideoIndex(idx);
-                      setMobileTab('home');
-                    }}
-                  >
-                    <img src="/images/imagempequena.png" alt={video.title} className="yt-video-thumb" />
-                    <span className="yt-video-duration-badge">{video.duration}</span>
-                  </div>
-                  <div className="yt-video-details-row">
-                    <img src="/images/foto01.jpg" alt="" className="yt-video-channel-avatar" />
-                    <div className="yt-video-meta-info">
-                      <h4 className="yt-video-card-title">{video.title}</h4>
-                      <p className="yt-video-card-stats">Janela do Vale • {10 + idx * 5}k visualizações • há {idx + 1} semanas</p>
-                    </div>
-                  </div>
+          {/* Other Videos List */}
+          <div className="yt-videos-list" style={{ padding: '0 16px 16px', gap: '12px' }}>
+            <h4 style={{ fontSize: '0.85rem', fontWeight: 700, color: '#aaa', margin: '0 0 4px' }}>Mais Episódios:</h4>
+            {PLAYLIST.map((video, idx) => (
+              <div 
+                key={video.id} 
+                className="yt-video-list-item"
+                style={{ 
+                  display: 'flex', 
+                  gap: '12px', 
+                  alignItems: 'center', 
+                  background: 'rgba(255,255,255,0.03)', 
+                  border: '1px solid rgba(255,255,255,0.06)', 
+                  borderRadius: '10px', 
+                  padding: '8px',
+                  cursor: 'pointer'
+                }}
+                onClick={() => {
+                  setActiveVideoIndex(idx);
+                  const el = document.getElementById('yt-mobile-top');
+                  if (el) el.scrollIntoView({ behavior: 'smooth' });
+                }}
+              >
+                <div style={{ position: 'relative', width: '80px', height: '45px', flexShrink: 0 }}>
+                  <img src="/images/imagempequena.png" alt="" style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: '6px' }} />
+                  <span style={{ position: 'absolute', bottom: '2px', right: '2px', background: 'rgba(0,0,0,0.85)', fontSize: '0.6rem', color: '#fff', padding: '1px 3px', borderRadius: '3px' }}>{video.duration}</span>
                 </div>
-              ))}
-            </div>
+                <div style={{ flex: 1, overflow: 'hidden' }}>
+                  <h5 style={{ fontSize: '0.8rem', fontWeight: 600, color: '#fff', margin: 0, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{video.title}</h5>
+                  <span style={{ fontSize: '0.65rem', color: '#aaa' }}>Janela do Vale</span>
+                </div>
+              </div>
+            ))}
           </div>
-        )}
+        </section>
 
-        {/* TAB 3: COMUNIDADE */}
-        {mobileTab === 'community' && (
-          <div className="yt-tab-content yt-community-tab">
-            <div className="yt-community-list">
-              {/* Post 1: Biografia */}
-              <div id="ig-post-bio" className="yt-comm-post">
-                <header className="yt-comm-header">
-                  <img src="/images/foto01.jpg" alt="" className="yt-comm-avatar" />
-                  <div className="yt-comm-header-text">
-                    <h4>Thenperson Oriebir Costa</h4>
-                    <span>há 1 dia</span>
-                  </div>
-                </header>
-                <div className="yt-comm-content">
-                  <p>
-                    <strong>Biografia:</strong> Com o carinho da família e a força do trabalho diário no comércio em Almenara, estamos construindo a verdadeira renovação do Vale do Jequitinhonha, olho no olho e sem promessas vazias. 💙✨ #Familia #Trabalho #Renovação
-                  </p>
-                  <img src="/images/foto02.png" alt="História do Vale" className="yt-comm-img" />
-                </div>
-                <div className="yt-comm-actions">
-                  <button className="yt-comm-action-btn"><ThumbsUp size={15} /> <span>1.2k</span></button>
-                  <button className="yt-comm-action-btn"><ThumbsDown size={15} /></button>
-                  <button className="yt-comm-action-btn"><MessageSquare size={15} /> <span>48</span></button>
-                </div>
+        {/* SECTION 2: CONTEÚDO E INFORMATIVOS */}
+        <section className="yt-section-content" style={{ borderTop: '1px solid rgba(255,255,255,0.08)', paddingTop: '16px' }}>
+          <div className="yt-community-list">
+            {/* Post 1: Biografia */}
+            <div id="ig-post-bio" className="yt-comm-post" style={{ cursor: 'default' }}>
+              <div className="yt-comm-content">
+                <p>
+                  <strong>Biografia:</strong> Com o carinho da família e a força do trabalho diário no comércio em Almenara, estamos construindo a verdadeira renovação do Vale do Jequitinhonha, olho no olho e sem promessas vazias. 💙✨ #Familia #Trabalho #Renovação
+                </p>
+                <img src="/images/foto02.png" alt="História do Vale" className="yt-comm-img" />
               </div>
+            </div>
 
-              {/* Post 2: Educação */}
-              <div id="ig-post-educacao" className="yt-comm-post">
-                <header className="yt-comm-header">
-                  <img src="/images/foto01.jpg" alt="" className="yt-comm-avatar" />
-                  <div className="yt-comm-header-text">
-                    <h4>Thenperson Oriebir Costa</h4>
-                    <span>há 3 dias</span>
-                  </div>
-                </header>
-                <div className="yt-comm-content">
-                  <p>
-                    <strong>Educação:</strong> Nossos alunos do IFNMG Almenara são premiados e cheios de potencial, mas sofrem com a falta de transporte escolar de qualidade e apoio do poder público. Estamos com eles na luta por respeito! 🎓✊ #IFNMG #Educação #Juventude
-                  </p>
-                  <img src="/images/estudantes.png" alt="Estudantes" className="yt-comm-img" />
-                </div>
-                <div className="yt-comm-actions">
-                  <button className="yt-comm-action-btn"><ThumbsUp size={15} /> <span>843</span></button>
-                  <button className="yt-comm-action-btn"><ThumbsDown size={15} /></button>
-                  <button className="yt-comm-action-btn"><MessageSquare size={15} /> <span>29</span></button>
-                </div>
+            {/* Post 2: Educação */}
+            <div id="ig-post-educacao" className="yt-comm-post" style={{ cursor: 'default' }}>
+              <div className="yt-comm-content">
+                <p>
+                  <strong>Educação:</strong> Nossos alunos do IFNMG Almenara são premiados e cheios de potencial, mas sofrem com a falta de transporte escolar de qualidade e apoio do poder público. Estamos com eles na luta por respeito! 🎓✊ #IFNMG #Educação #Juventude
+                </p>
+                <img src="/images/estudantes.png" alt="Estudantes" className="yt-comm-img" />
               </div>
+            </div>
 
-              {/* Post 3: Agenda */}
-              <div id="ig-post-agenda" className="yt-comm-post">
-                <header className="yt-comm-header">
-                  <img src="/images/foto01.jpg" alt="" className="yt-comm-avatar" />
-                  <div className="yt-comm-header-text">
-                    <h4>Thenperson Oriebir Costa</h4>
-                    <span>há 5 dias</span>
-                  </div>
-                </header>
-                <div className="yt-comm-content">
-                  <p>
-                    <strong>Agenda:</strong> Diálogo aberto com a nossa gente. Veja onde estaremos nos próximos dias para debater o futuro da nossa região. 🗓️🤝 #OlhoNoOlho #Jequitinhonha #Agenda
-                  </p>
-                  <div className="yt-comm-agenda-box">
-                    {loadingAgenda ? (
-                      <span style={{ fontSize: '0.75rem', color: '#aaa' }}>Carregando agenda...</span>
-                    ) : agenda.length === 0 ? (
-                      <span style={{ fontSize: '0.75rem', color: '#aaa' }}>Nenhum evento agendado.</span>
-                    ) : (
-                      agenda.slice(0, 4).map(item => (
-                        <div key={item.id} className="yt-comm-agenda-item">
-                          <span className="yt-agenda-date-badge">{item.date.split('-').reverse().join('/')}</span>
-                          <div className="yt-comm-agenda-item-details">
-                            <h5>{item.title}</h5>
-                            <p>📍 {item.location} • {item.time}h</p>
-                          </div>
-                        </div>
-                      ))
-                    )}
-                  </div>
-                </div>
-                <div className="yt-comm-actions">
-                  <button className="yt-comm-action-btn"><ThumbsUp size={15} /> <span>512</span></button>
-                  <button className="yt-comm-action-btn"><ThumbsDown size={15} /></button>
-                  <button className="yt-comm-action-btn"><MessageSquare size={15} /> <span>14</span></button>
-                </div>
-              </div>
-
-              {/* Post 4: Notícias */}
-              <div id="ig-post-noticias" className="yt-comm-post">
-                <header className="yt-comm-header">
-                  <img src="/images/foto01.jpg" alt="" className="yt-comm-avatar" />
-                  <div className="yt-comm-header-text">
-                    <h4>Thenperson Oriebir Costa</h4>
-                    <span>há 1 semana</span>
-                  </div>
-                </header>
-                <div className="yt-comm-content">
-                  <p>
-                    <strong>Notícias & Informativos:</strong> Trabalhando por atração de indústrias, tecnologia e incentivos fiscais para o Norte e Nordeste de Minas Gerais. O povo almenarense tem carisma, energia e merece oportunidades! 🚀🏭 #Desenvolvimento #Emprego #ValeForte
-                  </p>
-                  {loadingNews ? (
-                    <span style={{ fontSize: '0.75rem', color: '#aaa', display: 'block', marginTop: '8px' }}>Carregando notícias...</span>
-                  ) : news.length === 0 ? (
-                    <span style={{ fontSize: '0.75rem', color: '#aaa', display: 'block', marginTop: '8px' }}>Nenhum informativo disponível.</span>
+            {/* Post 3: Agenda */}
+            <div id="ig-post-agenda" className="yt-comm-post" style={{ cursor: 'default' }}>
+              <div className="yt-comm-content">
+                <p>
+                  <strong>Agenda:</strong> Diálogo aberto com a nossa gente. Veja onde estaremos nos próximos dias para debater o futuro da nossa região. 🗓️🤝 #OlhoNoOlho #Jequitinhonha #Agenda
+                </p>
+                <div className="yt-comm-agenda-box">
+                  {loadingAgenda ? (
+                    <span style={{ fontSize: '0.75rem', color: '#aaa' }}>Carregando agenda...</span>
+                  ) : agenda.length === 0 ? (
+                    <span style={{ fontSize: '0.75rem', color: '#aaa' }}>Nenhum evento agendado.</span>
                   ) : (
-                    news.slice(0, 2).map(item => (
-                      <div 
-                        key={item.id} 
-                        onClick={() => setSelectedNews(item)}
-                        style={{ 
-                          display: 'flex', 
-                          gap: '10px', 
-                          alignItems: 'center', 
-                          background: 'rgba(255,255,255,0.03)', 
-                          border: '1px solid rgba(255,255,255,0.06)', 
-                          borderRadius: '8px', 
-                          padding: '8px',
-                          cursor: 'pointer',
-                          marginTop: '8px'
-                        }}
-                      >
-                        <img src={item.image_url || '/images/fotovalebaixo.png'} alt="" style={{ width: '40px', height: '40px', borderRadius: '4px', objectFit: 'cover' }} />
-                        <div style={{ flex: 1, overflow: 'hidden' }}>
-                          <span style={{ fontSize: '0.6rem', color: 'var(--color-accent)', fontWeight: 700 }}>{item.category}</span>
-                          <h4 style={{ fontSize: '0.75rem', margin: '1px 0', lineHeight: 1.2, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{item.title}</h4>
+                    agenda.slice(0, 4).map(item => (
+                      <div key={item.id} className="yt-comm-agenda-item">
+                        <span className="yt-agenda-date-badge">{item.date.split('-').reverse().join('/')}</span>
+                        <div className="yt-comm-agenda-item-details">
+                          <h5>{item.title}</h5>
+                          <p>📍 {item.location} • {item.time}h</p>
                         </div>
                       </div>
                     ))
                   )}
                 </div>
-                <div className="yt-comm-actions">
-                  <button className="yt-comm-action-btn"><ThumbsUp size={15} /> <span>410</span></button>
-                  <button className="yt-comm-action-btn"><ThumbsDown size={15} /></button>
-                  <button className="yt-comm-action-btn"><MessageSquare size={15} /> <span>8</span></button>
-                </div>
               </div>
             </div>
-          </div>
-        )}
 
-        {/* TAB 4: PARTICIPE */}
-        {mobileTab === 'participate' && (
-          <div className="yt-tab-content yt-participate-tab">
-            <div className="yt-chat-container">
-              <div className="yt-chat-header-bar">
-                <div className="yt-chat-status">
-                  <span className="yt-status-pulse"></span>
-                  <span>Chat de Diálogo ao Vivo</span>
-                </div>
-              </div>
-
-              <div className="yt-chat-messages-stream">
-                <div className="yt-chat-bubble yt-chat-left">
-                  <span className="yt-chat-user">Thenperson Oriebir:</span>
-                  <p>Olá! Seja muito bem-vindo ao canal. Por favor, envie sua sugestão de melhoria ou mensagem de apoio no formulário abaixo! 👇</p>
-                </div>
-
-                {chatSubmitted && (
-                  <>
-                    <div className="yt-chat-bubble yt-chat-right animate-slide-in">
-                      <span className="yt-chat-user-me">Você:</span>
-                      <p>{chatSubmittedMessage}</p>
+            {/* Post 4: Notícias */}
+            <div id="ig-post-noticias" className="yt-comm-post" style={{ cursor: 'default' }}>
+              <div className="yt-comm-content">
+                <p>
+                  <strong>Notícias & Informativos:</strong> Trabalhando por atração de indústrias, tecnologia e incentivos fiscais para o Norte e Nordeste de Minas Gerais. O povo almenarense tem carisma, energia e merece oportunidades! 🚀🏭 #Desenvolvimento #Emprego #ValeForte
+                </p>
+                {loadingNews ? (
+                  <span style={{ fontSize: '0.75rem', color: '#aaa', display: 'block', marginTop: '8px' }}>Carregando notícias...</span>
+                ) : news.length === 0 ? (
+                  <span style={{ fontSize: '0.75rem', color: '#aaa', display: 'block', marginTop: '8px' }}>Nenhum informativo disponível.</span>
+                ) : (
+                  news.slice(0, 2).map(item => (
+                    <div 
+                      key={item.id} 
+                      onClick={() => setSelectedNews(item)}
+                      style={{ 
+                        display: 'flex', 
+                        gap: '10px', 
+                        alignItems: 'center', 
+                        background: 'rgba(255,255,255,0.03)', 
+                        border: '1px solid rgba(255,255,255,0.06)', 
+                        borderRadius: '8px', 
+                        padding: '8px',
+                        cursor: 'pointer',
+                        marginTop: '8px'
+                      }}
+                    >
+                      <img src={item.image_url || '/images/fotovalebaixo.png'} alt="" style={{ width: '40px', height: '40px', borderRadius: '4px', objectFit: 'cover' }} />
+                      <div style={{ flex: 1, overflow: 'hidden' }}>
+                        <span style={{ fontSize: '0.6rem', color: 'var(--color-accent)', fontWeight: 700 }}>{item.category}</span>
+                        <h4 style={{ fontSize: '0.75rem', margin: '1px 0', lineHeight: 1.2, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{item.title}</h4>
+                      </div>
                     </div>
-                    <div className="yt-chat-bubble yt-chat-left animate-slide-in" style={{ animationDelay: '0.5s' }}>
-                      <span className="yt-chat-user">Thenperson Oriebir:</span>
-                      <p>Recebi sua sugestão! Muito obrigado pela participação. Juntos faremos o Vale de Jequitinhonha cada vez mais forte! 🚀</p>
-                    </div>
-                  </>
+                  ))
                 )}
               </div>
-
-              <div className="yt-chat-input-box">
-                <form onSubmit={handleSubmitMessage} className="yt-chat-form">
-                  <div className="yt-chat-form-row">
-                    <input 
-                      type="text" 
-                      name="name" 
-                      value={contactForm.name}
-                      onChange={handleInputChange}
-                      placeholder="Nome Completo *" 
-                      className="yt-chat-input"
-                      required
-                    />
-                    <input 
-                      type="tel" 
-                      name="phone" 
-                      value={contactForm.phone}
-                      onChange={handleInputChange}
-                      placeholder="WhatsApp" 
-                      className="yt-chat-input"
-                    />
-                  </div>
-                  <div className="yt-chat-submit-row">
-                    <textarea 
-                      name="message" 
-                      value={contactForm.message}
-                      onChange={handleInputChange}
-                      placeholder="Escreva sua sugestão..." 
-                      className="yt-chat-textarea"
-                      required
-                    ></textarea>
-                    <button 
-                      type="submit" 
-                      className="yt-chat-send-btn"
-                      disabled={isSubmitting}
-                    >
-                      {isSubmitting ? '...' : 'Enviar'}
-                    </button>
-                  </div>
-                </form>
-              </div>
             </div>
           </div>
-        )}
-      </div>
+        </section>
 
-      {/* YouTube Bottom Navigation Bar */}
-      <nav className="yt-bottom-nav">
-        <button 
-          onClick={() => { setMobileTab('home'); window.scrollTo(0, 0); }} 
-          className={`yt-nav-btn ${mobileTab === 'home' ? 'active' : ''}`}
-        >
-          <Home size={20} />
-          <span>Início</span>
-        </button>
-        <button 
-          onClick={() => { setMobileTab('videos'); window.scrollTo(0, 0); }} 
-          className={`yt-nav-btn ${mobileTab === 'videos' ? 'active' : ''}`}
-        >
-          <Play size={20} />
-          <span>Vídeos</span>
-        </button>
-        <button 
-          onClick={() => { setMobileTab('community'); window.scrollTo(0, 0); }} 
-          className={`yt-nav-btn ${mobileTab === 'community' ? 'active' : ''}`}
-        >
-          <MessageSquare size={20} />
-          <span>Comunidade</span>
-        </button>
-        <button 
-          onClick={() => { setMobileTab('participate'); window.scrollTo(0, 0); }} 
-          className={`yt-nav-btn ${mobileTab === 'participate' ? 'active' : ''}`}
-        >
-          <Phone size={20} />
-          <span>Participe</span>
-        </button>
-      </nav>
+        {/* SECTION 3: DIÁLOGO & PARTICIPAÇÃO */}
+        <section id="yt-participate-section" style={{ borderTop: '1px solid rgba(255,255,255,0.08)', paddingTop: '16px' }}>
+          <div className="yt-chat-container" style={{ height: 'auto' }}>
+            <div className="yt-chat-header-bar">
+              <div className="yt-chat-status">
+                <span className="yt-status-pulse"></span>
+                <span>Canal de Diálogo Direto</span>
+              </div>
+            </div>
+
+            <div className="yt-chat-messages-stream" style={{ minHeight: '120px' }}>
+              <div className="yt-chat-bubble yt-chat-left">
+                <span className="yt-chat-user">Thenperson Oriebir:</span>
+                <p>Olá! Seja bem-vindo à nossa página de diálogo. Envie suas sugestões ou mensagem de apoio no formulário abaixo! 👇</p>
+              </div>
+
+              {chatSubmitted && (
+                <>
+                  <div className="yt-chat-bubble yt-chat-right animate-slide-in">
+                    <span className="yt-chat-user-me">Você:</span>
+                    <p>{chatSubmittedMessage}</p>
+                  </div>
+                  <div className="yt-chat-bubble yt-chat-left animate-slide-in" style={{ animationDelay: '0.5s' }}>
+                    <span className="yt-chat-user">Thenperson Oriebir:</span>
+                    <p>Recebi sua sugestão! Muito obrigado por participar. Juntos faremos o Vale de Jequitinhonha mais forte! 🚀</p>
+                  </div>
+                </>
+              )}
+            </div>
+
+            <div className="yt-chat-input-box" style={{ background: 'transparent' }}>
+              <form onSubmit={handleSubmitMessage} className="yt-chat-form">
+                <div className="yt-chat-form-row">
+                  <input 
+                    type="text" 
+                    name="name" 
+                    value={contactForm.name}
+                    onChange={handleInputChange}
+                    placeholder="Nome Completo *" 
+                    className="yt-chat-input"
+                    required
+                  />
+                  <input 
+                    type="tel" 
+                    name="phone" 
+                    value={contactForm.phone}
+                    onChange={handleInputChange}
+                    placeholder="WhatsApp" 
+                    className="yt-chat-input"
+                  />
+                </div>
+                <div className="yt-chat-submit-row">
+                  <textarea 
+                    name="message" 
+                    value={contactForm.message}
+                    onChange={handleInputChange}
+                    placeholder="Escreva sua sugestão de melhoria..." 
+                    className="yt-chat-textarea"
+                    required
+                  ></textarea>
+                  <button 
+                    type="submit" 
+                    className="yt-chat-send-btn"
+                    disabled={isSubmitting}
+                  >
+                    {isSubmitting ? '...' : 'Enviar'}
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </section>
+      </div>
 
       {/* Floating Story Card Overlay Modal */}
       {activeStoryIndex !== null && (
