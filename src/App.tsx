@@ -2,12 +2,10 @@ import React, { useState, useEffect } from 'react';
 import { 
   MessageSquare, 
   Calendar, 
-  Newspaper, 
   Video, 
   Phone, 
   Mail, 
   MapPin, 
-  User, 
   ExternalLink, 
   Instagram, 
   Facebook, 
@@ -24,7 +22,9 @@ import {
   Smartphone,
   Info
 } from 'lucide-react';
-import { db, isSupabaseConfigured, AgendaItem, NewsItem } from './supabaseClient';
+import { db, isSupabaseConfigured } from './supabaseClient';
+import type { AgendaItem, NewsItem } from './supabaseClient';
+
 
 interface VideoItem {
   id: string;
