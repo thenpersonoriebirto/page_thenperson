@@ -306,8 +306,8 @@ function App() {
                   <span className="highlight-label">Gerando Oportunidades</span>
                 </div>
                 <div className="highlight-item">
-                  <span className="highlight-number">Almenara</span>
-                  <span className="highlight-label">Minha Terra Natal</span>
+                  <span className="highlight-number">Sempre Presente</span>
+                  <span className="highlight-label">Vive e trabalha em Almenara</span>
                 </div>
               </div>
             </div>
@@ -316,7 +316,7 @@ function App() {
               <div className="hero-image-glow" aria-hidden="true"></div>
               <div className="hero-image-frame">
                 <img 
-                  src="/images/thenperson_portrait.png" 
+                  src="/images/foto01.jpg" 
                   alt="Thenperson sorrindo com olhar confiante" 
                   className="hero-image"
                   loading="eager"
@@ -364,7 +364,7 @@ function App() {
                 <div className="lc-avatar-wrapper">
                   <div className="lc-avatar-glow" aria-hidden="true"></div>
                   <img 
-                    src="/images/thenperson_portrait.png" 
+                    src="/images/foto01.jpg" 
                     alt="Thenperson" 
                     className="lc-avatar"
                   />
@@ -467,8 +467,8 @@ function App() {
             <div className="bio-images-grid">
               <div className="bio-img-wrapper bio-img-wrapper-tall">
                 <img 
-                  src="/images/thenperson_portrait.png" 
-                  alt="Thenperson posando em ambiente profissional" 
+                  src="/images/foto01.jpg" 
+                  alt="Thenperson em retrato oficial" 
                   className="bio-img"
                   loading="lazy"
                 />
@@ -483,8 +483,8 @@ function App() {
               </div>
               <div className="bio-img-wrapper">
                 <img 
-                  src="/images/thenperson_portrait.png" 
-                  alt="Thenperson conversando" 
+                  src="/images/foto02.png" 
+                  alt="Thenperson com sua família" 
                   className="bio-img"
                   loading="lazy"
                 />
@@ -496,21 +496,21 @@ function App() {
               <h2>Quem é <span>Thenperson</span>?</h2>
               
               <blockquote className="bio-quote">
-                "Nossas raízes definem quem somos, mas nossa determinação define onde podemos chegar."
+                "Nossas raízes definem nosso compromisso, e minha presença diária ao lado do nosso povo define minha luta."
               </blockquote>
               
               <div className="bio-paragraphs">
                 <p>
-                  Nascido e criado em Almenara, no coração do Vale do Jequitinhonha, <strong>Thenperson</strong> é um exemplo vivo da garra e do caráter do povo mineiro. Desde cedo aprendeu o valor do trabalho honesto, iniciando sua trajetória profissional com persistência até consolidar-se como empresário no ramo de tecnologia e telecomunicações.
+                  <strong>Thenperson</strong> é um exemplo vivo da garra, honestidade e do caráter do povo do Vale do Jequitinhonha. Diferente de muitos políticos de gabinete que vivem em grandes capitais e só visitam a nossa região de quatro em quatro anos para pedir votos na época de eleição, Thenperson mora, trabalha e vive em Almenara no dia a dia. É aqui que ele cria sua família, atende as pessoas e acompanha de perto a realidade de nossa gente.
                 </p>
                 <p>
-                  Como fundador e dono da <strong>Multicell</strong>, a principal loja de celulares e acessórios de Almenara, Thenperson gera empregos, incentiva a inovação e atende milhares de famílias da região com dedicação e simpatia. Sua proximidade diária com o público deu a ele um entendimento único sobre as necessidades do trabalhador e as dificuldades que os pequenos comerciantes enfrentam.
+                  Como proprietário e fundador da <strong>Multicell</strong>, a principal loja de celulares e acessórios de Almenara, Thenperson entende o que significa empreender no interior de Minas. Diariamente, por trás do balcão, ele conversa com comerciantes locais, pais de família e jovens em busca de qualificação profissional, conhecendo na pele as dificuldades do comércio e o valor do trabalho correto.
                 </p>
                 <p>
-                  Homem de fortes valores cristãos e éticos, ele preza intensamente pela saúde física e mental, acreditando que a promoção do esporte e do bem-estar social é o alicerce para desviar jovens do mau caminho e construir comunidades equilibradas.
+                  Homem de fortes princípios éticos e valores cristãos, ele preza intensamente pela saúde e pela família. Para ele, apoiar o esporte juvenil e a saúde básica preventiva são caminhos essenciais para construir uma comunidade mais equilibrada, justa e que ofereça oportunidades reais aos nossos jovens sem que precisem migrar para grandes centros urbanos.
                 </p>
                 <p>
-                  Sua decisão de colocar seu nome como pré-candidato a Deputado Federal nasce de um sentimento profundo de gratidão por sua terra e da indignação de ver o Vale do Jequitinhonha frequentemente esquecido pelas grandes esferas políticas. Thenperson quer ser a voz atuante que levará dignidade, recursos e inovação para toda a região.
+                  Sua decisão de colocar seu nome como pré-candidato a Deputado Federal nasce da indignação de ver o Vale do Jequitinhonha ser esquecido. Ele quer ser a voz legítima e presente que lutará por recursos na saúde de qualidade, incentivo ao pequeno comerciante e inclusão tecnológica para que o nosso povo cresça com dignidade.
                 </p>
               </div>
             </div>
