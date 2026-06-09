@@ -313,7 +313,7 @@ function App() {
   };
 
   // Stories CTA Handler
-  const handleStoryCTA = (link: string, id: string) => {
+  const handleStoryCTA = (id: string) => {
     setActiveStoryIndex(null);
     if (id === 'contato') {
       setMobileTab('message');
@@ -584,7 +584,7 @@ function App() {
                   <span className="ig-post-location">Agenda de Compromissos</span>
                 </div>
               </header>
-              <div className="ig-post-content-box" style={{ padding: '16px', background: 'rgba(11, 15, 25, 0.4)', borderY: '1px solid rgba(59, 130, 246, 0.1)' }}>
+              <div className="ig-post-content-box" style={{ padding: '16px', background: 'rgba(11, 15, 25, 0.4)', borderTop: '1px solid rgba(59, 130, 246, 0.1)', borderBottom: '1px solid rgba(59, 130, 246, 0.1)' }}>
                 {loadingAgenda ? (
                   <p style={{ textAlign: 'center', fontSize: '0.85rem' }}>Carregando agenda...</p>
                 ) : (
@@ -986,7 +986,7 @@ function App() {
                 className="story-cta-btn" 
                 onClick={(e) => {
                   e.stopPropagation();
-                  handleStoryCTA(STORIES[activeStoryIndex].link, STORIES[activeStoryIndex].id);
+                  handleStoryCTA(STORIES[activeStoryIndex].id);
                 }}
               >
                 <span>{STORIES[activeStoryIndex].actionLabel}</span>
