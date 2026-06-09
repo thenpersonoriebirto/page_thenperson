@@ -117,11 +117,11 @@ export const db = {
     }
     
     // Fallback: Check localStorage or load defaults
-    const local = localStorage.getItem('thenperson_agenda');
+    const local = localStorage.getItem('thenperson_agenda_v3');
     if (local) {
       return JSON.parse(local);
     }
-    localStorage.setItem('thenperson_agenda', JSON.stringify(defaultAgenda));
+    localStorage.setItem('thenperson_agenda_v3', JSON.stringify(defaultAgenda));
     return defaultAgenda;
   },
 
@@ -140,11 +140,11 @@ export const db = {
     }
     
     // Fallback: Check localStorage or load defaults
-    const local = localStorage.getItem('thenperson_news');
+    const local = localStorage.getItem('thenperson_news_v3');
     if (local) {
       return JSON.parse(local);
     }
-    localStorage.setItem('thenperson_news', JSON.stringify(defaultNews));
+    localStorage.setItem('thenperson_news_v3', JSON.stringify(defaultNews));
     return defaultNews;
   },
 

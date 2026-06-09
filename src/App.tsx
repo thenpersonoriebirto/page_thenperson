@@ -37,31 +37,31 @@ interface VideoItem {
 const PLAYLIST: VideoItem[] = [
   {
     id: '1',
-    title: 'Janela do Vale #260 | Empreendedorismo, Tecnologia e Varejo',
-    duration: '1:15:30',
-    youtubeId: 'dQw4w9WgXcQ',
-    description: 'Neste episódio do Janela do Vale Podcast, conversamos com comerciantes sobre o papel da tecnologia, o sucesso e a geração de empregos na Multicell e o fomento ao comércio local.'
+    title: 'Janela do Vale | Entrevista com o Líder do Legislativo de Jordânia',
+    duration: '1:34:10',
+    youtubeId: 'NoyobbBU16Y',
+    description: 'Entrevista com o líder do legislativo da Jordânia, abordando os desafios, oportunidades e aspectos culturais de ser jordaniense, além de reflexões sobre identidade, sociedade e desenvolvimento.'
   },
   {
     id: '2',
-    title: 'Janela do Vale #258 | Políticas Públicas e Desenvolvimento Regional',
-    duration: '1:42:15',
-    youtubeId: '9q8N1P-j2c8',
-    description: 'Discussão detalhada sobre a infraestrutura de saúde básica preventiva e a necessidade urgente de renovação política para destravar o progresso de Almenara.'
+    title: 'Janela do Vale | Projeto "Janela do Vale" no Instituto Federal',
+    duration: '0:45:20',
+    youtubeId: 'X3mGpVnPMHk',
+    description: 'Apresentação do projeto “Janela do Vale” no Instituto Federal, destacando iniciativas voltadas à educação, inovação e perspectivas para o futuro da região.'
   },
   {
     id: '3',
-    title: 'Janela do Vale #254 | A Luta dos Estudantes e o Futuro da Educação',
-    duration: '1:08:45',
-    youtubeId: 'S2k7yZ_oRts',
-    description: 'Debate essencial sobre a falta de incentivos federais, alimentação e transporte para os alunos do IFNMG e escolas públicas do Vale do Jequitinhonha.'
+    title: 'Janela do Vale | Educação Inclusiva para Pessoas com Autismo',
+    duration: '1:12:15',
+    youtubeId: '1R3OHWWx1SE',
+    description: 'Episódio sobre educação inclusiva para pessoas com autismo, discutindo práticas pedagógicas, inclusão escolar, acessibilidade e estratégias para melhorar o aprendizado e a participação dos estudantes.'
   },
   {
     id: '4',
-    title: 'Janela do Vale #248 | Arte, Cultura e Lendas do Jequitinhonha',
-    duration: '1:25:10',
-    youtubeId: 'qQc-91hF0xY',
-    description: 'Uma imersão na cultura de barro e nas tradições que expressam a força, a resiliência e a identidade viva do povo do Vale do Jequitinhonha.'
+    title: 'Janela do Vale | Projeto "IF na Rua" em Almenara - MG',
+    duration: '0:58:30',
+    youtubeId: 'WK4qRmjrCGw',
+    description: 'Vídeo mostrando o projeto “IF na Rua”, iniciativa do Instituto Federal Campus Almenara que leva ações educativas, informação e serviços à comunidade, fortalecendo a integração entre instituição e população.'
   }
 ];
 
@@ -681,7 +681,7 @@ function App() {
                     <div className="news-img-box">
                       <span className="news-category">{item.category}</span>
                       <img 
-                        src={item.image_url || '/images/jequitinhonha_landscape.png'} 
+                        src={item.image_url || '/images/fotovalebaixo.png'} 
                         alt={item.title} 
                         className="news-img"
                         loading="lazy"
@@ -895,7 +895,7 @@ function App() {
             </button>
             <div className="modal-img-wrapper">
               <img 
-                src={selectedNews.image_url || '/images/jequitinhonha_landscape.png'} 
+                src={selectedNews.image_url || '/images/fotovalebaixo.png'} 
                 alt={selectedNews.title} 
                 className="modal-img"
               />
