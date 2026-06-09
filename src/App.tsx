@@ -371,10 +371,10 @@ function App() {
                 </div>
                 
                 <h3 className="lc-name">Thenperson</h3>
-                <p className="lc-tagline">@thenperson.mg</p>
+                <p className="lc-tagline">@thenperson</p>
                 
                 <div className="lc-links-list">
-                  <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" className="lc-link-item">
+                  <a href="https://instagram.com/thenperson" target="_blank" rel="noopener noreferrer" className="lc-link-item">
                     <span className="lc-link-icon-name">
                       <Instagram className="lc-link-icon lc-link-icon-instagram" />
                       Instagram Oficial
@@ -803,7 +803,7 @@ function App() {
                 Uma nova liderança de ética, valores corretos e saúde preventiva, pronta para defender e desenvolver o Vale do Jequitinhonha no Congresso Nacional.
               </p>
               <div className="footer-socials">
-                <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" className="footer-social-btn" aria-label="Instagram">
+                <a href="https://instagram.com/thenperson" target="_blank" rel="noopener noreferrer" className="footer-social-btn" aria-label="Instagram">
                   <Instagram size={18} />
                 </a>
                 <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" className="footer-social-btn" aria-label="Facebook">
