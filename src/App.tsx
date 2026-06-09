@@ -37,31 +37,31 @@ interface VideoItem {
 const PLAYLIST: VideoItem[] = [
   {
     id: '1',
-    title: 'Thenperson: Trajetória, Valores e Compromisso',
-    duration: '2:45',
-    youtubeId: 'dQw4w9WgXcQ', // Placeholder, but dynamic
-    description: 'Conheça um pouco mais sobre a história de vida de Thenperson, sua infância em Almenara, a fundação da Multicell e o desejo de lutar pelo desenvolvimento do Vale do Jequitinhonha.'
+    title: 'Janela do Vale #260 | Empreendedorismo, Tecnologia e Varejo',
+    duration: '1:15:30',
+    youtubeId: 'dQw4w9WgXcQ',
+    description: 'Neste episódio do Janela do Vale Podcast, conversamos com comerciantes sobre o papel da tecnologia, o sucesso e a geração de empregos na Multicell e o fomento ao comércio local.'
   },
   {
     id: '2',
-    title: 'Esporte e Saúde Preventiva como Prioridade',
-    duration: '1:50',
+    title: 'Janela do Vale #258 | Políticas Públicas e Desenvolvimento Regional',
+    duration: '1:42:15',
     youtubeId: '9q8N1P-j2c8',
-    description: 'Depoimento de Thenperson sobre o poder transformador do esporte na vida dos jovens e a importância de focar em saúde preventiva nas unidades básicas do Vale.'
+    description: 'Discussão detalhada sobre a infraestrutura de saúde básica preventiva e a necessidade urgente de renovação política para destravar o progresso de Almenara.'
   },
   {
     id: '3',
-    title: 'O Pequeno Empreendedor no Vale do Jequitinhonha',
-    duration: '3:15',
+    title: 'Janela do Vale #254 | A Luta dos Estudantes e o Futuro da Educação',
+    duration: '1:08:45',
     youtubeId: 'S2k7yZ_oRts',
-    description: 'Como o proprietário da Multicell enxerga o futuro do comércio local, geração de empregos, cursos profissionalizantes em tecnologia e desburocratização.'
+    description: 'Debate essencial sobre a falta de incentivos federais, alimentação e transporte para os alunos do IFNMG e escolas públicas do Vale do Jequitinhonha.'
   },
   {
     id: '4',
-    title: 'Conversa com o Povo: Ouvindo Almenara e Região',
-    duration: '2:10',
+    title: 'Janela do Vale #248 | Arte, Cultura e Lendas do Jequitinhonha',
+    duration: '1:25:10',
     youtubeId: 'qQc-91hF0xY',
-    description: 'Registros das visitas às comunidades, distritos rurais e associações locais, ouvindo as reais necessidades e demandas de nossa população.'
+    description: 'Uma imersão na cultura de barro e nas tradições que expressam a força, a resiliência e a identidade viva do povo do Vale do Jequitinhonha.'
   }
 ];
 
@@ -390,7 +390,7 @@ function App() {
                     <ExternalLink size={14} className="lc-arrow" />
                   </a>
 
-                  <a href="https://youtube.com" target="_blank" rel="noopener noreferrer" className="lc-link-item">
+                  <a href="https://www.youtube.com/@janeladovalepodcast" target="_blank" rel="noopener noreferrer" className="lc-link-item">
                     <span className="lc-link-icon-name">
                       <Youtube className="lc-link-icon lc-link-icon-youtube" />
                       Canal no YouTube
@@ -475,7 +475,7 @@ function App() {
               </div>
               <div className="bio-img-wrapper">
                 <img 
-                  src="/images/jequitinhonha_landscape.png" 
+                  src="/images/fotovalecima.png" 
                   alt="Vale do Jequitinhonha ao amanhecer" 
                   className="bio-img"
                   loading="lazy"
@@ -501,16 +501,43 @@ function App() {
               
               <div className="bio-paragraphs">
                 <p>
-                  <strong>Thenperson</strong> é um exemplo vivo da garra, honestidade e do caráter do povo do Vale do Jequitinhonha. Diferente de muitos políticos de gabinete que vivem em grandes capitais e só visitam a nossa região de quatro em quatro anos para pedir votos na época de eleição, Thenperson mora, trabalha e vive em Almenara no dia a dia. É aqui que ele cria sua família, atende as pessoas e acompanha de perto a realidade de nossa gente.
+                  <strong>Thenperson</strong> representa o espírito do novo Vale do Jequitinhonha — uma terra de cultura viva e pulsante, habitada por um povo amável, acolhedor e profundamente batalhador, que hoje se desperta para um futuro de grandeza. Enquanto políticos tradicionais vivem em gabinetes nas capitais e só visitam Almenara de quatro em quatro anos para pedir votos e fazer falsas promessas, Thenperson vive, trabalha e caminha em nossa cidade todos os dias. Sua pré-campanha é o marco dessas mudanças reais que sopram sobre a nossa região.
                 </p>
                 <p>
-                  Como proprietário e fundador da <strong>Multicell</strong>, a principal loja de celulares e acessórios de Almenara, Thenperson entende o que significa empreender no interior de Minas. Diariamente, por trás do balcão, ele conversa com comerciantes locais, pais de família e jovens em busca de qualificação profissional, conhecendo na pele as dificuldades do comércio e o valor do trabalho correto.
+                  Como empresário e fundador da <strong>Multicell</strong>, a mais tradicional loja de celulares e acessórios de Almenara, ele construiu sua trajetória gerando empregos e ajudando no crescimento econômico local. Diariamente, por trás do balcão, Thenperson conversa diretamente com as famílias e comerciantes, conhecendo na pele a força do comércio de nossa região. Ele acredita que o Jequitinhonha não é uma região de escassez, mas uma potência adormecida, pronta para prosperar com ética e determinação.
                 </p>
                 <p>
-                  Homem de fortes princípios éticos e valores cristãos, ele preza intensamente pela saúde e pela família. Para ele, apoiar o esporte juvenil e a saúde básica preventiva são caminhos essenciais para construir uma comunidade mais equilibrada, justa e que ofereça oportunidades reais aos nossos jovens sem que precisem migrar para grandes centros urbanos.
+                  Homem de sólidos princípios cristãos e valores morais firmes, ele preza ativamente pela saúde e pela união familiar. Para ele, apoiar projetos de saúde básica preventiva e incentivar a prática do esporte juvenil são pilares inegociáveis para afastar a juventude das ruas e promover o bem-estar de toda a comunidade.
                 </p>
                 <p>
-                  Sua decisão de colocar seu nome como pré-candidato a Deputado Federal nasce da indignação de ver o Vale do Jequitinhonha ser esquecido. Ele quer ser a voz legítima e presente que lutará por recursos na saúde de qualidade, incentivo ao pequeno comerciante e inclusão tecnológica para que o nosso povo cresça com dignidade.
+                  Sua pré-candidatura a Deputado Federal é a força de Almenara tomando a frente contra a velha política tradicional. Chega de sermos representados por quem não vive o nosso dia a dia e só quer o voto do Vale em época de eleição. O Jequitinhonha está pronto para vencer, e Thenperson é a liderança presente e honesta que guiará essa transformação para um futuro grandioso.
+                </p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Education Highlight Section */}
+        <section id="educacao" className="section section-alt" style={{ borderTop: '1px solid var(--border-color)', borderBottom: '1px solid var(--border-color)' }}>
+          <div className="container">
+            <div className="video-grid" style={{ gridTemplateColumns: '1fr 1fr', alignItems: 'center' }}>
+              <div className="main-video-wrapper" style={{ height: 'auto', aspectRatio: '16/10', borderRadius: '16px', overflow: 'hidden', border: '1px solid var(--border-color)', boxShadow: 'var(--shadow-md)' }}>
+                <img 
+                  src="/images/estudantes.png" 
+                  alt="Thenperson reunido com dezenas de estudantes locais" 
+                  style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                />
+              </div>
+              <div className="hub-details">
+                <span className="section-tag">Aliança Pela Educação</span>
+                <h2 style={{ fontSize: '2.2rem', marginBottom: '20px', fontWeight: 800 }}>
+                  A Força da Nossa Juventude Contra o <span>Descaso Público</span>
+                </h2>
+                <p style={{ fontSize: '1.05rem', marginBottom: '16px', color: 'var(--text-secondary)' }}>
+                  Almenara e região abrigam mentes brilhantes. Nossos jovens ganham prêmios importantes de conhecimento e se destacam nacionalmente, incluindo os alunos do <strong>IFNMG (Instituto Federal do Norte de Minas Gerais)</strong> e de escolas públicas. No entanto, esses estudantes brilhantes sofrem diariamente com o descaso crônico do poder público tradicional: a falta de transporte seguro, a insegurança alimentar e a escassez de recursos limitam o futuro de quem quer crescer.
+                </p>
+                <p style={{ fontSize: '1.05rem', color: 'var(--text-secondary)' }}>
+                  Thenperson assumiu o compromisso de lutar por quem estuda. Ele tem se reunido com dezenas de estudantes e professores para ouvir suas demandas e propor melhorias como alimentação estudantil digna, subsídio de transporte intermunicipal e fomento à qualificação tecnológica. A juventude de Almenara é a força motora da nossa mudança. Nossa cidade está se unindo contra a velha política para garantir um amanhã de respeito e grandeza a todos.
                 </p>
               </div>
             </div>
@@ -607,7 +634,7 @@ function App() {
                     style={{ background: 'none', border: 'none', width: '100%', textAlign: 'left', font: 'inherit' }}
                   >
                     <div className="playlist-thumb" aria-hidden="true">
-                      <img src="/images/jequitinhonha_landscape.png" alt="" className="playlist-thumb-img" />
+                      <img src="/images/fotovalecima.png" alt="" className="playlist-thumb-img" />
                       <Video size={20} />
                     </div>
                     <div className="playlist-info">
@@ -689,6 +716,14 @@ function App() {
               <p className="contact-info-desc">
                 Quer dar uma sugestão para Almenara? Tem ideias para melhorar a saúde no Vale do Jequitinhonha? Quer declarar apoio ou fazer uma pergunta? Escreva para nós! O Thenperson e sua equipe lerão cada mensagem.
               </p>
+
+              <div className="contact-image-wrapper" style={{ marginBottom: '24px', borderRadius: '16px', overflow: 'hidden', border: '1px solid var(--border-color)', boxShadow: 'var(--shadow-sm)' }}>
+                <img 
+                  src="/images/foto05perfil.png" 
+                  alt="Thenperson e suas informações de contato de pré-campanha" 
+                  style={{ width: '100%', height: 'auto', display: 'block' }}
+                />
+              </div>
               
               <div className="contact-methods">
                 <div className="contact-method-card">
@@ -809,7 +844,7 @@ function App() {
                 <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" className="footer-social-btn" aria-label="Facebook">
                   <Facebook size={18} />
                 </a>
-                <a href="https://youtube.com" target="_blank" rel="noopener noreferrer" className="footer-social-btn" aria-label="YouTube">
+                <a href="https://www.youtube.com/@janeladovalepodcast" target="_blank" rel="noopener noreferrer" className="footer-social-btn" aria-label="YouTube">
                   <Youtube size={18} />
                 </a>
               </div>

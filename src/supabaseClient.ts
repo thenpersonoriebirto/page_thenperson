@@ -77,7 +77,7 @@ const defaultNews: NewsItem[] = [
     summary: 'Em entrevista local, o pré-candidato enfatizou que investir em esporte e saúde básica poupa vidas e recursos públicos.',
     content: 'O Vale do Jequitinhonha carece de infraestrutura de saúde ágil e humana. Thenperson defende que a saúde começa na prevenção: "Precisamos de postos de saúde que funcionem e de incentivos para práticas esportivas na infância e na terceira idade. Cuidar das pessoas é o nosso dever principal".',
     date: '08 de Junho, 2026',
-    image_url: '/images/jequitinhonha_landscape.png',
+    image_url: '/images/foto04vale.png',
     category: 'Saúde e Bem-estar',
   },
   {
@@ -86,7 +86,7 @@ const defaultNews: NewsItem[] = [
     summary: 'Conheça a história do empreendedor que gerou dezenas de empregos em Almenara e agora quer representar a região no Congresso Nacional.',
     content: 'Como fundador da Multicell, Thenperson compreende as dificuldades de empreender no interior de Minas Gerais. Ele ressalta que o pequeno comerciante precisa de apoio, e não de entraves burocráticos. Sua história de vida inspira muitos jovens locais que buscam vencer através do trabalho correto e honesto.',
     date: '05 de Junho, 2026',
-    image_url: '/images/thenperson_portrait.png',
+    image_url: '/images/foto01.jpg',
     category: 'Trajetória',
   },
   {
@@ -95,7 +95,7 @@ const defaultNews: NewsItem[] = [
     summary: 'Thenperson reúne-se com lideranças políticas para planejar projetos de atração de indústrias e empresas de tecnologia para a nossa região.',
     content: 'Atrair indústrias e empresas é o caminho definitivo para manter nossos jovens no Vale do Jequitinhonha. "Nossos talentos não podem ser obrigados a migrar para as grandes capitais por falta de emprego. Queremos que Almenara seja um polo de tecnologia e comércio", afirmou o pré-candidato.',
     date: '02 de Junho, 2026',
-    image_url: '/images/jequitinhonha_landscape.png',
+    image_url: '/images/fotovalebaixo.png',
     category: 'Desenvolvimento',
   }
 ];
