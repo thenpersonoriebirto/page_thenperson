@@ -525,7 +525,7 @@ function App() {
                 <img 
                   src="/images/estudantes.png" 
                   alt="Thenperson reunido com dezenas de estudantes locais" 
-                  style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                  style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'top' }}
                 />
               </div>
               <div className="hub-details">
@@ -634,7 +634,7 @@ function App() {
                     style={{ background: 'none', border: 'none', width: '100%', textAlign: 'left', font: 'inherit' }}
                   >
                     <div className="playlist-thumb" aria-hidden="true">
-                      <img src="/images/fotovalecima.png" alt="" className="playlist-thumb-img" />
+                      <img src="/images/imagempequena.png" alt="" className="playlist-thumb-img" />
                       <Video size={20} />
                     </div>
                     <div className="playlist-info">
