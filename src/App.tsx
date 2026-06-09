@@ -37,17 +37,17 @@ interface VideoItem {
 const PLAYLIST: VideoItem[] = [
   {
     id: '1',
-    title: 'Tenpheson: Trajetória, Valores e Compromisso',
+    title: 'Thenperson: Trajetória, Valores e Compromisso',
     duration: '2:45',
     youtubeId: 'dQw4w9WgXcQ', // Placeholder, but dynamic
-    description: 'Conheça um pouco mais sobre a história de vida de Tenpheson, sua infância em Almenara, a fundação da Multicell e o desejo de lutar pelo desenvolvimento do Vale do Jequitinhonha.'
+    description: 'Conheça um pouco mais sobre a história de vida de Thenperson, sua infância em Almenara, a fundação da Multicell e o desejo de lutar pelo desenvolvimento do Vale do Jequitinhonha.'
   },
   {
     id: '2',
     title: 'Esporte e Saúde Preventiva como Prioridade',
     duration: '1:50',
     youtubeId: '9q8N1P-j2c8',
-    description: 'Depoimento de Tenpheson sobre o poder transformador do esporte na vida dos jovens e a importância de focar em saúde preventiva nas unidades básicas do Vale.'
+    description: 'Depoimento de Thenperson sobre o poder transformador do esporte na vida dos jovens e a importância de focar em saúde preventiva nas unidades básicas do Vale.'
   },
   {
     id: '3',
@@ -177,7 +177,7 @@ function App() {
       if (response.success) {
         setToast({
           show: true,
-          message: 'Mensagem enviada com sucesso! Tenpheson agradece o seu contato.',
+          message: 'Mensagem enviada com sucesso! Thenperson agradece o seu contato.',
           type: 'success'
         });
         setContactForm({
@@ -237,9 +237,9 @@ function App() {
       {/* Navigation Header */}
       <header className={`header ${scrolled ? 'header-scrolled' : ''}`}>
         <div className="container header-container">
-          <a href="#inicio" className="logo" aria-label="Tenpheson Home">
+          <a href="#inicio" className="logo" aria-label="Thenperson Home">
             <Shield className="logo-icon" />
-            <span>TENPHESON</span>
+            <span>THENPERSON</span>
           </a>
 
           {/* Desktop Nav */}
@@ -283,7 +283,7 @@ function App() {
               </h1>
               
               <p className="hero-description">
-                Tenpheson é empresário (fundador da Multicell em Almenara), engajado socialmente, apaixonado por saúde, esporte e focado no crescimento de nossa gente. Um líder correto que preza pelo equilíbrio e pela honestidade.
+                Thenperson é empresário (fundador da Multicell em Almenara), engajado socialmente, apaixonado por saúde, esporte e focado no crescimento de nossa gente. Um líder correto que preza pelo equilíbrio e pela honestidade.
               </p>
               
               <div className="hero-buttons">
@@ -316,8 +316,8 @@ function App() {
               <div className="hero-image-glow" aria-hidden="true"></div>
               <div className="hero-image-frame">
                 <img 
-                  src="/images/tenpheson_portrait.png" 
-                  alt="Tenpheson sorrindo com olhar confiante" 
+                  src="/images/thenperson_portrait.png" 
+                  alt="Thenperson sorrindo com olhar confiante" 
                   className="hero-image"
                   loading="eager"
                 />
@@ -364,14 +364,14 @@ function App() {
                 <div className="lc-avatar-wrapper">
                   <div className="lc-avatar-glow" aria-hidden="true"></div>
                   <img 
-                    src="/images/tenpheson_portrait.png" 
-                    alt="Tenpheson" 
+                    src="/images/thenperson_portrait.png" 
+                    alt="Thenperson" 
                     className="lc-avatar"
                   />
                 </div>
                 
-                <h3 className="lc-name">Tenpheson</h3>
-                <p className="lc-tagline">@tenpheson.mg</p>
+                <h3 className="lc-name">Thenperson</h3>
+                <p className="lc-tagline">@thenperson.mg</p>
                 
                 <div className="lc-links-list">
                   <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" className="lc-link-item">
@@ -467,8 +467,8 @@ function App() {
             <div className="bio-images-grid">
               <div className="bio-img-wrapper bio-img-wrapper-tall">
                 <img 
-                  src="/images/tenpheson_portrait.png" 
-                  alt="Tenpheson posando em ambiente profissional" 
+                  src="/images/thenperson_portrait.png" 
+                  alt="Thenperson posando em ambiente profissional" 
                   className="bio-img"
                   loading="lazy"
                 />
@@ -483,8 +483,8 @@ function App() {
               </div>
               <div className="bio-img-wrapper">
                 <img 
-                  src="/images/tenpheson_portrait.png" 
-                  alt="Tenpheson conversando" 
+                  src="/images/thenperson_portrait.png" 
+                  alt="Thenperson conversando" 
                   className="bio-img"
                   loading="lazy"
                 />
@@ -493,7 +493,7 @@ function App() {
             
             <div className="bio-content">
               <span className="section-tag">História e Valores</span>
-              <h2>Quem é <span>Tenpheson</span>?</h2>
+              <h2>Quem é <span>Thenperson</span>?</h2>
               
               <blockquote className="bio-quote">
                 "Nossas raízes definem quem somos, mas nossa determinação define onde podemos chegar."
@@ -501,16 +501,16 @@ function App() {
               
               <div className="bio-paragraphs">
                 <p>
-                  Nascido e criado em Almenara, no coração do Vale do Jequitinhonha, <strong>Tenpheson</strong> é um exemplo vivo da garra e do caráter do povo mineiro. Desde cedo aprendeu o valor do trabalho honesto, iniciando sua trajetória profissional com persistência até consolidar-se como empresário no ramo de tecnologia e telecomunicações.
+                  Nascido e criado em Almenara, no coração do Vale do Jequitinhonha, <strong>Thenperson</strong> é um exemplo vivo da garra e do caráter do povo mineiro. Desde cedo aprendeu o valor do trabalho honesto, iniciando sua trajetória profissional com persistência até consolidar-se como empresário no ramo de tecnologia e telecomunicações.
                 </p>
                 <p>
-                  Como fundador e dono da <strong>Multicell</strong>, a principal loja de celulares e acessórios de Almenara, Tenpheson gera empregos, incentiva a inovação e atende milhares de famílias da região com dedicação e simpatia. Sua proximidade diária com o público deu a ele um entendimento único sobre as necessidades do trabalhador e as dificuldades que os pequenos comerciantes enfrentam.
+                  Como fundador e dono da <strong>Multicell</strong>, a principal loja de celulares e acessórios de Almenara, Thenperson gera empregos, incentiva a inovação e atende milhares de famílias da região com dedicação e simpatia. Sua proximidade diária com o público deu a ele um entendimento único sobre as necessidades do trabalhador e as dificuldades que os pequenos comerciantes enfrentam.
                 </p>
                 <p>
                   Homem de fortes valores cristãos e éticos, ele preza intensamente pela saúde física e mental, acreditando que a promoção do esporte e do bem-estar social é o alicerce para desviar jovens do mau caminho e construir comunidades equilibradas.
                 </p>
                 <p>
-                  Sua decisão de colocar seu nome como pré-candidato a Deputado Federal nasce de um sentimento profundo de gratidão por sua terra e da indignação de ver o Vale do Jequitinhonha frequentemente esquecido pelas grandes esferas políticas. Tenpheson quer ser a voz atuante que levará dignidade, recursos e inovação para toda a região.
+                  Sua decisão de colocar seu nome como pré-candidato a Deputado Federal nasce de um sentimento profundo de gratidão por sua terra e da indignação de ver o Vale do Jequitinhonha frequentemente esquecido pelas grandes esferas políticas. Thenperson quer ser a voz atuante que levará dignidade, recursos e inovação para toda a região.
                 </p>
               </div>
             </div>
@@ -524,7 +524,7 @@ function App() {
               <span className="section-tag">Compromissos</span>
               <h2 className="section-title">Agenda de <span>Visitas e Debates</span></h2>
               <p className="section-subtitle">
-                Acompanhe onde o Tenpheson estará nos próximos dias. Venha conversar, debater ideias e somar com a nossa causa!
+                Acompanhe onde o Thenperson estará nos próximos dias. Venha conversar, debater ideias e somar com a nossa causa!
               </p>
             </div>
             
@@ -687,7 +687,7 @@ function App() {
               <span className="section-tag">Fale Conosco</span>
               <h2 className="contact-info-title">Envie sua <span>Mensagem</span></h2>
               <p className="contact-info-desc">
-                Quer dar uma sugestão para Almenara? Tem ideias para melhorar a saúde no Vale do Jequitinhonha? Quer declarar apoio ou fazer uma pergunta? Escreva para nós! O Tenpheson e sua equipe lerão cada mensagem.
+                Quer dar uma sugestão para Almenara? Tem ideias para melhorar a saúde no Vale do Jequitinhonha? Quer declarar apoio ou fazer uma pergunta? Escreva para nós! O Thenperson e sua equipe lerão cada mensagem.
               </p>
               
               <div className="contact-methods">
@@ -707,7 +707,7 @@ function App() {
                   </div>
                   <div className="contact-method-details">
                     <h4>E-mail de Contato</h4>
-                    <p>contato@tenpheson.com.br</p>
+                    <p>contato@thenperson.com.br</p>
                   </div>
                 </div>
 
@@ -784,7 +784,7 @@ function App() {
                   className="btn-submit"
                   disabled={isSubmitting}
                 >
-                  {isSubmitting ? 'Enviando...' : 'Enviar Mensagem para Tenpheson'}
+                  {isSubmitting ? 'Enviando...' : 'Enviar Mensagem para Thenperson'}
                   <ArrowRight size={18} aria-hidden="true" />
                 </button>
               </form>
@@ -798,7 +798,7 @@ function App() {
         <div className="container">
           <div className="footer-grid">
             <div className="footer-brand">
-              <h3>TENPHESON</h3>
+              <h3>THENPERSON</h3>
               <p>
                 Uma nova liderança de ética, valores corretos e saúde preventiva, pronta para defender e desenvolver o Vale do Jequitinhonha no Congresso Nacional.
               </p>
@@ -838,7 +838,7 @@ function App() {
           
           <div className="footer-bottom">
             <p>
-              &copy; {new Date().getFullYear()} Tenpheson - Pré-Candidato a Deputado Federal. Todos os direitos reservados.
+              &copy; {new Date().getFullYear()} Thenperson - Pré-Candidato a Deputado Federal. Todos os direitos reservados.
             </p>
             <p>
               Desenvolvido de forma ética. Material informativo de pré-campanha em conformidade com a legislação vigente.

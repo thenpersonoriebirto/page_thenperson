@@ -73,26 +73,26 @@ export interface NewsItem {
 const defaultNews: NewsItem[] = [
   {
     id: '1',
-    title: 'Tenpheson destaca a importância da Saúde Preventiva no Vale do Jequitinhonha',
+    title: 'Thenperson destaca a importância da Saúde Preventiva no Vale do Jequitinhonha',
     summary: 'Em entrevista local, o pré-candidato enfatizou que investir em esporte e saúde básica poupa vidas e recursos públicos.',
-    content: 'O Vale do Jequitinhonha carece de infraestrutura de saúde ágil e humana. Tenpheson defende que a saúde começa na prevenção: "Precisamos de postos de saúde que funcionem e de incentivos para práticas esportivas na infância e na terceira idade. Cuidar das pessoas é o nosso dever principal".',
+    content: 'O Vale do Jequitinhonha carece de infraestrutura de saúde ágil e humana. Thenperson defende que a saúde começa na prevenção: "Precisamos de postos de saúde que funcionem e de incentivos para práticas esportivas na infância e na terceira idade. Cuidar das pessoas é o nosso dever principal".',
     date: '08 de Junho, 2026',
     image_url: '/images/jequitinhonha_landscape.png',
     category: 'Saúde e Bem-estar',
   },
   {
     id: '2',
-    title: 'Da Multicell para a Liderança Comunitária: A trajetória de superação de Tenpheson',
+    title: 'Da Multicell para a Liderança Comunitária: A trajetória de superação de Thenperson',
     summary: 'Conheça a história do empreendedor que gerou dezenas de empregos em Almenara e agora quer representar a região no Congresso Nacional.',
-    content: 'Como fundador da Multicell, Tenpheson compreende as dificuldades de empreender no interior de Minas Gerais. Ele ressalta que o pequeno comerciante precisa de apoio, e não de entraves burocráticos. Sua história de vida inspira muitos jovens locais que buscam vencer através do trabalho correto e honesto.',
+    content: 'Como fundador da Multicell, Thenperson compreende as dificuldades de empreender no interior de Minas Gerais. Ele ressalta que o pequeno comerciante precisa de apoio, e não de entraves burocráticos. Sua história de vida inspira muitos jovens locais que buscam vencer através do trabalho correto e honesto.',
     date: '05 de Junho, 2026',
-    image_url: '/images/tenpheson_portrait.png',
+    image_url: '/images/thenperson_portrait.png',
     category: 'Trajetória',
   },
   {
     id: '3',
     title: 'Debate sobre Incentivos Fiscais para o Norte e Nordeste de Minas Gerais',
-    summary: 'Tenpheson reúne-se com lideranças políticas para planejar projetos de atração de indústrias e empresas de tecnologia para a nossa região.',
+    summary: 'Thenperson reúne-se com lideranças políticas para planejar projetos de atração de indústrias e empresas de tecnologia para a nossa região.',
     content: 'Atrair indústrias e empresas é o caminho definitivo para manter nossos jovens no Vale do Jequitinhonha. "Nossos talentos não podem ser obrigados a migrar para as grandes capitais por falta de emprego. Queremos que Almenara seja um polo de tecnologia e comércio", afirmou o pré-candidato.',
     date: '02 de Junho, 2026',
     image_url: '/images/jequitinhonha_landscape.png',
@@ -117,11 +117,11 @@ export const db = {
     }
     
     // Fallback: Check localStorage or load defaults
-    const local = localStorage.getItem('tenpheson_agenda');
+    const local = localStorage.getItem('thenperson_agenda');
     if (local) {
       return JSON.parse(local);
     }
-    localStorage.setItem('tenpheson_agenda', JSON.stringify(defaultAgenda));
+    localStorage.setItem('thenperson_agenda', JSON.stringify(defaultAgenda));
     return defaultAgenda;
   },
 
@@ -140,11 +140,11 @@ export const db = {
     }
     
     // Fallback: Check localStorage or load defaults
-    const local = localStorage.getItem('tenpheson_news');
+    const local = localStorage.getItem('thenperson_news');
     if (local) {
       return JSON.parse(local);
     }
-    localStorage.setItem('tenpheson_news', JSON.stringify(defaultNews));
+    localStorage.setItem('thenperson_news', JSON.stringify(defaultNews));
     return defaultNews;
   },
 
@@ -165,10 +165,10 @@ export const db = {
 
     // Fallback: Save to localStorage
     try {
-      const local = localStorage.getItem('tenpheson_messages');
+      const local = localStorage.getItem('thenperson_messages');
       const messages = local ? JSON.parse(local) : [];
       messages.push({ id: crypto.randomUUID(), ...messageData, created_at: timestamp });
-      localStorage.setItem('tenpheson_messages', JSON.stringify(messages));
+      localStorage.setItem('thenperson_messages', JSON.stringify(messages));
       return { success: true };
     } catch (err: any) {
       return { success: false, error: err.message || 'Erro ao salvar mensagem localmente.' };
