@@ -1,10 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { 
-  MessageSquare, 
   Calendar, 
   Video, 
   Phone, 
-  Mail, 
   MapPin, 
   ExternalLink, 
   Instagram, 
@@ -17,13 +15,11 @@ import {
   AlertCircle, 
   Heart, 
   Shield, 
-  Award, 
-  TrendingUp, 
   Smartphone,
   Info
 } from 'lucide-react';
 import { db, isSupabaseConfigured } from './supabaseClient';
-import type { AgendaItem, NewsItem } from './supabaseClient';
+import type { AgendaItem } from './supabaseClient';
 
 
 interface VideoItem {
@@ -140,12 +136,9 @@ function App() {
 
   // Database States
   const [agenda, setAgenda] = useState<AgendaItem[]>([]);
-  const [news, setNews] = useState<NewsItem[]>([]);
   const [loadingAgenda, setLoadingAgenda] = useState<boolean>(true);
-  const [loadingNews, setLoadingNews] = useState<boolean>(true);
   
   // UI States
-  const [selectedNews, setSelectedNews] = useState<NewsItem | null>(null);
   const [activeVideoIndex, setActiveVideoIndex] = useState<number>(0);
   const [mobileMenuOpen, setMobileMenuOpen] = useState<boolean>(false);
   const [showSbBanner, setShowSbBanner] = useState<boolean>(true);
@@ -155,17 +148,6 @@ function App() {
   const [activeStoryIndex, setActiveStoryIndex] = useState<number | null>(null);
   const [storyProgress, setStoryProgress] = useState<number>(0);
   const [storyPaused, setStoryPaused] = useState<boolean>(false);
-  const [chatSubmittedMessage, setChatSubmittedMessage] = useState<string>('');
-  const [chatSubmitted, setChatSubmitted] = useState<boolean>(false);
-  
-  // Form State
-  const [contactForm, setContactForm] = useState({
-    name: '',
-    email: '',
-    phone: '',
-    message: ''
-  });
-  const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
   
   // Toast Notification State
   const [toast, setToast] = useState<{
@@ -192,7 +174,7 @@ function App() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // Fetch Agenda and News on mount
+  // Fetch Agenda on mount
   useEffect(() => {
     const fetchInitialData = async () => {
       try {
@@ -202,15 +184,6 @@ function App() {
       } catch (err) {
         console.error('Failed to load agenda', err);
         setLoadingAgenda(false);
-      }
-
-      try {
-        const newsData = await db.getNews();
-        setNews(newsData);
-        setLoadingNews(false);
-      } catch (err) {
-        console.error('Failed to load news', err);
-        setLoadingNews(false);
       }
     };
 
@@ -226,61 +199,6 @@ function App() {
       return () => clearTimeout(timer);
     }
   }, [toast.show]);
-
-  // Form Input Change Handler
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    const { name, value } = e.target;
-    setContactForm(prev => ({
-      ...prev,
-      [name]: value
-    }));
-  };
-
-  // Form Submission Handler
-  const handleSubmitMessage = async (e: React.FormEvent) => {
-    e.preventDefault();
-    
-    // Quick validation
-    if (!contactForm.name || !contactForm.message) {
-      setToast({
-        show: true,
-        message: 'Por favor, preencha seu nome e a mensagem.',
-        type: 'error'
-      });
-      return;
-    }
-
-    setIsSubmitting(true);
-    
-    try {
-      const response = await db.saveMessage(contactForm);
-      if (response.success) {
-        setToast({
-          show: true,
-          message: 'Mensagem enviada com sucesso! Thenperson agradece o seu contato.',
-          type: 'success'
-        });
-        setChatSubmittedMessage(contactForm.message);
-        setChatSubmitted(true);
-        setContactForm({
-          name: '',
-          email: '',
-          phone: '',
-          message: ''
-        });
-      } else {
-        throw new Error(response.error || 'Erro desconhecido.');
-      }
-    } catch (err: any) {
-      setToast({
-        show: true,
-        message: `Ocorreu um erro ao enviar: ${err.message || 'Tente novamente.'}`,
-        type: 'error'
-      });
-    } finally {
-      setIsSubmitting(false);
-    }
-  };
 
   // Stories Navigation Helper: Prev
   const handlePrevStory = () => {
@@ -359,25 +277,14 @@ function App() {
         setStoryProgress={setStoryProgress}
         storyPaused={storyPaused}
         setStoryPaused={setStoryPaused}
-        chatSubmitted={chatSubmitted}
-        chatSubmittedMessage={chatSubmittedMessage}
-        contactForm={contactForm}
-        handleInputChange={handleInputChange}
-        handleSubmitMessage={handleSubmitMessage}
-        activeVideoIndex={activeVideoIndex}
         setActiveVideoIndex={setActiveVideoIndex}
-        selectedNews={selectedNews}
-        setSelectedNews={setSelectedNews}
         toast={toast}
         agenda={agenda}
-        news={news}
         loadingAgenda={loadingAgenda}
-        loadingNews={loadingNews}
         deviceSpecs={deviceSpecs}
         handlePrevStory={handlePrevStory}
         handleNextStory={handleNextStory}
         handleStoryCTA={handleStoryCTA}
-        isSubmitting={isSubmitting}
       />
     );
   }
@@ -424,11 +331,6 @@ function App() {
             <a href="#biografia" className="nav-link" onClick={handleNavLinkClick}>Biografia</a>
             <a href="#agenda" className="nav-link" onClick={handleNavLinkClick}>Agenda</a>
             <a href="#videos" className="nav-link" onClick={handleNavLinkClick}>Vídeos</a>
-            <a href="#noticias" className="nav-link" onClick={handleNavLinkClick}>Notícias</a>
-            <a href="#contato" className="btn-contact" onClick={handleNavLinkClick}>
-              <MessageSquare size={16} />
-              Participe
-            </a>
           </nav>
 
           {/* Mobile menu toggle */}
@@ -462,8 +364,8 @@ function App() {
               </p>
               
               <div className="hero-buttons">
-                <a href="#contato" className="btn-primary">
-                  Apoiar Pré-Campanha
+                <a href="#agenda" className="btn-primary">
+                  Acompanhar Agenda
                   <ArrowRight size={18} />
                 </a>
                 <a href="#biografia" className="btn-secondary">
@@ -664,40 +566,6 @@ function App() {
                 <p className="hub-text">
                   Acreditamos em uma política feita olho no olho e de portas abertas. O uso ético das redes sociais nos ajuda a ouvir as dores do Vale do Jequitinhonha em tempo real. Escolha sua plataforma favorita e junte-se ao nosso movimento!
                 </p>
-                
-                <div className="values-grid">
-                  <div className="value-card">
-                    <div className="value-icon-box">
-                      <Shield />
-                    </div>
-                    <h3>Valores e Ética</h3>
-                    <p>Conduta correta, respeito à família e governança baseada em princípios transparentes.</p>
-                  </div>
-
-                  <div className="value-card">
-                    <div className="value-icon-box">
-                      <Heart />
-                    </div>
-                    <h3>Foco na Saúde</h3>
-                    <p>Mais apoio ao esporte regional, lazer e infraestrutura de saúde humanizada.</p>
-                  </div>
-
-                  <div className="value-card">
-                    <div className="value-icon-box">
-                      <TrendingUp />
-                    </div>
-                    <h3>Desenvolvimento</h3>
-                    <p>Qualificação profissional, fomento ao comércio varejista e atração de tecnologia.</p>
-                  </div>
-
-                  <div className="value-card">
-                    <div className="value-icon-box">
-                      <Award />
-                    </div>
-                    <h3>Compromisso</h3>
-                    <p>Uma voz forte no Congresso Nacional lutando pela dignidade de todo o Vale.</p>
-                  </div>
-                </div>
               </div>
             </div>
           </div>
@@ -789,14 +657,6 @@ function App() {
         {/* Agenda Section */}
         <section id="agenda" className="section section-alt">
           <div className="container">
-            <div className="section-title-wrapper">
-              <span className="section-tag">Compromissos</span>
-              <h2 className="section-title">Agenda de <span>Visitas e Debates</span></h2>
-              <p className="section-subtitle">
-                Acompanhe onde o Thenperson estará nos próximos dias. Venha conversar, debater ideias e somar com a nossa causa!
-              </p>
-            </div>
-            
             {loadingAgenda ? (
               <div style={{ textAlign: 'center', padding: '40px', color: 'var(--text-secondary)' }}>
                 Carregando agenda...
@@ -837,179 +697,6 @@ function App() {
             )}
           </div>
         </section>
-
-
-        {/* News Section */}
-        <section id="noticias" className="section section-alt">
-          <div className="container">
-            <div className="section-title-wrapper">
-              <span className="section-tag">Atualizações</span>
-              <h2 className="section-title">Notícias e <span>Informativos</span></h2>
-              <p className="section-subtitle">
-                Fique por dentro das últimas novidades da nossa pré-campanha e das discussões sobre Almenara e o Vale do Jequitinhonha.
-              </p>
-            </div>
-            
-            {loadingNews ? (
-              <div style={{ textAlign: 'center', padding: '40px', color: 'var(--text-secondary)' }}>
-                Carregando notícias...
-              </div>
-            ) : news.length === 0 ? (
-              <div style={{ textAlign: 'center', padding: '40px', color: 'var(--text-secondary)' }}>
-                Nenhuma notícia publicada no momento.
-              </div>
-            ) : (
-              <div className="news-grid">
-                {news.map((item) => (
-                  <article key={item.id} className="news-card">
-                    <div className="news-img-box">
-                      <span className="news-category">{item.category}</span>
-                      <img 
-                        src={item.image_url || '/images/fotovalebaixo.png'} 
-                        alt={item.title} 
-                        className="news-img"
-                        loading="lazy"
-                      />
-                    </div>
-                    <div className="news-content">
-                      <span className="news-date">{item.date}</span>
-                      <h3 className="news-card-title">{item.title}</h3>
-                      <p className="news-summary">{item.summary}</p>
-                      <button 
-                        onClick={() => setSelectedNews(item)}
-                        className="news-readmore"
-                        style={{ background: 'none', border: 'none', font: 'inherit', padding: 0 }}
-                      >
-                        Leia Mais
-                        <ArrowRight size={14} aria-hidden="true" />
-                      </button>
-                    </div>
-                  </article>
-                ))}
-              </div>
-            )}
-          </div>
-        </section>
-
-        {/* Contact / Message Section */}
-        <section id="contato" className="section">
-          <div className="container contact-grid">
-            <div className="contact-info">
-              <span className="section-tag">Fale Conosco</span>
-              <h2 className="contact-info-title">Envie sua <span>Mensagem</span></h2>
-              <p className="contact-info-desc">
-                Quer dar uma sugestão para Almenara? Tem ideias para melhorar a saúde no Vale do Jequitinhonha? Quer declarar apoio ou fazer uma pergunta? Escreva para nós! O Thenperson e sua equipe lerão cada mensagem.
-              </p>
-
-              <div className="contact-image-wrapper" style={{ marginBottom: '24px', borderRadius: '16px', overflow: 'hidden', border: '1px solid var(--border-color)', boxShadow: 'var(--shadow-sm)' }}>
-                <img 
-                  src="/images/foto05perfil.png" 
-                  alt="Thenperson e suas informações de contato de pré-campanha" 
-                  style={{ width: '100%', height: 'auto', display: 'block' }}
-                />
-              </div>
-              
-              <div className="contact-methods">
-                <div className="contact-method-card">
-                  <div className="contact-method-icon" aria-hidden="true">
-                    <Phone />
-                  </div>
-                  <div className="contact-method-details">
-                    <h4>WhatsApp Oficial</h4>
-                    <p>(33) 99999-9999</p>
-                  </div>
-                </div>
-
-                <div className="contact-method-card">
-                  <div className="contact-method-icon" aria-hidden="true">
-                    <Mail />
-                  </div>
-                  <div className="contact-method-details">
-                    <h4>E-mail de Contato</h4>
-                    <p>contato@thenperson.com.br</p>
-                  </div>
-                </div>
-
-                <div className="contact-method-card">
-                  <div className="contact-method-icon" aria-hidden="true">
-                    <MapPin />
-                  </div>
-                  <div className="contact-method-details">
-                    <h4>Multicell Almenara</h4>
-                    <p>Rua Hermano Souza, 276 - Almenara, MG</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-            
-            <div className="contact-form-container">
-              <form onSubmit={handleSubmitMessage} aria-label="Formulário de contato">
-                <div className="form-group-row">
-                  <div className="form-group">
-                    <label htmlFor="name" className="form-label">Nome Completo *</label>
-                    <input 
-                      type="text" 
-                      id="name" 
-                      name="name" 
-                      value={contactForm.name}
-                      onChange={handleInputChange}
-                      placeholder="Ex: João da Silva" 
-                      className="form-input" 
-                      required
-                    />
-                  </div>
-                  <div className="form-group">
-                    <label htmlFor="phone" className="form-label">Telefone / WhatsApp</label>
-                    <input 
-                      type="tel" 
-                      id="phone" 
-                      name="phone" 
-                      value={contactForm.phone}
-                      onChange={handleInputChange}
-                      placeholder="Ex: (33) 99999-9999" 
-                      className="form-input" 
-                    />
-                  </div>
-                </div>
-                
-                <div className="form-group">
-                  <label htmlFor="email" className="form-label">Endereço de E-mail</label>
-                  <input 
-                    type="email" 
-                    id="email" 
-                    name="email" 
-                    value={contactForm.email}
-                    onChange={handleInputChange}
-                    placeholder="Ex: joao@email.com" 
-                    className="form-input" 
-                  />
-                </div>
-                
-                <div className="form-group">
-                  <label htmlFor="message" className="form-label">Sua Mensagem *</label>
-                  <textarea 
-                    id="message" 
-                    name="message" 
-                    value={contactForm.message}
-                    onChange={handleInputChange}
-                    placeholder="Escreva suas propostas, dúvidas ou palavras de incentivo..." 
-                    className="form-textarea" 
-                    required
-                  ></textarea>
-                </div>
-                
-                <button 
-                  type="submit" 
-                  className="btn-submit"
-                  disabled={isSubmitting}
-                >
-                  {isSubmitting ? 'Enviando...' : 'Enviar Mensagem para Thenperson'}
-                  <ArrowRight size={18} aria-hidden="true" />
-                </button>
-              </form>
-            </div>
-          </div>
-        </section>
       </main>
 
       {/* Footer */}
@@ -1048,8 +735,6 @@ function App() {
               <h4>Políticas e Apoio</h4>
               <ul>
                 <li><a href="#videos" className="footer-link">Galeria de Vídeos</a></li>
-                <li><a href="#noticias" className="footer-link">Informativos</a></li>
-                <li><a href="#contato" className="footer-link">Fale Conosco</a></li>
                 <li><a href="https://www.tse.jus.br" target="_blank" rel="noopener noreferrer" className="footer-link">Legislação Eleitoral</a></li>
               </ul>
             </div>
@@ -1065,40 +750,6 @@ function App() {
           </div>
         </div>
       </footer>
-
-      {/* News Article Modal (Popup details) */}
-      {selectedNews && (
-        <div className="modal-overlay" onClick={() => setSelectedNews(null)} role="dialog" aria-modal="true">
-          <div className="modal-content" onClick={(e) => e.stopPropagation()}>
-            <button 
-              className="modal-close-btn" 
-              onClick={() => setSelectedNews(null)}
-              aria-label="Fechar modal"
-            >
-              <X size={18} />
-            </button>
-            <div className="modal-img-wrapper">
-              <img 
-                src={selectedNews.image_url || '/images/fotovalebaixo.png'} 
-                alt={selectedNews.title} 
-                className="modal-img"
-              />
-            </div>
-            <div className="modal-body">
-              <div className="modal-header-meta">
-                <span className="modal-category">{selectedNews.category}</span>
-                <span className="modal-date">{selectedNews.date}</span>
-              </div>
-              <h3 className="modal-title">{selectedNews.title}</h3>
-              <div className="modal-text">
-                {selectedNews.content.split('\n\n').map((paragraph, idx) => (
-                  <p key={idx} style={{ marginBottom: '16px' }}>{paragraph}</p>
-                ))}
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
 
       {/* Toast Notification */}
       {toast.show && (
@@ -1124,25 +775,14 @@ interface MobileAppProps {
   setStoryProgress: (progress: number) => void;
   storyPaused: boolean;
   setStoryPaused: (paused: boolean) => void;
-  chatSubmitted: boolean;
-  chatSubmittedMessage: string;
-  contactForm: any;
-  handleInputChange: (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
-  handleSubmitMessage: (e: React.FormEvent) => void;
-  activeVideoIndex: number;
   setActiveVideoIndex: (index: number) => void;
-  selectedNews: any;
-  setSelectedNews: (news: any) => void;
   toast: any;
   agenda: any[];
-  news: any[];
   loadingAgenda: boolean;
-  loadingNews: boolean;
   deviceSpecs: any;
   handlePrevStory: () => void;
   handleNextStory: () => void;
   handleStoryCTA: (id: string) => void;
-  isSubmitting: boolean;
 }
 
 const MobileApp: React.FC<MobileAppProps> = ({
@@ -1151,24 +791,14 @@ const MobileApp: React.FC<MobileAppProps> = ({
   setActiveStoryIndex,
   storyProgress,
   setStoryPaused,
-  chatSubmitted,
-  chatSubmittedMessage,
-  contactForm,
-  handleInputChange,
-  handleSubmitMessage,
   setActiveVideoIndex,
-  selectedNews,
-  setSelectedNews,
   toast,
   agenda,
-  news,
   loadingAgenda,
-  loadingNews,
   deviceSpecs,
   handlePrevStory,
   handleNextStory,
-  handleStoryCTA,
-  isSubmitting
+  handleStoryCTA
 }) => {
   return (
     <div id="yt-mobile-top" className={`yt-mobile-container device-mobile orientation-${deviceSpecs.isPortrait ? 'portrait' : 'landscape'}`}>
@@ -1279,34 +909,14 @@ const MobileApp: React.FC<MobileAppProps> = ({
           </div>
         </section>
 
-        {/* SECTION 2: CONTEÚDO E INFORMATIVOS */}
+        {/* SECTION 2: CONTEÚDO E INFORMATIVOS - ONLY AGENDA (LINHA DO TEMPO) */}
         <section className="yt-section-content" style={{ borderTop: '1px solid rgba(255,255,255,0.08)', paddingTop: '16px' }}>
           <div className="yt-community-list">
-            {/* Post 1: Biografia */}
-            <div id="ig-post-bio" className="yt-comm-post" style={{ cursor: 'default' }}>
-              <div className="yt-comm-content">
-                <p>
-                  <strong>Biografia:</strong> Com o carinho da família e a força do trabalho diário no comércio em Almenara, estamos construindo a verdadeira renovação do Vale do Jequitinhonha, olho no olho e sem promessas vazias. 💙✨ #Familia #Trabalho #Renovação
-                </p>
-                <img src="/images/foto02.png" alt="História do Vale" className="yt-comm-img" />
-              </div>
-            </div>
-
-            {/* Post 2: Educação */}
-            <div id="ig-post-educacao" className="yt-comm-post" style={{ cursor: 'default' }}>
-              <div className="yt-comm-content">
-                <p>
-                  <strong>Educação:</strong> Nossos alunos do IFNMG Almenara são premiados e cheios de potencial, mas sofrem com a falta de transporte escolar de qualidade e apoio do poder público. Estamos com eles na luta por respeito! 🎓✊ #IFNMG #Educação #Juventude
-                </p>
-                <img src="/images/estudantes.png" alt="Estudantes" className="yt-comm-img" />
-              </div>
-            </div>
-
-            {/* Post 3: Agenda */}
+            {/* Agenda Post */}
             <div id="ig-post-agenda" className="yt-comm-post" style={{ cursor: 'default' }}>
               <div className="yt-comm-content">
                 <p>
-                  <strong>Agenda:</strong> Diálogo aberto com a nossa gente. Veja onde estaremos nos próximos dias para debater o futuro da nossa região. 🗓️🤝 #OlhoNoOlho #Jequitinhonha #Agenda
+                  <strong>Agenda & Compromissos:</strong> Diálogo aberto com a nossa gente. Veja onde estaremos nos próximos dias para debater o futuro da nossa região. 🗓️🤝
                 </p>
                 <div className="yt-comm-agenda-box">
                   {loadingAgenda ? (
@@ -1314,7 +924,7 @@ const MobileApp: React.FC<MobileAppProps> = ({
                   ) : agenda.length === 0 ? (
                     <span style={{ fontSize: '0.75rem', color: '#aaa' }}>Nenhum evento agendado.</span>
                   ) : (
-                    agenda.slice(0, 4).map(item => (
+                    agenda.map(item => (
                       <div key={item.id} className="yt-comm-agenda-item">
                         <span className="yt-agenda-date-badge">{item.date.split('-').reverse().join('/')}</span>
                         <div className="yt-comm-agenda-item-details">
@@ -1326,117 +936,6 @@ const MobileApp: React.FC<MobileAppProps> = ({
                   )}
                 </div>
               </div>
-            </div>
-
-            {/* Post 4: Notícias */}
-            <div id="ig-post-noticias" className="yt-comm-post" style={{ cursor: 'default' }}>
-              <div className="yt-comm-content">
-                <p>
-                  <strong>Notícias & Informativos:</strong> Trabalhando por atração de indústrias, tecnologia e incentivos fiscais para o Norte e Nordeste de Minas Gerais. O povo almenarense tem carisma, energia e merece oportunidades! 🚀🏭 #Desenvolvimento #Emprego #ValeForte
-                </p>
-                {loadingNews ? (
-                  <span style={{ fontSize: '0.75rem', color: '#aaa', display: 'block', marginTop: '8px' }}>Carregando notícias...</span>
-                ) : news.length === 0 ? (
-                  <span style={{ fontSize: '0.75rem', color: '#aaa', display: 'block', marginTop: '8px' }}>Nenhum informativo disponível.</span>
-                ) : (
-                  news.slice(0, 2).map(item => (
-                    <div 
-                      key={item.id} 
-                      onClick={() => setSelectedNews(item)}
-                      style={{ 
-                        display: 'flex', 
-                        gap: '10px', 
-                        alignItems: 'center', 
-                        background: 'rgba(255,255,255,0.03)', 
-                        border: '1px solid rgba(255,255,255,0.06)', 
-                        borderRadius: '8px', 
-                        padding: '8px',
-                        cursor: 'pointer',
-                        marginTop: '8px'
-                      }}
-                    >
-                      <img src={item.image_url || '/images/fotovalebaixo.png'} alt="" style={{ width: '40px', height: '40px', borderRadius: '4px', objectFit: 'cover' }} />
-                      <div style={{ flex: 1, overflow: 'hidden' }}>
-                        <span style={{ fontSize: '0.6rem', color: 'var(--color-accent)', fontWeight: 700 }}>{item.category}</span>
-                        <h4 style={{ fontSize: '0.75rem', margin: '1px 0', lineHeight: 1.2, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{item.title}</h4>
-                      </div>
-                    </div>
-                  ))
-                )}
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* SECTION 3: DIÁLOGO & PARTICIPAÇÃO */}
-        <section id="yt-participate-section" style={{ borderTop: '1px solid rgba(255,255,255,0.08)', paddingTop: '16px' }}>
-          <div className="yt-chat-container" style={{ height: 'auto' }}>
-            <div className="yt-chat-header-bar">
-              <div className="yt-chat-status">
-                <span className="yt-status-pulse"></span>
-                <span>Canal de Diálogo Direto</span>
-              </div>
-            </div>
-
-            <div className="yt-chat-messages-stream" style={{ minHeight: '120px' }}>
-              <div className="yt-chat-bubble yt-chat-left">
-                <span className="yt-chat-user">Thenperson Oriebir:</span>
-                <p>Olá! Seja bem-vindo à nossa página de diálogo. Envie suas sugestões ou mensagem de apoio no formulário abaixo! 👇</p>
-              </div>
-
-              {chatSubmitted && (
-                <>
-                  <div className="yt-chat-bubble yt-chat-right animate-slide-in">
-                    <span className="yt-chat-user-me">Você:</span>
-                    <p>{chatSubmittedMessage}</p>
-                  </div>
-                  <div className="yt-chat-bubble yt-chat-left animate-slide-in" style={{ animationDelay: '0.5s' }}>
-                    <span className="yt-chat-user">Thenperson Oriebir:</span>
-                    <p>Recebi sua sugestão! Muito obrigado por participar. Juntos faremos o Vale de Jequitinhonha mais forte! 🚀</p>
-                  </div>
-                </>
-              )}
-            </div>
-
-            <div className="yt-chat-input-box" style={{ background: 'transparent' }}>
-              <form onSubmit={handleSubmitMessage} className="yt-chat-form">
-                <div className="yt-chat-form-row">
-                  <input 
-                    type="text" 
-                    name="name" 
-                    value={contactForm.name}
-                    onChange={handleInputChange}
-                    placeholder="Nome Completo *" 
-                    className="yt-chat-input"
-                    required
-                  />
-                  <input 
-                    type="tel" 
-                    name="phone" 
-                    value={contactForm.phone}
-                    onChange={handleInputChange}
-                    placeholder="WhatsApp" 
-                    className="yt-chat-input"
-                  />
-                </div>
-                <div className="yt-chat-submit-row">
-                  <textarea 
-                    name="message" 
-                    value={contactForm.message}
-                    onChange={handleInputChange}
-                    placeholder="Escreva sua sugestão de melhoria..." 
-                    className="yt-chat-textarea"
-                    required
-                  ></textarea>
-                  <button 
-                    type="submit" 
-                    className="yt-chat-send-btn"
-                    disabled={isSubmitting}
-                  >
-                    {isSubmitting ? '...' : 'Enviar'}
-                  </button>
-                </div>
-              </form>
             </div>
           </div>
         </section>
@@ -1493,28 +992,6 @@ const MobileApp: React.FC<MobileAppProps> = ({
                 <span>{STORIES[activeStoryIndex].actionLabel}</span>
                 <ArrowRight size={14} style={{ marginLeft: '4px' }} />
               </button>
-            </div>
-          </div>
-        </div>
-      )}
-
-      {/* News Detail Modal */}
-      {selectedNews && (
-        <div className="modal-backdrop" onClick={() => setSelectedNews(null)}>
-          <div className="modal-content" onClick={(e) => e.stopPropagation()}>
-            <div className="modal-header">
-              <span className="modal-category">{selectedNews.category}</span>
-              <button className="modal-close" onClick={() => setSelectedNews(null)} aria-label="Fechar modal"><X size={18} /></button>
-            </div>
-            <div className="modal-body" style={{ maxHeight: '70vh', overflowY: 'auto' }}>
-              <img src={selectedNews.image_url || '/images/fotovalebaixo.png'} alt={selectedNews.title} className="modal-img" style={{ width: '100%', borderRadius: '12px', marginBottom: '16px', objectFit: 'cover' }} />
-              <span className="modal-date">{selectedNews.date}</span>
-              <h3 className="modal-title" style={{ fontSize: '1.2rem', margin: '8px 0 16px' }}>{selectedNews.title}</h3>
-              <div className="modal-text" style={{ fontSize: '0.85rem' }}>
-                {selectedNews.content.split('\n\n').map((paragraph: string, idx: number) => (
-                  <p key={idx} style={{ marginBottom: '10px' }}>{paragraph}</p>
-                ))}
-              </div>
             </div>
           </div>
         </div>
