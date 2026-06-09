@@ -55,13 +55,6 @@ const PLAYLIST: VideoItem[] = [
     duration: '1:12:15',
     youtubeId: '1R3OHWWx1SE',
     description: 'Episódio sobre educação inclusiva para pessoas com autismo, discutindo práticas pedagógicas, inclusão escolar, acessibilidade e estratégias para melhorar o aprendizado e a participação dos estudantes.'
-  },
-  {
-    id: '4',
-    title: 'Janela do Vale | Projeto "IF na Rua" em Almenara - MG',
-    duration: '0:58:30',
-    youtubeId: 'WK4qRmjrCGw',
-    description: 'Vídeo mostrando o projeto “IF na Rua”, iniciativa do Instituto Federal Campus Almenara que leva ações educativas, informação e serviços à comunidade, fortalecendo a integração entre instituição e população.'
   }
 ];
 
@@ -426,23 +419,21 @@ function App() {
           </div>
         </section>
 
-        {/* Stories Destaques styled with modern rounded Squircles */}
-        <section className="ig-stories">
-          {STORIES.map((story, index) => (
-            <button 
-              key={story.id} 
-              onClick={() => { setActiveStoryIndex(index); setStoryProgress(0); }}
-              className="ig-story-item-btn"
-            >
-              <div className="ig-story-circle-wrapper">
-                <div className="ig-story-circle-glow"></div>
-                <div className="ig-story-circle">
-                  <img src={story.image} alt={story.title} />
-                </div>
-              </div>
-              <span>{story.title}</span>
-            </button>
-          ))}
+        {/* Custom website horizontal tag pills instead of circle stories */}
+        <section className="ig-highlights-nav">
+          <span className="ig-highlights-title">Tópicos:</span>
+          <div className="ig-highlights-scroll">
+            {STORIES.map((story, index) => (
+              <button 
+                key={story.id} 
+                onClick={() => { setActiveStoryIndex(index); setStoryProgress(0); }}
+                className="ig-highlight-pill"
+              >
+                <span className="ig-pill-indicator"></span>
+                <span className="ig-pill-text">{story.title}</span>
+              </button>
+            ))}
+          </div>
         </section>
 
         {/* Segmented control style Tab switcher */}
@@ -498,6 +489,64 @@ function App() {
         {/* Feed View Tab */}
         {mobileTab === 'feed' && (
           <div className="ig-feed">
+            {/* Post 4: Vídeos / Podcast */}
+            <article id="ig-post-videos" className="ig-post">
+              <header className="ig-post-header">
+                <img src="/images/foto01.jpg" alt="" className="ig-post-avatar" />
+                <div className="ig-post-header-info">
+                  <span className="ig-post-username">thenperson</span>
+                  <span className="ig-post-location">Janela do Vale Podcast</span>
+                </div>
+                <span className="post-category-badge">Podcast</span>
+              </header>
+              <div className="ig-post-video-player" style={{ aspectRatio: '16/9', background: '#000' }}>
+                <iframe 
+                  width="100%" 
+                  height="100%" 
+                  src={`https://www.youtube.com/embed/${activeVideo.youtubeId}?autoplay=0&rel=0`}
+                  title={activeVideo.title}
+                  frameBorder="0"
+                  allowFullScreen
+                  style={{ border: 'none' }}
+                ></iframe>
+              </div>
+              <div className="ig-post-horizontal-playlist" style={{ display: 'flex', overflowX: 'auto', gap: '8px', padding: '10px 16px', background: 'rgba(11, 15, 25, 0.5)' }}>
+                {PLAYLIST.map((video, idx) => (
+                  <button 
+                    key={video.id} 
+                    onClick={() => setActiveVideoIndex(idx)}
+                    style={{ 
+                      flex: '0 0 140px', 
+                      background: idx === activeVideoIndex ? 'rgba(59, 130, 246, 0.15)' : 'rgba(255,255,255,0.02)', 
+                      border: idx === activeVideoIndex ? '1px solid var(--color-primary)' : '1px solid rgba(255,255,255,0.05)',
+                      borderRadius: '8px', 
+                      padding: '6px',
+                      textAlign: 'left',
+                      color: '#fff',
+                      font: 'inherit',
+                      cursor: 'pointer'
+                    }}
+                  >
+                    <h4 style={{ fontSize: '0.7rem', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{video.title}</h4>
+                    <p style={{ fontSize: '0.6rem', color: 'var(--text-secondary)', marginTop: '2px' }}>⏱️ {video.duration}</p>
+                  </button>
+                ))}
+              </div>
+              <div className="ig-post-actions">
+                <Heart size={22} className="ig-post-action-icon" />
+                <button onClick={() => setMobileTab('message')} className="ig-post-action-btn-svg" aria-label="Enviar Mensagem">
+                  <svg viewBox="0 0 24 24" width="22" height="22" stroke="currentColor" strokeWidth="2.2" fill="none" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+                  </svg>
+                </button>
+              </div>
+              <div className="ig-post-caption">
+                <p>
+                  <strong>thenperson</strong> O Janela do Vale Podcast dá voz à nossa cultura, lideranças e aos desafios de inclusão (como o autismo) e educação da nossa região. Dê o play nos cortes! 🎙️📲 #JanelaDoVale #Podcast #VozDoVale
+                </p>
+              </div>
+            </article>
+
             {/* Post 1: Biografia */}
             <article id="ig-post-bio" className="ig-post">
               <header className="ig-post-header">
@@ -596,64 +645,6 @@ function App() {
               <div className="ig-post-caption">
                 <p>
                   <strong>thenperson</strong> Diálogo aberto com a nossa gente. Veja onde estaremos nos próximos dias para debater o futuro da nossa região. 🗓️🤝 #OlhoNoOlho #Jequitinhonha #Agenda
-                </p>
-              </div>
-            </article>
-
-            {/* Post 4: Vídeos / Podcast */}
-            <article id="ig-post-videos" className="ig-post">
-              <header className="ig-post-header">
-                <img src="/images/foto01.jpg" alt="" className="ig-post-avatar" />
-                <div className="ig-post-header-info">
-                  <span className="ig-post-username">thenperson</span>
-                  <span className="ig-post-location">Janela do Vale Podcast</span>
-                </div>
-                <span className="post-category-badge">Podcast</span>
-              </header>
-              <div className="ig-post-video-player" style={{ aspectRatio: '16/9', background: '#000' }}>
-                <iframe 
-                  width="100%" 
-                  height="100%" 
-                  src={`https://www.youtube.com/embed/${activeVideo.youtubeId}?autoplay=0&rel=0`}
-                  title={activeVideo.title}
-                  frameBorder="0"
-                  allowFullScreen
-                  style={{ border: 'none' }}
-                ></iframe>
-              </div>
-              <div className="ig-post-horizontal-playlist" style={{ display: 'flex', overflowX: 'auto', gap: '8px', padding: '10px 16px', background: 'rgba(11, 15, 25, 0.5)' }}>
-                {PLAYLIST.map((video, idx) => (
-                  <button 
-                    key={video.id} 
-                    onClick={() => setActiveVideoIndex(idx)}
-                    style={{ 
-                      flex: '0 0 140px', 
-                      background: idx === activeVideoIndex ? 'rgba(59, 130, 246, 0.15)' : 'rgba(255,255,255,0.02)', 
-                      border: idx === activeVideoIndex ? '1px solid var(--color-primary)' : '1px solid rgba(255,255,255,0.05)',
-                      borderRadius: '8px', 
-                      padding: '6px',
-                      textAlign: 'left',
-                      color: '#fff',
-                      font: 'inherit',
-                      cursor: 'pointer'
-                    }}
-                  >
-                    <h4 style={{ fontSize: '0.7rem', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{video.title}</h4>
-                    <p style={{ fontSize: '0.6rem', color: 'var(--text-secondary)', marginTop: '2px' }}>⏱️ {video.duration}</p>
-                  </button>
-                ))}
-              </div>
-              <div className="ig-post-actions">
-                <Heart size={22} className="ig-post-action-icon" />
-                <button onClick={() => setMobileTab('message')} className="ig-post-action-btn-svg" aria-label="Enviar Mensagem">
-                  <svg viewBox="0 0 24 24" width="22" height="22" stroke="currentColor" strokeWidth="2.2" fill="none" strokeLinecap="round" strokeLinejoin="round">
-                    <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
-                  </svg>
-                </button>
-              </div>
-              <div className="ig-post-caption">
-                <p>
-                  <strong>thenperson</strong> O Janela do Vale Podcast dá voz à nossa cultura, lideranças e aos desafios de inclusão (como o autismo) e educação da nossa região. Dê o play nos cortes! 🎙️📲 #JanelaDoVale #Podcast #VozDoVale
                 </p>
               </div>
             </article>
@@ -1158,6 +1149,73 @@ function App() {
           </div>
         </section>
 
+        {/* Videos Section */}
+        <section id="videos" className="section">
+          <div className="container">
+            <div className="section-title-wrapper">
+              <span className="section-tag">Galeria</span>
+              <h2 className="section-title">Espaço de <span>Vídeos</span></h2>
+              <p className="section-subtitle">
+                Assista aos nossos vídeos explicativos, pronunciamentos de pré-campanha e saiba quais são as nossas propostas para o Vale.
+              </p>
+            </div>
+            
+            <div className="desktop-video-layout">
+              {/* Main player component */}
+              <div className="main-video-container">
+                <div className="main-video-wrapper">
+                  <iframe 
+                    width="100%" 
+                    height="100%" 
+                    src={`https://www.youtube.com/embed/${activeVideo.youtubeId}?autoplay=0&rel=0`}
+                    title={activeVideo.title}
+                    frameBorder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+                    allowFullScreen
+                    style={{ border: 'none' }}
+                  ></iframe>
+                </div>
+                
+                {/* Details under active video */}
+                <div className="active-video-details">
+                  <span className="active-video-tag">Em Destaque</span>
+                  <h3 className="active-video-title">{activeVideo.title}</h3>
+                  <p className="active-video-desc">{activeVideo.description}</p>
+                </div>
+              </div>
+              
+              {/* Playlist Selector below the player */}
+              <div className="other-videos-section">
+                <h3 className="other-videos-heading">Outros Vídeos</h3>
+                <div className="other-videos-grid">
+                  {PLAYLIST.map((video, idx) => {
+                    if (idx === activeVideoIndex) return null;
+                    return (
+                      <button 
+                        key={video.id} 
+                        className="other-video-card"
+                        onClick={() => setActiveVideoIndex(idx)}
+                      >
+                        <div className="other-video-thumb">
+                          <img src="/images/imagempequena.png" alt="" className="other-video-thumb-img" />
+                          <div className="play-overlay">
+                            <Video size={24} />
+                          </div>
+                          <span className="other-video-duration">{video.duration}</span>
+                        </div>
+                        <div className="other-video-info">
+                          <h4>{video.title}</h4>
+                          <p>{video.description.substring(0, 120)}...</p>
+                        </div>
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
         {/* Links Hub Section (Cartão de Redes Sociais) */}
         <section id="links" className="section section-alt">
           <div className="container">
@@ -1407,64 +1465,6 @@ function App() {
           </div>
         </section>
 
-        {/* Videos Section */}
-        <section id="videos" className="section">
-          <div className="container">
-            <div className="section-title-wrapper">
-              <span className="section-tag">Galeria</span>
-              <h2 className="section-title">Espaço de <span>Vídeos</span></h2>
-              <p className="section-subtitle">
-                Assista aos nossos vídeos explicativos, pronunciamentos de pré-campanha e saiba quais são as nossas propostas para o Vale.
-              </p>
-            </div>
-            
-            <div className="video-grid">
-              {/* Main player component */}
-              <div className="main-video-wrapper">
-                {/* Embed YouTube dynamic player using the active video id */}
-                <iframe 
-                  width="100%" 
-                  height="100%" 
-                  src={`https://www.youtube.com/embed/${activeVideo.youtubeId}?autoplay=0&rel=0`}
-                  title={activeVideo.title}
-                  frameBorder="0"
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
-                  allowFullScreen
-                  style={{ border: 'none' }}
-                ></iframe>
-              </div>
-              
-              {/* Playlist Selector */}
-              <div className="video-playlist">
-                <h3 style={{ fontSize: '1.2rem', marginBottom: '8px', paddingLeft: '4px' }}>Outros Vídeos</h3>
-                {PLAYLIST.map((video, idx) => (
-                  <button 
-                    key={video.id} 
-                    className={`playlist-item ${idx === activeVideoIndex ? 'playlist-item-active' : ''}`}
-                    onClick={() => setActiveVideoIndex(idx)}
-                    style={{ background: 'none', border: 'none', width: '100%', textAlign: 'left', font: 'inherit' }}
-                  >
-                    <div className="playlist-thumb" aria-hidden="true">
-                      <img src="/images/imagempequena.png" alt="" className="playlist-thumb-img" />
-                      <Video size={20} />
-                    </div>
-                    <div className="playlist-info">
-                      <h4>{video.title}</h4>
-                      <p>{video.duration} • {video.description.substring(0, 50)}...</p>
-                    </div>
-                  </button>
-                ))}
-
-                {/* Details under active video */}
-                <div style={{ marginTop: '20px', padding: '16px', backgroundColor: 'rgba(255,255,255,0.02)', borderRadius: '12px', border: '1px solid rgba(255,255,255,0.05)' }}>
-                  <h4 style={{ color: 'var(--color-accent)', marginBottom: '8px', fontSize: '0.95rem' }}>Em Destaque</h4>
-                  <h3 style={{ fontSize: '1.1rem', marginBottom: '8px' }}>{activeVideo.title}</h3>
-                  <p style={{ fontSize: '0.85rem', color: 'var(--text-secondary)' }}>{activeVideo.description}</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
 
         {/* News Section */}
         <section id="noticias" className="section section-alt">
