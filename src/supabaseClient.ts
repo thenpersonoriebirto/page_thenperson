@@ -91,12 +91,12 @@ const defaultNews: NewsItem[] = [
   },
   {
     id: '3',
-    title: 'Debate sobre Incentivos Fiscais para o Norte e Nordeste de Minas Gerais',
-    summary: 'Thenperson reúne-se com lideranças políticas para planejar projetos de atração de indústrias e empresas de tecnologia para a nossa região.',
-    content: 'Atrair indústrias e empresas é o caminho definitivo para manter nossos jovens no Vale do Jequitinhonha. "Nossos talentos não podem ser obrigados a migrar para as grandes capitais por falta de emprego. Queremos que Almenara seja um polo de tecnologia e comércio", afirmou o pré-candidato.',
+    title: 'Thenperson celebra o carisma e a energia contagiante do povo de Almenara',
+    summary: 'Em declaração recente, o pré-candidato expressou seu amor pela calorosa acolhida e pela força de vontade do povo almenarense.',
+    content: 'O Vale do Jequitinhonha tem muitas belezas, mas o maior tesouro é a alma de nossa gente. Thenperson destacou que ama a energia contagiante, o carisma e o calor humano do povo almenarense: "A alegria e a garra do nosso povo nos dão a certeza de que Almenara está pronta para trilhar um caminho grandioso, longe da velha política".',
     date: '02 de Junho, 2026',
     image_url: '/images/fotovalebaixo.png',
-    category: 'Desenvolvimento',
+    category: 'Cultura e Comunidade',
   }
 ];
 
@@ -117,11 +117,11 @@ export const db = {
     }
     
     // Fallback: Check localStorage or load defaults
-    const local = localStorage.getItem('thenperson_agenda_v3');
+    const local = localStorage.getItem('thenperson_agenda_v4');
     if (local) {
       return JSON.parse(local);
     }
-    localStorage.setItem('thenperson_agenda_v3', JSON.stringify(defaultAgenda));
+    localStorage.setItem('thenperson_agenda_v4', JSON.stringify(defaultAgenda));
     return defaultAgenda;
   },
 
@@ -140,11 +140,11 @@ export const db = {
     }
     
     // Fallback: Check localStorage or load defaults
-    const local = localStorage.getItem('thenperson_news_v3');
+    const local = localStorage.getItem('thenperson_news_v4');
     if (local) {
       return JSON.parse(local);
     }
-    localStorage.setItem('thenperson_news_v3', JSON.stringify(defaultNews));
+    localStorage.setItem('thenperson_news_v4', JSON.stringify(defaultNews));
     return defaultNews;
   },
 

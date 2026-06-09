@@ -66,6 +66,27 @@ const PLAYLIST: VideoItem[] = [
 ];
 
 function App() {
+  // Device and Orientation Detection States
+  const [deviceSpecs, setDeviceSpecs] = useState({
+    isMobile: window.innerWidth <= 768,
+    isPortrait: window.innerHeight > window.innerWidth
+  });
+
+  useEffect(() => {
+    const handleResize = () => {
+      setDeviceSpecs({
+        isMobile: window.innerWidth <= 768,
+        isPortrait: window.innerHeight > window.innerWidth
+      });
+    };
+    window.addEventListener('resize', handleResize);
+    window.addEventListener('orientationchange', handleResize);
+    return () => {
+      window.removeEventListener('resize', handleResize);
+      window.removeEventListener('orientationchange', handleResize);
+    };
+  }, []);
+
   // Database States
   const [agenda, setAgenda] = useState<AgendaItem[]>([]);
   const [news, setNews] = useState<NewsItem[]>([]);
@@ -208,7 +229,7 @@ function App() {
   const activeVideo = PLAYLIST[activeVideoIndex];
 
   return (
-    <>
+    <div className={`app-wrapper device-${deviceSpecs.isMobile ? 'mobile' : 'desktop'} orientation-${deviceSpecs.isPortrait ? 'portrait' : 'landscape'}`}>
       {/* Background Neon Glows */}
       <div className="bg-glow-container" aria-hidden="true">
         <div className="bg-glow-1"></div>
@@ -928,7 +949,7 @@ function App() {
           <span className="toast-text">{toast.message}</span>
         </div>
       )}
-    </>
+    </div>
   );
 }
 
