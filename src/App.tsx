@@ -487,8 +487,8 @@ function App() {
         <section id="inicio" className="channel-hub-header">
           <div className="channel-banner-container">
             <img 
-              src="/images/jequitinhonha_landscape.png" 
-              alt="Paisagem do Vale do Jequitinhonha" 
+              src="/images/fotovalecima.png" 
+              alt="Thenperson no Vale do Jequitinhonha" 
               className="channel-banner-img" 
             />
             <div className="channel-banner-overlay"></div>
@@ -666,13 +666,13 @@ function App() {
         {/* Biography Section */}
         <section id="biografia" className="section section-alt">
           <div className="container bio-grid">
-            <div className="bio-images-grid">
-              {/* Instagram Card 1 (Tall / left) */}
+            <div className="bio-instagram-stack">
+              {/* Instagram Card 1 (Now standard-post) */}
               <a 
                 href="https://instagram.com/thenperson" 
                 target="_blank" 
                 rel="noopener noreferrer" 
-                className="instagram-bio-card tall-post border-glow"
+                className="instagram-bio-card standard-post border-glow"
               >
                 <div className="instagram-card-header">
                   <img src="/images/foto01.jpg" alt="" className="instagram-avatar-tiny" />
@@ -685,7 +685,7 @@ function App() {
                   </div>
                   <span className="instagram-dots">•••</span>
                 </div>
-                <div className="instagram-card-img-wrapper tall">
+                <div className="instagram-card-img-wrapper standard">
                   <img 
                     src="/images/foto05perfil.png" 
                     alt="Thenperson em Almenara" 
@@ -712,54 +712,12 @@ function App() {
                 </div>
               </a>
 
-              {/* Instagram Card 2 (Top right) */}
+              {/* Instagram Card 2 (Now standard-post) */}
               <a 
                 href="https://instagram.com/thenperson" 
                 target="_blank" 
                 rel="noopener noreferrer" 
-                className="instagram-bio-card square-post shadow-hover"
-              >
-                <div className="instagram-card-header">
-                  <img src="/images/foto01.jpg" alt="" className="instagram-avatar-tiny" />
-                  <div className="instagram-header-info">
-                    <span className="instagram-username">
-                      thenperson
-                      <Shield size={10} style={{ fill: 'var(--color-azul)', stroke: 'var(--color-azul)', marginLeft: '2px' }} />
-                    </span>
-                    <span className="instagram-location">Almenara, MG</span>
-                  </div>
-                  <span className="instagram-dots">•••</span>
-                </div>
-                <div className="instagram-card-img-wrapper square">
-                  <img 
-                    src="/images/fotovalecima.png" 
-                    alt="Paisagem Jequitinhonha" 
-                    className="instagram-card-img"
-                    loading="lazy"
-                  />
-                </div>
-                <div className="instagram-card-actions">
-                  <div className="instagram-actions-left">
-                    <Heart size={16} className="instagram-action-icon" />
-                    <MessageSquare size={16} className="instagram-action-icon" />
-                    <Send size={16} className="instagram-action-icon" />
-                  </div>
-                  <Bookmark size={16} className="instagram-action-icon" />
-                </div>
-                <div className="instagram-card-caption">
-                  <p><strong>thenperson</strong> O Vale do Jequitinhonha tem belezas incomparáveis, mas acima de tudo, um povo batalhador que merece voz ativa e representação. 🏞️❤️</p>
-                  <span className="instagram-cta-link">
-                    Ver no Instagram <ArrowRight size={10} />
-                  </span>
-                </div>
-              </a>
-
-              {/* Instagram Card 3 (Bottom right) */}
-              <a 
-                href="https://instagram.com/thenperson" 
-                target="_blank" 
-                rel="noopener noreferrer" 
-                className="instagram-bio-card square-post shadow-hover"
+                className="instagram-bio-card standard-post shadow-hover"
               >
                 <div className="instagram-card-header">
                   <img src="/images/foto01.jpg" alt="" className="instagram-avatar-tiny" />
@@ -772,7 +730,7 @@ function App() {
                   </div>
                   <span className="instagram-dots">•••</span>
                 </div>
-                <div className="instagram-card-img-wrapper square">
+                <div className="instagram-card-img-wrapper standard">
                   <img 
                     src="/images/foto02.png" 
                     alt="Família Thenperson" 
