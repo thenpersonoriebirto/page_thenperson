@@ -467,10 +467,30 @@ a {
 
 /* YouTube Channel Hub Header (Hero) */
 .channel-hub-header {
-  background-color: var(--bg-primary);
+  background: 
+    radial-gradient(circle at 80% 20%, rgba(30, 78, 140, 0.04), transparent 45%),
+    radial-gradient(circle at 20% 80%, rgba(165, 90, 58, 0.05), transparent 45%),
+    var(--bg-primary);
   padding-bottom: 60px;
   border-bottom: 1px solid var(--border-color);
   position: relative;
+  overflow: hidden;
+}
+
+.channel-hub-header::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: 
+    linear-gradient(rgba(30, 78, 140, 0.025) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(30, 78, 140, 0.025) 1px, transparent 1px);
+  background-size: 30px 30px;
+  background-position: center top;
+  pointer-events: none;
+  z-index: 0;
 }
 
 .channel-banner-container {

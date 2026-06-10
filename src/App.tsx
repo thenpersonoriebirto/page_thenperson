@@ -747,6 +747,37 @@ function App() {
           </div>
         </section>
 
+        {/* Education Highlight (Public Neglect Protest Section) */}
+        <section id="educacao" className="section section-dark-accent">
+          <div className="container">
+            <div className="protest-grid">
+              <div className="protest-image-wrapper">
+                <img 
+                  src="/images/estudantes.png" 
+                  alt="Thenperson e estudantes do Vale" 
+                  className="protest-image"
+                />
+              </div>
+              <div className="protest-content">
+                <span className="section-tag tag-on-dark">Aliança Pela Educação</span>
+                <h2>A Garra da Juventude Contra o <span>Descaso Público</span></h2>
+                <p>
+                  Almenara abriga jovens talentosos que conquistam premiações nacionais no <strong>IFNMG (Instituto Federal do Norte de Minas Gerais)</strong>. No entanto, esses estudantes brilhantes enfrentam no dia a dia a falta crônica de infraestrutura: transporte escolar rural precário, falta de subsídio intermunicipal e merendas deficientes.
+                </p>
+                <p>
+                  Thenperson apoia e se une à voz dos estudantes por respeito e suporte digno. Mais que um dever do governo, garantir transporte seguro e alimentação escolar de qualidade é preservar as mentes que desenharão o futuro do nosso Vale do Jequitinhonha.
+                </p>
+                <div style={{ marginTop: '20px' }}>
+                  <a href="https://wa.me/5533999999999" target="_blank" rel="noopener noreferrer" className="btn-orange">
+                    Apoiar Nossos Estudantes
+                    <ArrowRight size={18} />
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
         {/* Biography Section */}
         <section id="biografia" className="section section-alt">
           <div className="container bio-grid">
@@ -1001,37 +1032,6 @@ function App() {
                       </div>
                     </button>
                   ))}
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Education Highlight (Public Neglect Protest Section) */}
-        <section id="educacao" className="section section-dark-accent">
-          <div className="container">
-            <div className="protest-grid">
-              <div className="protest-image-wrapper">
-                <img 
-                  src="/images/estudantes.png" 
-                  alt="Thenperson e estudantes do Vale" 
-                  className="protest-image"
-                />
-              </div>
-              <div className="protest-content">
-                <span className="section-tag tag-on-dark">Aliança Pela Educação</span>
-                <h2>A Garra da Juventude Contra o <span>Descaso Público</span></h2>
-                <p>
-                  Almenara abriga jovens talentosos que conquistam premiações nacionais no <strong>IFNMG (Instituto Federal do Norte de Minas Gerais)</strong>. No entanto, esses estudantes brilhantes enfrentam no dia a dia a falta crônica de infraestrutura: transporte escolar rural precário, falta de subsídio intermunicipal e merendas deficientes.
-                </p>
-                <p>
-                  Thenperson apoia e se une à voz dos estudantes por respeito e suporte digno. Mais que um dever do governo, garantir transporte seguro e alimentação escolar de qualidade é preservar as mentes que desenharão o futuro do nosso Vale do Jequitinhonha.
-                </p>
-                <div style={{ marginTop: '20px' }}>
-                  <a href="https://wa.me/5533999999999" target="_blank" rel="noopener noreferrer" className="btn-orange">
-                    Apoiar Nossos Estudantes
-                    <ArrowRight size={18} />
-                  </a>
                 </div>
               </div>
             </div>
