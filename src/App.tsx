@@ -569,8 +569,8 @@ function App() {
           <nav className={`nav-menu ${mobileMenuOpen ? 'nav-menu-open' : ''}`} role="navigation">
             <a href="#inicio" className="nav-link" onClick={handleNavLinkClick}>Início</a>
             <a href="#videos" className="nav-link" onClick={handleNavLinkClick}>Vídeos</a>
-            <a href="#revista" className="nav-link" onClick={handleNavLinkClick}>Revista & Serviços</a>
             <a href="#biografia" className="nav-link" onClick={handleNavLinkClick}>Trajetória</a>
+            <a href="#revista" className="nav-link" onClick={handleNavLinkClick}>Revista & Serviços</a>
             <a href="#agenda" className="nav-link" onClick={handleNavLinkClick}>Agenda</a>
             <a href="#sugestao" className="nav-link nav-link-special" onClick={handleNavLinkClick}>Deixe Sua Voz</a>
             <a href="#compromissos" className="nav-link" onClick={handleNavLinkClick}>Pilares</a>
@@ -799,8 +799,64 @@ function App() {
           </div>
         </section>
 
+        {/* Biography Section */}
+        <section id="biografia" className="section section-alt">
+          <div className="container bio-grid">
+            <div className="bio-images-grid">
+              <div className="bio-img-wrapper bio-img-wrapper-tall border-glow">
+                <img 
+                  src="/images/foto05perfil.png" 
+                  alt="Thenperson em Almenara" 
+                  className="bio-img"
+                  loading="lazy"
+                  onError={(e) => {
+                    (e.target as HTMLImageElement).src = "/images/foto01.jpg";
+                  }}
+                />
+              </div>
+              <div className="bio-img-wrapper shadow-hover">
+                <img 
+                  src="/images/fotovalecima.png" 
+                  alt="Paisagem Jequitinhonha" 
+                  className="bio-img"
+                  loading="lazy"
+                />
+              </div>
+              <div className="bio-img-wrapper shadow-hover">
+                <img 
+                  src="/images/foto02.png" 
+                  alt="Família Thenperson" 
+                  className="bio-img"
+                  loading="lazy"
+                />
+              </div>
+            </div>
+            
+            <div className="bio-content">
+              <span className="section-tag">Origens e Trajetória</span>
+              <h2>Quem é <span>Thenperson</span>?</h2>
+              
+              <blockquote className="bio-quote">
+                "O Vale não precisa de políticos que aparecem a cada quatro anos com promessas vazias. Precisamos de presença diária, trabalho real e valores sólidos."
+              </blockquote>
+              
+              <div className="bio-paragraphs">
+                <p>
+                  <strong>Thenperson</strong> representa as raízes honestas e batalhadoras do Vale do Jequitinhonha. Nascido, criado e estabelecido em Almenara, MG, ele é reconhecido na comunidade pelo seu trabalho sério de mais de uma década como comerciante local, sendo o fundador da tradicional loja <strong>Multicell Almenara</strong>.
+                </p>
+                <p>
+                  Seu compromisso com a região não vem de teorias de gabinete, mas da vivência diária. Por trás do balcão e no comércio local, Thenperson conhece as dificuldades do setor produtivo, a necessidade de capacitação para a juventude e a luta das famílias brasileiras por dignidade.
+                </p>
+                <p>
+                  Homem de firmes <strong>valores familiares e princípios cristãos</strong>, ele enxerga o esporte infanto-juvenil e a saúde básica como os principais eixos de blindagem social e desenvolvimento do Vale. Com honestidade, proximidade real com o povo e espírito de trabalho, ele propõe uma caminhada de renovação séria.
+                </p>
+              </div>
+            </div>
+          </div>
+        </section>
+
         {/* Revista do Vale & Portal de Serviços ao Cidadão */}
-        <section id="revista" className="section section-alt revista-section">
+        <section id="revista" className="section revista-section">
           <div className="container">
             <div className="section-title-wrapper">
               <span className="section-tag">Portal do Cidadão</span>
@@ -983,62 +1039,6 @@ function App() {
                 </div>
               </div>
             )}
-          </div>
-        </section>
-
-        {/* Biography Section */}
-        <section id="biografia" className="section">
-          <div className="container bio-grid">
-            <div className="bio-images-grid">
-              <div className="bio-img-wrapper bio-img-wrapper-tall border-glow">
-                <img 
-                  src="/images/foto05perfil.png" 
-                  alt="Thenperson em Almenara" 
-                  className="bio-img"
-                  loading="lazy"
-                  onError={(e) => {
-                    (e.target as HTMLImageElement).src = "/images/foto01.jpg";
-                  }}
-                />
-              </div>
-              <div className="bio-img-wrapper shadow-hover">
-                <img 
-                  src="/images/fotovalecima.png" 
-                  alt="Paisagem Jequitinhonha" 
-                  className="bio-img"
-                  loading="lazy"
-                />
-              </div>
-              <div className="bio-img-wrapper shadow-hover">
-                <img 
-                  src="/images/foto02.png" 
-                  alt="Família Thenperson" 
-                  className="bio-img"
-                  loading="lazy"
-                />
-              </div>
-            </div>
-            
-            <div className="bio-content">
-              <span className="section-tag">Origens e Trajetória</span>
-              <h2>Quem é <span>Thenperson</span>?</h2>
-              
-              <blockquote className="bio-quote">
-                "O Vale não precisa de políticos que aparecem a cada quatro anos com promessas vazias. Precisamos de presença diária, trabalho real e valores sólidos."
-              </blockquote>
-              
-              <div className="bio-paragraphs">
-                <p>
-                  <strong>Thenperson</strong> representa as raízes honestas e batalhadoras do Vale do Jequitinhonha. Nascido, criado e estabelecido em Almenara, MG, ele é reconhecido na comunidade pelo seu trabalho sério de mais de uma década como comerciante local, sendo o fundador da tradicional loja <strong>Multicell Almenara</strong>.
-                </p>
-                <p>
-                  Seu compromisso com a região não vem de teorias de gabinete, mas da vivência diária. Por trás do balcão e no comércio local, Thenperson conhece as dificuldades do setor produtivo, a necessidade de capacitação para a juventude e a luta das famílias brasileiras por dignidade.
-                </p>
-                <p>
-                  Homem de firmes <strong>valores familiares e princípios cristãos</strong>, ele enxerga o esporte infanto-juvenil e a saúde básica como os principais eixos de blindagem social e desenvolvimento do Vale. Com honestidade, proximidade real com o povo e espírito de trabalho, ele propõe uma caminhada de renovação séria.
-                </p>
-              </div>
-            </div>
           </div>
         </section>
 
@@ -1489,8 +1489,8 @@ function App() {
               <ul>
                 <li><a href="#inicio" className="footer-link">Início</a></li>
                 <li><a href="#videos" className="footer-link">Vídeos e Podcast</a></li>
-                <li><a href="#revista" className="footer-link">Revista & Serviços</a></li>
                 <li><a href="#biografia" className="footer-link">Quem é Thenperson</a></li>
+                <li><a href="#revista" className="footer-link">Revista & Serviços</a></li>
                 <li><a href="#compromissos" className="footer-link">Pilares & Bandeiras</a></li>
               </ul>
             </div>
