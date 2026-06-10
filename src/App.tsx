@@ -487,8 +487,8 @@ function App() {
         <section id="inicio" className="channel-hub-header">
           <div className="channel-banner-container">
             <img 
-              src="/images/fotovalecima.png" 
-              alt="Thenperson no Vale do Jequitinhonha" 
+              src="/images/jequitinhonha_landscape.png" 
+              alt="Paisagem do Vale do Jequitinhonha" 
               className="channel-banner-img" 
             />
             <div className="channel-banner-overlay"></div>
@@ -524,7 +524,7 @@ function App() {
                 </div>
                 
                 <p className="channel-description">
-                  Comerciante local de Almenara, pautado no trabalho sério, na defesa dos valores cristãos, da saúde preventiva e do incentivo ao esporte juvenil. Uma liderança real que caminha diariamente ao lado de nossa gente.
+                  <strong>100% presente no Vale do Jequitinhonha</strong>. Comerciante e fundador da tradicional loja <strong>Multicell Almenara</strong>, Thenperson atua de forma independente e ativa pelo progresso regional. Sua caminhada é pautada na <strong>defesa intransigente dos valores cristãos, da família, da saúde preventiva e do incentivo ao esporte para nossa juventude</strong>. Uma liderança real que caminha diariamente ao lado de nossa gente.
                 </p>
                 
                 <div className="channel-actions-row">
@@ -558,40 +558,7 @@ function App() {
           </div>
         </section>
 
-        {/* Dynamic Statistics Panel */}
-        <section className="stats-section">
-          <div className="container">
-            <div className="stats-grid">
-              <div className="stat-card">
-                <div className="stat-icon-bg">
-                  <User size={24} className="stat-icon" />
-                </div>
-                <div className="stat-info">
-                  <span className="stat-number">100%</span>
-                  <span className="stat-label">Presente no Jequitinhonha</span>
-                </div>
-              </div>
-              <div className="stat-card">
-                <div className="stat-icon-bg">
-                  <Award size={24} className="stat-icon" />
-                </div>
-                <div className="stat-info">
-                  <span className="stat-number">Multicell</span>
-                  <span className="stat-label">Geração de Emprego Local</span>
-                </div>
-              </div>
-              <div className="stat-card">
-                <div className="stat-icon-bg">
-                  <Heart size={24} className="stat-icon" />
-                </div>
-                <div className="stat-info">
-                  <span className="stat-number">Valores</span>
-                  <span className="stat-label">Família e Princípios Cristãos</span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
+
 
         {/* Revista do Vale & Portal de Serviços ao Cidadão */}
         <section id="revista" className="section revista-section">
@@ -829,7 +796,49 @@ function App() {
                 </div>
               </a>
 
-              {/* Instagram Card 2 (Now standard-post) */}
+              {/* Instagram Card 2 (Mountain Valley Card - Restored) */}
+              <a 
+                href="https://instagram.com/thenperson" 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                className="instagram-bio-card standard-post shadow-hover"
+              >
+                <div className="instagram-card-header">
+                  <img src="/images/foto01.jpg" alt="" className="instagram-avatar-tiny" />
+                  <div className="instagram-header-info">
+                    <span className="instagram-username">
+                      thenperson
+                      <Shield size={10} style={{ fill: 'var(--color-azul)', stroke: 'var(--color-azul)', marginLeft: '2px' }} />
+                    </span>
+                    <span className="instagram-location">Almenara, MG</span>
+                  </div>
+                  <span className="instagram-dots">•••</span>
+                </div>
+                <div className="instagram-card-img-wrapper standard">
+                  <img 
+                    src="/images/fotovalecima.png" 
+                    alt="Thenperson no Vale do Jequitinhonha" 
+                    className="instagram-card-img"
+                    loading="lazy"
+                  />
+                </div>
+                <div className="instagram-card-actions">
+                  <div className="instagram-actions-left">
+                    <Heart size={16} className="instagram-action-icon" />
+                    <MessageSquare size={16} className="instagram-action-icon" />
+                    <Send size={16} className="instagram-action-icon" />
+                  </div>
+                  <Bookmark size={16} className="instagram-action-icon" />
+                </div>
+                <div className="instagram-card-caption">
+                  <p><strong>thenperson</strong> O Vale do Jequitinhonha tem belezas incomparáveis, mas acima de tudo, um povo batalhador que merece voz ativa e representação. 🏞️❤️</p>
+                  <span className="instagram-cta-link">
+                    Ver no Instagram <ArrowRight size={10} />
+                  </span>
+                </div>
+              </a>
+
+              {/* Instagram Card 3 (Now standard-post) */}
               <a 
                 href="https://instagram.com/thenperson" 
                 target="_blank" 
@@ -890,6 +899,39 @@ function App() {
                 <p>
                   Homem de firmes <strong>valores familiares e princípios cristãos</strong>, ele enxerga o esporte infanto-juvenil e a saúde básica como os principais eixos de blindagem social e desenvolvimento do Vale. Com honestidade, proximidade real com o povo e espírito de trabalho, ele propõe uma caminhada de renovação séria.
                 </p>
+              </div>
+
+              {/* Bio Integrated Highlights */}
+              <div className="bio-highlights-grid">
+                <div className="bio-highlight-item">
+                  <div className="bio-highlight-icon-wrapper">
+                    <User size={18} />
+                  </div>
+                  <div className="bio-highlight-text">
+                    <h4>100% Presente no Jequitinhonha</h4>
+                    <p>Caminhando e vivenciando diariamente as dores e potenciais de nossas cidades, sem teorias de gabinete.</p>
+                  </div>
+                </div>
+                
+                <div className="bio-highlight-item">
+                  <div className="bio-highlight-icon-wrapper">
+                    <Award size={18} />
+                  </div>
+                  <div className="bio-highlight-text">
+                    <h4>Multicell: Geração de Emprego Local</h4>
+                    <p>Força produtiva ativa, entendendo as dificuldades reais de quem empreende e trabalha na região.</p>
+                  </div>
+                </div>
+                
+                <div className="bio-highlight-item">
+                  <div className="bio-highlight-icon-wrapper">
+                    <Heart size={18} />
+                  </div>
+                  <div className="bio-highlight-text">
+                    <h4>Valores Familiares e Cristãos</h4>
+                    <p>Defesa integral dos princípios éticos, da união da família e do incentivo ao esporte para nossa juventude.</p>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
