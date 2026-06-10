@@ -331,6 +331,7 @@ function App() {
             <a href="#biografia" className="nav-link" onClick={handleNavLinkClick}>Biografia</a>
             <a href="#agenda" className="nav-link" onClick={handleNavLinkClick}>Agenda</a>
             <a href="#videos" className="nav-link" onClick={handleNavLinkClick}>Vídeos</a>
+            <a href="https://wa.me/5533999999999" target="_blank" rel="noopener noreferrer" className="btn-cta-header" onClick={handleNavLinkClick}>Faça Parte</a>
           </nav>
 
           {/* Mobile menu toggle */}
@@ -364,9 +365,12 @@ function App() {
               </p>
               
               <div className="hero-buttons">
+                <a href="https://wa.me/5533999999999" target="_blank" rel="noopener noreferrer" className="btn-orange">
+                  Faça Parte
+                  <ArrowRight size={18} />
+                </a>
                 <a href="#agenda" className="btn-primary">
                   Acompanhar Agenda
-                  <ArrowRight size={18} />
                 </a>
                 <a href="#biografia" className="btn-secondary">
                   Conhecer História
@@ -848,6 +852,52 @@ const MobileApp: React.FC<MobileAppProps> = ({
           
           <div className="yt-channel-description">
             <p>Empresário, fundador da Multicell Almenara, trabalhando e dialogando diariamente pelo Vale do Jequitinhonha.</p>
+          </div>
+
+          <div className="yt-channel-actions" style={{ display: 'flex', gap: '8px', marginTop: '12px' }}>
+            <a 
+              href="https://wa.me/5533999999999" 
+              target="_blank" 
+              rel="noopener noreferrer" 
+              className="yt-subscribe-btn"
+              style={{
+                backgroundColor: 'var(--color-laranja)',
+                color: '#ffffff',
+                flex: 1.2,
+                borderRadius: '20px',
+                padding: '10px 16px',
+                fontWeight: 700,
+                fontSize: '0.85rem',
+                textAlign: 'center',
+                boxShadow: '0 4px 10px rgba(228, 124, 44, 0.2)',
+                border: 'none',
+                cursor: 'pointer',
+                display: 'inline-block',
+                textDecoration: 'none'
+              }}
+            >
+              Faça Parte
+            </a>
+            <a 
+              href="#ig-post-agenda" 
+              className="yt-msg-btn"
+              style={{
+                backgroundColor: 'transparent',
+                border: '1px solid var(--color-primary)',
+                color: 'var(--color-primary)',
+                flex: 1,
+                borderRadius: '20px',
+                padding: '10px 16px',
+                fontWeight: 700,
+                fontSize: '0.85rem',
+                textAlign: 'center',
+                cursor: 'pointer',
+                display: 'inline-block',
+                textDecoration: 'none'
+              }}
+            >
+              Ver Agenda
+            </a>
           </div>
         </section>
 
