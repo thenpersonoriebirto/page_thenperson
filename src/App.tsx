@@ -21,7 +21,6 @@ import {
 import { db, isSupabaseConfigured } from './supabaseClient';
 import type { AgendaItem } from './supabaseClient';
 
-
 interface VideoItem {
   id: string;
   title: string;
@@ -71,7 +70,7 @@ const STORIES: StoryItem[] = [
     image: '/images/foto02.png',
     headline: 'Minha Família, Minha Base',
     text: 'Thenperson é comerciante local em Almenara. Sua história é pautada no trabalho honesto e nos valores de família para renovar o Vale do Jequitinhonha.',
-    link: '#ig-post-bio',
+    link: '#biografia',
     actionLabel: 'Ver Biografia'
   },
   {
@@ -80,7 +79,7 @@ const STORIES: StoryItem[] = [
     image: '/images/estudantes.png',
     headline: 'Voz Para a Juventude',
     text: 'Estudantes do IFNMG Almenara conquistam prêmios nacionais, mas enfrentam descaso com transporte e merenda. Apoiamos essa luta!',
-    link: '#ig-post-educacao',
+    link: '#educacao',
     actionLabel: 'Apoiar Estudantes'
   },
   {
@@ -89,7 +88,7 @@ const STORIES: StoryItem[] = [
     image: '/images/fotovalecima.png',
     headline: 'Pé na Estrada',
     text: 'Encontros olho no olho em Almenara e região. Acreditamos na presença constante do político no dia a dia das pessoas.',
-    link: '#ig-post-agenda',
+    link: '#agenda',
     actionLabel: 'Ver Agenda'
   },
   {
@@ -98,7 +97,7 @@ const STORIES: StoryItem[] = [
     image: '/images/imagempequena.png',
     headline: 'Janela do Vale',
     text: 'Nosso podcast traz as vozes de quem realmente vive o Vale. Assista a entrevistas exclusivas e debates fundamentais.',
-    link: '#ig-post-videos',
+    link: '#videos',
     actionLabel: 'Assista Agora'
   },
   {
@@ -107,31 +106,21 @@ const STORIES: StoryItem[] = [
     image: '/images/foto04vale.png',
     headline: 'Desenvolvimento Já!',
     text: 'Informações e propostas por incentivos fiscais para o Norte e Nordeste de Minas Gerais. Mais indústrias, mais empregos.',
-    link: '#ig-post-noticias',
-    actionLabel: 'Ler Informativos'
+    link: '#links',
+    actionLabel: 'Ver Canais'
   }
 ];
 
 function App() {
-  // Device and Orientation Detection States
-  const [deviceSpecs, setDeviceSpecs] = useState({
-    isMobile: window.innerWidth <= 768,
-    isPortrait: window.innerHeight > window.innerWidth
-  });
+  // Device Detection for responsive classes
+  const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
 
   useEffect(() => {
     const handleResize = () => {
-      setDeviceSpecs({
-        isMobile: window.innerWidth <= 768,
-        isPortrait: window.innerHeight > window.innerWidth
-      });
+      setIsMobile(window.innerWidth <= 768);
     };
     window.addEventListener('resize', handleResize);
-    window.addEventListener('orientationchange', handleResize);
-    return () => {
-      window.removeEventListener('resize', handleResize);
-      window.removeEventListener('orientationchange', handleResize);
-    };
+    return () => window.removeEventListener('resize', handleResize);
   }, []);
 
   // Database States
@@ -159,7 +148,6 @@ function App() {
     message: '',
     type: 'success'
   });
-
 
   // Track scroll for sticky header styling
   useEffect(() => {
@@ -223,19 +211,18 @@ function App() {
   };
 
   // Stories CTA Handler
-  const handleStoryCTA = (id: string) => {
+  const handleStoryCTA = (link: string) => {
     setActiveStoryIndex(null);
-    if (id === 'contato') {
-      const el = document.getElementById('yt-participate-section');
-      if (el) el.scrollIntoView({ behavior: 'smooth' });
-    } else {
-      setTimeout(() => {
-        const element = document.getElementById(`ig-post-${id}`);
+    setTimeout(() => {
+      if (link.startsWith('#')) {
+        const element = document.getElementById(link.substring(1));
         if (element) {
           element.scrollIntoView({ behavior: 'smooth', block: 'center' });
         }
-      }, 100);
-    }
+      } else {
+        window.open(link, '_blank', 'noopener,noreferrer');
+      }
+    }, 100);
   };
 
   // Auto-advance Stories
@@ -260,38 +247,15 @@ function App() {
     return () => clearInterval(timer);
   }, [activeStoryIndex, storyPaused]);
 
-  // Navigation Click Handler (handles mobile drawer closing)
   const handleNavLinkClick = () => {
     setMobileMenuOpen(false);
   };
 
   const activeVideo = PLAYLIST[activeVideoIndex];
 
-  if (deviceSpecs.isMobile) {
-    return (
-      <MobileApp 
-        activeVideo={activeVideo}
-        activeStoryIndex={activeStoryIndex}
-        setActiveStoryIndex={setActiveStoryIndex}
-        storyProgress={storyProgress}
-        setStoryProgress={setStoryProgress}
-        storyPaused={storyPaused}
-        setStoryPaused={setStoryPaused}
-        setActiveVideoIndex={setActiveVideoIndex}
-        toast={toast}
-        agenda={agenda}
-        loadingAgenda={loadingAgenda}
-        deviceSpecs={deviceSpecs}
-        handlePrevStory={handlePrevStory}
-        handleNextStory={handleNextStory}
-        handleStoryCTA={handleStoryCTA}
-      />
-    );
-  }
-
   return (
-    <div className={`app-wrapper device-${deviceSpecs.isMobile ? 'mobile' : 'desktop'} orientation-${deviceSpecs.isPortrait ? 'portrait' : 'landscape'}`}>
-      {/* Background Neon Glows */}
+    <div className={`app-wrapper device-${isMobile ? 'mobile' : 'desktop'}`}>
+      {/* Background Glows */}
       <div className="bg-glow-container" aria-hidden="true">
         <div className="bg-glow-1"></div>
         <div className="bg-glow-2"></div>
@@ -300,7 +264,7 @@ function App() {
       {/* Supabase Status Banner */}
       {showSbBanner && (
         <div className="sb-banner">
-          <Info size={16} color="var(--color-accent)" />
+          <Info size={16} color="var(--color-primary)" />
           <span>
             {isSupabaseConfigured 
               ? 'Conectado com sucesso ao Supabase Backend!' 
@@ -324,7 +288,7 @@ function App() {
             <span>THENPERSON</span>
           </a>
 
-          {/* Desktop Nav */}
+          {/* Responsive Nav */}
           <nav className={`nav-menu ${mobileMenuOpen ? 'nav-menu-open' : ''}`} role="navigation">
             <a href="#inicio" className="nav-link" onClick={handleNavLinkClick}>Início</a>
             <a href="#links" className="nav-link" onClick={handleNavLinkClick}>Redes</a>
@@ -345,6 +309,29 @@ function App() {
           </button>
         </div>
       </header>
+
+      {/* Stories Tray Section */}
+      <section className="stories-section">
+        <div className="container">
+          <div className="stories-tray">
+            {STORIES.map((story, idx) => (
+              <button 
+                key={story.id} 
+                className="story-bubble-wrapper"
+                onClick={() => {
+                  setActiveStoryIndex(idx);
+                  setStoryProgress(0);
+                }}
+              >
+                <div className="story-bubble-ring">
+                  <img src={story.image} alt={story.title} className="story-bubble-img" />
+                </div>
+                <span className="story-bubble-title">{story.title}</span>
+              </button>
+            ))}
+          </div>
+        </div>
+      </section>
 
       <main>
         {/* Hero Section */}
@@ -388,7 +375,7 @@ function App() {
                 </div>
                 <div className="highlight-item">
                   <span className="highlight-number">Sempre Presente</span>
-                  <span className="highlight-label">Vive e trabalha em Almenara</span>
+                  <span className="highlight-label">Mora e trabalha em Almenara</span>
                 </div>
               </div>
             </div>
@@ -404,14 +391,14 @@ function App() {
                 />
               </div>
 
-              {/* Floating badges for design aesthetics */}
+              {/* Floating badges */}
               <div className="floating-badge badge-left">
                 <div className="floating-badge-icon">
                   <Heart />
                 </div>
                 <div className="floating-badge-text">
-                  <h4>Saúde e Bem-estar</h4>
-                  <p>Prevenção em Primeiro Lugar</p>
+                  <h4>Saúde e Esporte</h4>
+                  <p>Prevenção e Bem-estar</p>
                 </div>
               </div>
 
@@ -420,22 +407,22 @@ function App() {
                   <Smartphone />
                 </div>
                 <div className="floating-badge-text">
-                  <h4>Dono da Multicell</h4>
-                  <p>Inovação e Tecnologia</p>
+                  <h4>Multicell Almenara</h4>
+                  <p>Inovação e Trabalho</p>
                 </div>
               </div>
             </div>
           </div>
         </section>
 
-        {/* Videos Section */}
+        {/* Videos Section - Contexto: Vídeos Emocionais / Vale (Terracota + Areia + Azul) */}
         <section id="videos" className="section">
           <div className="container">
             <div className="section-title-wrapper">
-              <span className="section-tag">Galeria</span>
-              <h2 className="section-title">Espaço de <span>Vídeos</span></h2>
+              <span className="section-tag">Janela do Vale</span>
+              <h2 className="section-title">Galeria de <span>Vídeos</span></h2>
               <p className="section-subtitle">
-                Assista aos nossos vídeos explicativos, pronunciamentos de pré-campanha e saiba quais são as nossas propostas para o Vale.
+                Assista aos episódios do nosso podcast, pronunciamentos de pré-campanha e saiba quais são as nossas propostas para a região do Vale.
               </p>
             </div>
             
@@ -465,7 +452,7 @@ function App() {
               
               {/* Playlist Selector below the player */}
               <div className="other-videos-section">
-                <h3 className="other-videos-heading">Outros Vídeos</h3>
+                <h3 className="other-videos-heading">Outros Episódios</h3>
                 <div className="other-videos-grid">
                   {PLAYLIST.map((video, idx) => {
                     if (idx === activeVideoIndex) return null;
@@ -495,7 +482,7 @@ function App() {
           </div>
         </section>
 
-        {/* Links Hub Section (Cartão de Redes Sociais) */}
+        {/* Links Hub Section (Canais Digitais) */}
         <section id="links" className="section section-alt">
           <div className="container">
             <div className="section-title-wrapper">
@@ -507,7 +494,7 @@ function App() {
             </div>
             
             <div className="hub-grid">
-              {/* Sleek digital linktree-style card */}
+              {/* Digital linktree card */}
               <div className="link-card-container">
                 <div className="lc-avatar-wrapper">
                   <div className="lc-avatar-glow" aria-hidden="true"></div>
@@ -564,18 +551,24 @@ function App() {
                 </div>
               </div>
 
-              {/* Informative elements next to card */}
+              {/* Informative elements */}
               <div className="hub-details">
-                <h3 className="hub-heading">Engajamento que Conecta e Transforma</h3>
+                <h3 className="hub-heading">Diálogo Aberto: O Vale com Voz e Vez</h3>
                 <p className="hub-text">
-                  Acreditamos em uma política feita olho no olho e de portas abertas. O uso ético das redes sociais nos ajuda a ouvir as dores do Vale do Jequitinhonha em tempo real. Escolha sua plataforma favorita e junte-se ao nosso movimento!
+                  Acreditamos em uma política construída de forma participativa, presente nos bairros e no comércio de Almenara e região. O uso das ferramentas digitais é nossa ponte para escutar, planejar e dar voz ao povo do Jequitinhonha. Escolha sua rede social favorita e participe da nossa caminhada.
                 </p>
+                <div style={{ marginTop: '10px' }}>
+                  <a href="https://wa.me/5533999999999" target="_blank" rel="noopener noreferrer" className="btn-orange" style={{ width: 'fit-content' }}>
+                    Faça Parte
+                    <ArrowRight size={18} />
+                  </a>
+                </div>
               </div>
             </div>
           </div>
         </section>
 
-        {/* Biography Section */}
+        {/* Biography Section - Contexto: Autoridade / Propostas (Azul Institucional predominante) */}
         <section id="biografia" className="section">
           <div className="container bio-grid">
             <div className="bio-images-grid">
@@ -615,27 +608,24 @@ function App() {
               
               <div className="bio-paragraphs">
                 <p>
-                  <strong>Thenperson</strong> representa o espírito do novo Vale do Jequitinhonha — uma terra de cultura viva e pulsante, habitada por um povo amável, acolhedor e profundamente batalhador, que hoje se desperta para um futuro de grandeza. Enquanto políticos tradicionais vivem em gabinetes nas capitais e só visitam Almenara de quatro em quatro anos para pedir votos e fazer falsas promessas, Thenperson vive, trabalha e caminha em nossa cidade todos os dias. Sua pré-campanha é o marco dessas mudanças reais que sopram sobre a nossa região.
+                  <strong>Thenperson</strong> representa o espírito do novo Vale do Jequitinhonha — uma terra de cultura viva e pulsante, habitada por um povo amável, acolhedor e batalhador, que hoje se desperta para um futuro de grandeza. Enquanto políticos tradicionais só visitam Almenara de quatro em quatro anos em época eleitoral, Thenperson vive, trabalha e caminha em nossa cidade diariamente. Sua trajetória é construída com pé no chão e proximidade real com a nossa gente.
                 </p>
                 <p>
-                  Como empresário e fundador da <strong>Multicell</strong>, a mais tradicional loja de celulares e acessórios de Almenara, ele construiu sua trajetória gerando empregos e ajudando no crescimento econômico local. Diariamente, por trás do balcão, Thenperson conversa diretamente com as famílias e comerciantes, conhecendo na pele a força do comércio de nossa região. Ele acredita que o Jequitinhonha não é uma região de escassez, mas uma potência adormecida, pronta para prosperar com ética e determinação.
+                  Como empresário e fundador da <strong>Multicell</strong>, a mais tradicional loja de celulares e acessórios de Almenara, ele conquistou espaço gerando empregos e apoiando o comércio local. Por trás do balcão, dialogando diretamente com a comunidade, ele conhece na pele a força empreendedora da região e os desafios do setor produtivo do Norte e Nordeste de Minas Gerais.
                 </p>
                 <p>
-                  Homem de sólidos princípios cristãos e valores morais firmes, ele preza ativamente pela saúde e pela união familiar. Para ele, apoiar projetos de saúde básica preventiva e incentivar a prática do esporte juvenil são pilares inegociáveis para afastar a juventude das ruas e promover o bem-estar de toda a comunidade.
-                </p>
-                <p>
-                  Sua pré-candidatura a Deputado Federal é a força de Almenara tomando a frente contra a velha política tradicional. Chega de sermos representados por quem não vive o nosso dia a dia e só quer o voto do Vale em época de eleição. O Jequitinhonha está pronto para vencer, e Thenperson é a liderança presente e honesta que guiará essa transformação para um futuro grandioso.
+                  Homem de sólidos princípios cristãos e values morais firmes, ele preza pela união familiar, pela saúde preventiva e pelo incentivo ao esporte juvenil. Para ele, afastar a juventude das ruas através do esporte e estruturar a saúde de base são pilares inegociáveis para garantir o desenvolvimento e a dignidade humana a cada família.
                 </p>
               </div>
             </div>
           </div>
         </section>
 
-        {/* Education Highlight Section */}
-        <section id="educacao" className="section section-alt" style={{ borderTop: '1px solid var(--border-color)', borderBottom: '1px solid var(--border-color)' }}>
+        {/* Education Highlight Section - Contexto: Denúncias/Problemas (Azul Escuro Predominante + Detalhes em Terracota Escuro) */}
+        <section id="educacao" className="section">
           <div className="container">
             <div className="video-grid" style={{ gridTemplateColumns: '1fr 1fr', alignItems: 'center' }}>
-              <div className="main-video-wrapper" style={{ height: 'auto', aspectRatio: '16/10', borderRadius: '16px', overflow: 'hidden', border: '1px solid var(--border-color)', boxShadow: 'var(--shadow-md)' }}>
+              <div className="main-video-wrapper">
                 <img 
                   src="/images/estudantes.png" 
                   alt="Thenperson reunido com dezenas de estudantes locais" 
@@ -647,11 +637,11 @@ function App() {
                 <h2 style={{ fontSize: '2.2rem', marginBottom: '20px', fontWeight: 800 }}>
                   A Força da Nossa Juventude Contra o <span>Descaso Público</span>
                 </h2>
-                <p style={{ fontSize: '1.05rem', marginBottom: '16px', color: 'var(--text-secondary)' }}>
-                  Almenara e região abrigam mentes brilhantes. Nossos jovens ganham prêmios importantes de conhecimento e se destacam nacionalmente, incluindo os alunos do <strong>IFNMG (Instituto Federal do Norte de Minas Gerais)</strong> e de escolas públicas. No entanto, esses estudantes brilhantes sofrem diariamente com o descaso crônico do poder público tradicional: a falta de transporte seguro, a insegurança alimentar e a escassez de recursos limitam o futuro de quem quer crescer.
+                <p style={{ fontSize: '1.05rem', marginBottom: '16px' }}>
+                  Almenara e região abrigam mentes brilhantes. Nossos jovens se destacam nacionalmente em Olimpíadas de Conhecimento e projetos de inovação, como os alunos do <strong>IFNMG (Instituto Federal do Norte de Minas Gerais)</strong>. No entanto, esses estudantes brilhantes sofrem diariamente com o descaso crônico do poder público tradicional: a falta de transporte escolar seguro, a precariedade da merenda e a escassez de apoio limitam o futuro de quem quer crescer.
                 </p>
-                <p style={{ fontSize: '1.05rem', color: 'var(--text-secondary)' }}>
-                  Thenperson assumiu o compromisso de lutar por quem estuda. Ele tem se reunido com dezenas de estudantes e professores para ouvir suas demandas e propor melhorias como alimentação estudantil digna, subsídio de transporte intermunicipal e fomento à qualificação tecnológica. A juventude de Almenara é a força motora da nossa mudança. Nossa cidade está se unindo contra a velha política para garantir um amanhã de respeito e grandeza a todos.
+                <p style={{ fontSize: '1.05rem' }}>
+                  Thenperson assumiu o compromisso de lutar por quem estuda. Ele tem se reunido com estudantes e educadores para estruturar propostas pelo subsídio do transporte intermunicipal, alimentação estudantil de qualidade e fomento à tecnologia. A juventude do Vale do Jequitinhonha merece respeito, infraestrutura e oportunidades reais para prosperar.
                 </p>
               </div>
             </div>
@@ -661,6 +651,14 @@ function App() {
         {/* Agenda Section */}
         <section id="agenda" className="section section-alt">
           <div className="container">
+            <div className="section-title-wrapper">
+              <span className="section-tag">Presença Constante</span>
+              <h2 className="section-title">Compromisso e <span>Presença</span></h2>
+              <p className="section-subtitle">
+                Acompanhe as datas de nossas reuniões de trabalho, visitas comunitárias e debates sobre as propostas para a nossa região.
+              </p>
+            </div>
+
             {loadingAgenda ? (
               <div style={{ textAlign: 'center', padding: '40px', color: 'var(--text-secondary)' }}>
                 Carregando agenda...
@@ -672,7 +670,6 @@ function App() {
             ) : (
               <div className="agenda-timeline">
                 {agenda.map((item) => {
-                  // Format date nicely from YYYY-MM-DD
                   const [year, month, day] = item.date.split('-');
                   const formattedDate = `${day}/${month}/${year}`;
                   
@@ -683,12 +680,12 @@ function App() {
                         <div className="agenda-date-time">
                           <span className="agenda-date">{formattedDate}</span>
                           <span className="agenda-time">
-                            <Calendar size={14} />
+                            <Calendar size={14} style={{ color: 'var(--color-primary)' }} />
                             {item.time}h
                           </span>
                         </div>
                         <div className="agenda-location">
-                          <MapPin size={14} />
+                          <MapPin size={14} style={{ color: 'var(--color-primary)' }} />
                           {item.location}
                         </div>
                       </div>
@@ -703,14 +700,14 @@ function App() {
         </section>
       </main>
 
-      {/* Footer */}
+      {/* Footer - Contexto: Credibilidade / Rodapé (Azul credibilidade predominante) */}
       <footer className="footer">
         <div className="container">
           <div className="footer-grid">
             <div className="footer-brand">
               <h3>THENPERSON</h3>
               <p>
-                Uma nova liderança de ética, valores corretos e saúde preventiva, pronta para defender e desenvolver o Vale do Jequitinhonha no Congresso Nacional.
+                Uma nova liderança fundada no trabalho correto, em valores familiares e na saúde preventiva, pronta para defender e alavancar o desenvolvimento do Vale do Jequitinhonha.
               </p>
               <div className="footer-socials">
                 <a href="https://instagram.com/thenperson" target="_blank" rel="noopener noreferrer" className="footer-social-btn" aria-label="Instagram">
@@ -729,14 +726,14 @@ function App() {
               <h4>Navegação</h4>
               <ul>
                 <li><a href="#inicio" className="footer-link">Início</a></li>
-                <li><a href="#links" className="footer-link">Redes Digitais</a></li>
+                <li><a href="#links" className="footer-link">Canais Digitais</a></li>
                 <li><a href="#biografia" className="footer-link">Biografia</a></li>
-                <li><a href="#agenda" className="footer-link">Agenda</a></li>
+                <li><a href="#agenda" className="footer-link">Agenda de Visitas</a></li>
               </ul>
             </div>
 
             <div className="footer-links-col">
-              <h4>Políticas e Apoio</h4>
+              <h4>Transparência</h4>
               <ul>
                 <li><a href="#videos" className="footer-link">Galeria de Vídeos</a></li>
                 <li><a href="https://www.tse.jus.br" target="_blank" rel="noopener noreferrer" className="footer-link">Legislação Eleitoral</a></li>
@@ -749,11 +746,69 @@ function App() {
               &copy; {new Date().getFullYear()} Thenperson - Pré-Candidato a Deputado Federal. Todos os direitos reservados.
             </p>
             <p>
-              Desenvolvido de forma ética. Material informativo de pré-campanha em conformidade com a legislação vigente.
+              Material informativo de pré-campanha em total conformidade com a legislação eleitoral vigente.
             </p>
           </div>
         </div>
       </footer>
+
+      {/* Fullscreen Stories Card Popup Viewer (Gives smartphone mockup experience on desktop) */}
+      {activeStoryIndex !== null && (
+        <div 
+          className="story-viewer"
+          onTouchStart={() => setStoryPaused(true)}
+          onTouchEnd={() => setStoryPaused(false)}
+          onMouseDown={() => setStoryPaused(true)}
+          onMouseUp={() => setStoryPaused(false)}
+        >
+          <div className="story-viewer-container">
+            {/* Story header progress bars */}
+            <div className="story-progress-container">
+              {STORIES.map((_, idx) => (
+                <div key={idx} className="story-progress-bar-bg">
+                  <div 
+                    className="story-progress-bar-fg" 
+                    style={{ 
+                      width: idx < activeStoryIndex ? '100%' : idx === activeStoryIndex ? `${storyProgress}%` : '0%' 
+                    }}
+                  ></div>
+                </div>
+              ))}
+            </div>
+
+            <div className="story-header-info">
+              <div className="story-profile">
+                <img src="/images/foto01.jpg" alt="" className="story-avatar" />
+                <span className="story-username">thenperson</span>
+              </div>
+              <button className="story-close-btn" onClick={() => setActiveStoryIndex(null)} aria-label="Fechar Story">
+                <X size={20} />
+              </button>
+            </div>
+
+            {/* Tap areas to navigate */}
+            <div className="story-tap-areas">
+              <button className="story-tap-left" onClick={handlePrevStory} aria-label="Story anterior"></button>
+              <button className="story-tap-right" onClick={handleNextStory} aria-label="Próximo story"></button>
+            </div>
+
+            <div className="story-card-body">
+              <img src={STORIES[activeStoryIndex].image} alt="" className="story-image" />
+              <div className="story-content-overlay">
+                <h3 className="story-headline">{STORIES[activeStoryIndex].headline}</h3>
+                <p className="story-text">{STORIES[activeStoryIndex].text}</p>
+                <button 
+                  className="story-cta-btn" 
+                  onClick={() => handleStoryCTA(STORIES[activeStoryIndex].link)}
+                >
+                  <span>{STORIES[activeStoryIndex].actionLabel}</span>
+                  <ArrowRight size={14} style={{ marginLeft: '4px' }} />
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Toast Notification */}
       {toast.show && (
@@ -770,294 +825,5 @@ function App() {
     </div>
   );
 }
-
-interface MobileAppProps {
-  activeVideo: any;
-  activeStoryIndex: number | null;
-  setActiveStoryIndex: (index: number | null) => void;
-  storyProgress: number;
-  setStoryProgress: (progress: number) => void;
-  storyPaused: boolean;
-  setStoryPaused: (paused: boolean) => void;
-  setActiveVideoIndex: (index: number) => void;
-  toast: any;
-  agenda: any[];
-  loadingAgenda: boolean;
-  deviceSpecs: any;
-  handlePrevStory: () => void;
-  handleNextStory: () => void;
-  handleStoryCTA: (id: string) => void;
-}
-
-const MobileApp: React.FC<MobileAppProps> = ({
-  activeVideo,
-  activeStoryIndex,
-  setActiveStoryIndex,
-  storyProgress,
-  setStoryPaused,
-  setActiveVideoIndex,
-  toast,
-  agenda,
-  loadingAgenda,
-  deviceSpecs,
-  handlePrevStory,
-  handleNextStory,
-  handleStoryCTA
-}) => {
-  return (
-    <div id="yt-mobile-top" className={`yt-mobile-container device-mobile orientation-${deviceSpecs.isPortrait ? 'portrait' : 'landscape'}`}>
-      {/* Background Glows */}
-      <div className="bg-glow-container" aria-hidden="true">
-        <div className="bg-glow-1"></div>
-        <div className="bg-glow-2"></div>
-      </div>
-
-      {/* Header */}
-      <header className="yt-header">
-        <div className="yt-header-left">
-          <span className="yt-logo-icon">
-            <Shield size={18} color="var(--color-accent)" />
-          </span>
-          <span className="yt-logo-text" style={{ textTransform: 'uppercase', letterSpacing: '1px', fontSize: '0.9rem' }}>Thenperson</span>
-        </div>
-        <div className="yt-header-right">
-          <button 
-            onClick={() => {
-              const el = document.getElementById('yt-participate-section');
-              if (el) el.scrollIntoView({ behavior: 'smooth' });
-            }} 
-            className="yt-avatar-btn"
-          >
-            <img src="/images/foto01.jpg" alt="Perfil" className="yt-top-avatar" />
-          </button>
-        </div>
-      </header>
-
-      {/* Scrollable Container */}
-      <div className="yt-mobile-scrollable" style={{ paddingBottom: '24px' }}>
-        {/* Channel Info */}
-        <div className="yt-channel-banner">
-          <img src="/images/fotovalecima.png" alt="Vale do Jequitinhonha" className="yt-banner-img" />
-        </div>
-
-        <section className="yt-channel-header" style={{ borderBottom: 'none', paddingBottom: '8px' }}>
-          <div className="yt-channel-main">
-            <img src="/images/foto01.jpg" alt="Thenperson Oriebir Costa" className="yt-channel-avatar" />
-            <div className="yt-channel-details">
-              <h1 className="yt-channel-name">Thenperson Oriebir Costa</h1>
-              <p className="yt-channel-handle">@thenperson</p>
-              <p className="yt-channel-meta">Almenara/MG</p>
-            </div>
-          </div>
-          
-          <div className="yt-channel-description">
-            <p>Empresário, fundador da Multicell Almenara, trabalhando e dialogando diariamente pelo Vale do Jequitinhonha.</p>
-          </div>
-
-          <div className="yt-channel-actions" style={{ display: 'flex', gap: '8px', marginTop: '12px' }}>
-            <a 
-              href="https://wa.me/5533999999999" 
-              target="_blank" 
-              rel="noopener noreferrer" 
-              className="yt-subscribe-btn"
-              style={{
-                backgroundColor: 'var(--color-laranja)',
-                color: '#ffffff',
-                flex: 1.2,
-                borderRadius: '20px',
-                padding: '10px 16px',
-                fontWeight: 700,
-                fontSize: '0.85rem',
-                textAlign: 'center',
-                boxShadow: '0 4px 10px rgba(228, 124, 44, 0.2)',
-                border: 'none',
-                cursor: 'pointer',
-                display: 'inline-block',
-                textDecoration: 'none'
-              }}
-            >
-              Faça Parte
-            </a>
-            <a 
-              href="#ig-post-agenda" 
-              className="yt-msg-btn"
-              style={{
-                backgroundColor: 'transparent',
-                border: '1px solid var(--color-primary)',
-                color: 'var(--color-primary)',
-                flex: 1,
-                borderRadius: '20px',
-                padding: '10px 16px',
-                fontWeight: 700,
-                fontSize: '0.85rem',
-                textAlign: 'center',
-                cursor: 'pointer',
-                display: 'inline-block',
-                textDecoration: 'none'
-              }}
-            >
-              Ver Agenda
-            </a>
-          </div>
-        </section>
-
-        {/* SECTION 1: VIDEOS & PODCAST */}
-        <section className="yt-section-videos" style={{ borderTop: '1px solid rgba(255,255,255,0.08)', paddingTop: '16px' }}>
-          {/* Featured Video Player */}
-          <div className="yt-video-card-featured" style={{ borderBottom: 'none' }}>
-            <div className="yt-video-player-wrapper">
-              <iframe 
-                width="100%" 
-                height="100%" 
-                src={`https://www.youtube.com/embed/${activeVideo.youtubeId}?autoplay=0&rel=0`}
-                title={activeVideo.title}
-                frameBorder="0"
-                allowFullScreen
-              ></iframe>
-            </div>
-            <div className="yt-video-info-block" style={{ padding: '12px 16px' }}>
-              <div className="yt-video-text">
-                <h3 className="yt-video-title" style={{ fontSize: '1rem', fontWeight: 700 }}>{activeVideo.title}</h3>
-                <p className="yt-video-stats">Janela do Vale Podcast</p>
-              </div>
-            </div>
-          </div>
-
-          {/* Other Videos List */}
-          <div className="yt-videos-list" style={{ padding: '0 16px 16px', gap: '12px' }}>
-            <h4 style={{ fontSize: '0.85rem', fontWeight: 700, color: '#aaa', margin: '0 0 4px' }}>Mais Episódios:</h4>
-            {PLAYLIST.map((video, idx) => (
-              <div 
-                key={video.id} 
-                className="yt-video-list-item"
-                style={{ 
-                  display: 'flex', 
-                  gap: '12px', 
-                  alignItems: 'center', 
-                  background: 'rgba(255,255,255,0.03)', 
-                  border: '1px solid rgba(255,255,255,0.06)', 
-                  borderRadius: '10px', 
-                  padding: '8px',
-                  cursor: 'pointer'
-                }}
-                onClick={() => {
-                  setActiveVideoIndex(idx);
-                  const el = document.getElementById('yt-mobile-top');
-                  if (el) el.scrollIntoView({ behavior: 'smooth' });
-                }}
-              >
-                <div style={{ position: 'relative', width: '80px', height: '45px', flexShrink: 0 }}>
-                  <img src="/images/imagempequena.png" alt="" style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: '6px' }} />
-                  <span style={{ position: 'absolute', bottom: '2px', right: '2px', background: 'rgba(0,0,0,0.85)', fontSize: '0.6rem', color: '#fff', padding: '1px 3px', borderRadius: '3px' }}>{video.duration}</span>
-                </div>
-                <div style={{ flex: 1, overflow: 'hidden' }}>
-                  <h5 style={{ fontSize: '0.8rem', fontWeight: 600, color: '#fff', margin: 0, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{video.title}</h5>
-                  <span style={{ fontSize: '0.65rem', color: '#aaa' }}>Janela do Vale</span>
-                </div>
-              </div>
-            ))}
-          </div>
-        </section>
-
-        {/* SECTION 2: CONTEÚDO E INFORMATIVOS - ONLY AGENDA (LINHA DO TEMPO) */}
-        <section className="yt-section-content" style={{ borderTop: '1px solid rgba(255,255,255,0.08)', paddingTop: '16px' }}>
-          <div className="yt-community-list">
-            {/* Agenda Post */}
-            <div id="ig-post-agenda" className="yt-comm-post" style={{ cursor: 'default' }}>
-              <div className="yt-comm-content">
-                <p>
-                  <strong>Agenda & Compromissos:</strong> Diálogo aberto com a nossa gente. Veja onde estaremos nos próximos dias para debater o futuro da nossa região. 🗓️🤝
-                </p>
-                <div className="yt-comm-agenda-box">
-                  {loadingAgenda ? (
-                    <span style={{ fontSize: '0.75rem', color: '#aaa' }}>Carregando agenda...</span>
-                  ) : agenda.length === 0 ? (
-                    <span style={{ fontSize: '0.75rem', color: '#aaa' }}>Nenhum evento agendado.</span>
-                  ) : (
-                    agenda.map(item => (
-                      <div key={item.id} className="yt-comm-agenda-item">
-                        <span className="yt-agenda-date-badge">{item.date.split('-').reverse().join('/')}</span>
-                        <div className="yt-comm-agenda-item-details">
-                          <h5>{item.title}</h5>
-                          <p>📍 {item.location} • {item.time}h</p>
-                        </div>
-                      </div>
-                    ))
-                  )}
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-      </div>
-
-      {/* Floating Story Card Overlay Modal */}
-      {activeStoryIndex !== null && (
-        <div 
-          className="story-viewer"
-          onTouchStart={() => setStoryPaused(true)}
-          onTouchEnd={() => setStoryPaused(false)}
-          onMouseDown={() => setStoryPaused(true)}
-          onMouseUp={() => setStoryPaused(false)}
-        >
-          {/* Story header progress bars */}
-          <div className="story-progress-container">
-            {STORIES.map((_, idx) => (
-              <div key={idx} className="story-progress-bar-bg">
-                <div 
-                  className="story-progress-bar-fg" 
-                  style={{ 
-                    width: idx < activeStoryIndex ? '100%' : idx === activeStoryIndex ? `${storyProgress}%` : '0%' 
-                  }}
-                ></div>
-              </div>
-            ))}
-          </div>
-
-          <div className="story-header-info">
-            <div className="story-profile">
-              <img src="/images/foto01.jpg" alt="" className="story-avatar" />
-              <span className="story-username">thenperson</span>
-            </div>
-            <button className="story-close-btn" onClick={() => setActiveStoryIndex(null)} aria-label="Fechar Story">
-              <X size={20} />
-            </button>
-          </div>
-
-          {/* Tap areas to navigate */}
-          <div className="story-tap-areas">
-            <button className="story-tap-left" onClick={handlePrevStory} aria-label="Story anterior"></button>
-            <button className="story-tap-right" onClick={handleNextStory} aria-label="Próximo story"></button>
-          </div>
-
-          <div className="story-card-body">
-            <img src={STORIES[activeStoryIndex].image} alt="" className="story-image" />
-            <div className="story-content-overlay">
-              <h3 className="story-headline">{STORIES[activeStoryIndex].headline}</h3>
-              <p className="story-text">{STORIES[activeStoryIndex].text}</p>
-              <button 
-                className="story-cta-btn" 
-                onClick={() => handleStoryCTA(STORIES[activeStoryIndex].id)}
-              >
-                <span>{STORIES[activeStoryIndex].actionLabel}</span>
-                <ArrowRight size={14} style={{ marginLeft: '4px' }} />
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
-
-      {/* Toast Notification */}
-      {toast.show && (
-        <div className={`toast ${toast.type === 'success' ? 'toast-success' : 'toast-error'}`} role="status">
-          <div className="toast-icon">
-            {toast.type === 'success' ? <CheckCircle size={20} /> : <AlertCircle size={20} />}
-          </div>
-          <span className="toast-text">{toast.message}</span>
-        </div>
-      )}
-    </div>
-  );
-};
 
 export default App;
