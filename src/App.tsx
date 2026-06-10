@@ -19,7 +19,9 @@ import {
   User,
   Check,
   Send,
-  Bookmark
+  Bookmark,
+  ChevronRight,
+  ExternalLink
 } from 'lucide-react';
 import { db, isSupabaseConfigured } from './supabaseClient';
 import type { NewsItem } from './supabaseClient';
@@ -62,44 +64,7 @@ const PLAYLIST: VideoItem[] = [
 
 
 
-interface PillarDetail {
-  title: string;
-  description: string;
-  points: string[];
-}
 
-const PILLARS_DETAILS: PillarDetail[] = [
-  {
-    title: 'Desenvolvimento Econômico & Comércio Local',
-    description: 'Como comerciante e fundador da Multicell, Thenperson conhece as barreiras para empreender. Seu plano foca em criar um ecossistema favorável aos pequenos negócios regionais:',
-    points: [
-      'Luta por incentivos fiscais específicos para indústrias e empresas que se instalarem no Norte e Nordeste de Minas.',
-      'Parcerias para capacitação de microempreendedores e facilitação de crédito regional.',
-      'Defesa da redução da burocracia estadual e federal sobre o pequeno comércio varejista.',
-      'Criação de feiras de negócios intermunicipais para escoar a produção artesanal e agrícola local.'
-    ]
-  },
-  {
-    title: 'Saúde Preventiva & Esporte Juvenil',
-    description: 'A saúde de qualidade começa na prevenção. Thenperson defende que incentivar o esporte afasta jovens das ruas e melhora o bem-estar social:',
-    points: [
-      'Destinação de emendas para estruturar postos de saúde de base nas comunidades rurais e bairros carentes.',
-      'Apoio e financiamento de projetos sociais de futebol, vôlei e esportes nas comunidades do Vale.',
-      'Programas de check-up de saúde itinerantes para exames básicos preventivos nas cidades vizinhas.',
-      'Construção e reforma de quadras poliesportivas em áreas de vulnerabilidade social.'
-    ]
-  },
-  {
-    title: 'Educação Técnica & Qualificação Tecnológica',
-    description: 'Preparar a nossa juventude para os empregos do futuro é a maior arma de transformação social. Nossas propostas incluem:',
-    points: [
-      'Garantir o subsídio e a segurança no transporte intermunicipal dos estudantes do Instituto Federal (IFNMG) e universidades.',
-      'Luta por merendas escolares nutritivas e de qualidade para as escolas públicas regionais.',
-      'Fomento a laboratórios de informática e cursos gratuitos de programação, marketing digital e empreendedorismo.',
-      'Parcerias com empresas de tecnologia nacionais para contratação remota de jovens qualificados no Vale.'
-    ]
-  }
-];
 
 interface MagazineArticle {
   id: string;
