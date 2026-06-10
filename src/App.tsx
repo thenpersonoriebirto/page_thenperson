@@ -1,10 +1,7 @@
 import { useState, useEffect } from 'react';
 import { 
-  Calendar, 
   Video, 
   Phone, 
-  MapPin, 
-  ExternalLink, 
   Instagram, 
   Facebook, 
   Youtube, 
@@ -15,14 +12,9 @@ import {
   AlertCircle, 
   Heart, 
   Shield, 
-  Smartphone,
   Info,
-  TrendingUp,
-  Activity,
-  BookOpen,
   MessageSquare,
   Award,
-  ChevronRight,
   Clock,
   User,
   Check,
@@ -30,7 +22,7 @@ import {
   Bookmark
 } from 'lucide-react';
 import { db, isSupabaseConfigured } from './supabaseClient';
-import type { AgendaItem, NewsItem } from './supabaseClient';
+import type { NewsItem } from './supabaseClient';
 
 interface VideoItem {
   id: string;
@@ -247,17 +239,11 @@ function App() {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
-  // Database States
-  const [agenda, setAgenda] = useState<AgendaItem[]>([]);
-  const [loadingAgenda, setLoadingAgenda] = useState<boolean>(true);
-  
   // UI States
   const [activeVideoIndex, setActiveVideoIndex] = useState<number>(0);
   const [mobileMenuOpen, setMobileMenuOpen] = useState<boolean>(false);
   const [showSbBanner, setShowSbBanner] = useState<boolean>(true);
   const [scrolled, setScrolled] = useState<boolean>(false);
-  const [activePillarIndex, setActivePillarIndex] = useState<number | null>(null);
-  const [agendaFilter, setAgendaFilter] = useState<string>('todos');
   
   // Revista / Magazine States
   const [activeRevistaTab, setActiveRevistaTab] = useState<string>('videos');
@@ -311,23 +297,7 @@ function App() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // Fetch data on mount
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const agendaData = await db.getAgenda();
-        setAgenda(agendaData);
-        setLoadingAgenda(false);
-      } catch (err) {
-        console.error('Failed to load agenda', err);
-        setLoadingAgenda(false);
-      }
 
-
-    };
-
-    fetchData();
-  }, []);
 
   // Auto-hide toast after 4 seconds
   useEffect(() => {
@@ -389,20 +359,7 @@ function App() {
 
   const activeVideo = PLAYLIST[activeVideoIndex];
 
-  // Filter Agenda items based on selection
-  const filteredAgenda = agenda.filter(item => {
-    if (agendaFilter === 'todos') return true;
-    if (agendaFilter === 'comercio') {
-      return item.title.toLowerCase().includes('comerciante') || item.title.toLowerCase().includes('empresa') || item.location.toLowerCase().includes('cdl');
-    }
-    if (agendaFilter === 'reuniao') {
-      return item.title.toLowerCase().includes('reunião') || item.title.toLowerCase().includes('encontro') || item.title.toLowerCase().includes('visita');
-    }
-    if (agendaFilter === 'plenaria') {
-      return item.title.toLowerCase().includes('plenária') || item.title.toLowerCase().includes('câmara');
-    }
-    return true;
-  });
+
 
   return (
     <div className={`app-wrapper device-${isMobile ? 'mobile' : 'desktop'}`}>
@@ -461,9 +418,7 @@ function App() {
             <a href="#revista" className="nav-link" onClick={handleNavLinkClick}>Revista & Serviços</a>
             <a href="#biografia" className="nav-link" onClick={handleNavLinkClick}>Trajetória</a>
             <a href="#videos" className="nav-link" onClick={handleNavLinkClick}>Vídeos</a>
-            <a href="#agenda" className="nav-link" onClick={handleNavLinkClick}>Agenda</a>
             <a href="#sugestao" className="nav-link nav-link-special" onClick={handleNavLinkClick}>Deixe Sua Voz</a>
-            <a href="#compromissos" className="nav-link" onClick={handleNavLinkClick}>Pilares</a>
             <a href="https://wa.me/5533999999999" target="_blank" rel="noopener noreferrer" className="btn-cta-header" onClick={handleNavLinkClick}>
               Faça Parte
               <ArrowRight size={14} style={{ marginLeft: '4px' }} />
@@ -1035,97 +990,7 @@ function App() {
           </div>
         </section>
 
-        {/* Interactive Event Agenda Section */}
-        <section id="agenda" className="section section-alt">
-          <div className="container">
-            <div className="section-title-wrapper">
-              <span className="section-tag">Sempre nas Ruas</span>
-              <h2 className="section-title">Nossa Agenda de <span>Presença</span></h2>
-              <p className="section-subtitle">
-                Confira os locais que estamos visitando, reuniões públicas e debates sobre o Vale do Jequitinhonha.
-              </p>
-            </div>
 
-            {/* Agenda Filtering Tabs */}
-            <div className="agenda-tabs">
-              <button 
-                className={`agenda-tab-btn ${agendaFilter === 'todos' ? 'active' : ''}`}
-                onClick={() => setAgendaFilter('todos')}
-              >
-                Todos Compromissos
-              </button>
-              <button 
-                className={`agenda-tab-btn ${agendaFilter === 'comercio' ? 'active' : ''}`}
-                onClick={() => setAgendaFilter('comercio')}
-              >
-                Comércio & Empresas
-              </button>
-              <button 
-                className={`agenda-tab-btn ${agendaFilter === 'reuniao' ? 'active' : ''}`}
-                onClick={() => setAgendaFilter('reuniao')}
-              >
-                Associações & Visitas
-              </button>
-              <button 
-                className={`agenda-tab-btn ${agendaFilter === 'plenaria' ? 'active' : ''}`}
-                onClick={() => setAgendaFilter('plenaria')}
-              >
-                Plenárias Cívicas
-              </button>
-            </div>
-
-            {loadingAgenda ? (
-              <div style={{ textAlign: 'center', padding: '40px', color: 'var(--text-secondary)' }}>
-                Carregando calendário de visitas...
-              </div>
-            ) : filteredAgenda.length === 0 ? (
-              <div className="agenda-empty-state">
-                <Calendar size={48} className="agenda-empty-icon" />
-                <p>Nenhum compromisso correspondente na agenda. Que tal sugerir uma visita?</p>
-                <a href="#sugestao" className="btn-primary" style={{ marginTop: '16px', display: 'inline-flex' }}>Sugerir Visita</a>
-              </div>
-            ) : (
-              <div className="agenda-timeline">
-                {filteredAgenda.map((item) => {
-                  const [year, month, day] = item.date.split('-');
-                  const formattedDate = `${day}/${month}/${year}`;
-                  
-                  return (
-                    <div key={item.id} className="agenda-card scale-hover">
-                      <div className="agenda-marker" aria-hidden="true"></div>
-                      <div className="agenda-header">
-                        <div className="agenda-date-time">
-                          <span className="agenda-date">{formattedDate}</span>
-                          <span className="agenda-time">
-                            <Clock size={14} style={{ marginRight: '4px', color: 'var(--color-primary)' }} />
-                            {item.time}h
-                          </span>
-                        </div>
-                        <div className="agenda-location">
-                          <MapPin size={14} style={{ marginRight: '4px', color: 'var(--color-primary)' }} />
-                          {item.location}
-                        </div>
-                      </div>
-                      <h3 className="agenda-title">{item.title}</h3>
-                      <p className="agenda-desc">{item.description}</p>
-                      <div className="agenda-footer-card">
-                        <a 
-                          href={`https://wa.me/5533999999999?text=Ol%C3%A1%20Thenperson%2C%20gostaria%20de%20confirmar%20presen%C3%A7a%20no%20evento%20${encodeURIComponent(item.title)}%20dia%20${formattedDate}`} 
-                          target="_blank" 
-                          rel="noopener noreferrer" 
-                          className="agenda-confirm-btn"
-                        >
-                          Confirmar Presença no WhatsApp
-                          <ExternalLink size={12} style={{ marginLeft: '4px' }} />
-                        </a>
-                      </div>
-                    </div>
-                  );
-                })}
-              </div>
-            )}
-          </div>
-        </section>
 
         {/* Suggestion Box & Contact Form ("Deixe Sua Voz") */}
         <section id="sugestao" className="section">
@@ -1233,195 +1098,7 @@ function App() {
           </div>
         </section>
 
-        {/* Digital Hub channels */}
-        <section id="links" className="section section-alt">
-          <div className="container">
-            <div className="section-title-wrapper">
-              <span className="section-tag">Conectados Sempre</span>
-              <h2 className="section-title">Nossos Canais <span>Digitais</span></h2>
-              <p className="section-subtitle">
-                Acompanhe os nossos posicionamentos diários no Instagram, debata no Facebook, assista aos vídeos e fale diretamente conosco.
-              </p>
-            </div>
 
-            <div className="hub-grid">
-              
-              <div className="link-card-container">
-                <div className="lc-avatar-wrapper">
-                  <div className="lc-avatar-glow" aria-hidden="true"></div>
-                  <img 
-                    src="/images/foto01.jpg" 
-                    alt="Thenperson" 
-                    className="lc-avatar"
-                  />
-                </div>
-                
-                <h3 className="lc-name">Thenperson</h3>
-                <p className="lc-tagline">@thenperson</p>
-                
-                <div className="lc-links-list">
-                  <a href="https://instagram.com/thenperson" target="_blank" rel="noopener noreferrer" className="lc-link-item">
-                    <span className="lc-link-icon-name">
-                      <Instagram className="lc-link-icon lc-link-icon-instagram" />
-                      Instagram Oficial
-                    </span>
-                    <ExternalLink size={14} className="lc-arrow" />
-                  </a>
-
-                  <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" className="lc-link-item">
-                    <span className="lc-link-icon-name">
-                      <Facebook className="lc-link-icon lc-link-icon-facebook" />
-                      Página no Facebook
-                    </span>
-                    <ExternalLink size={14} className="lc-arrow" />
-                  </a>
-
-                  <a href="https://www.youtube.com/@janeladovalepodcast" target="_blank" rel="noopener noreferrer" className="lc-link-item">
-                    <span className="lc-link-icon-name">
-                      <Youtube className="lc-link-icon lc-link-icon-youtube" />
-                      Canal do YouTube
-                    </span>
-                    <ExternalLink size={14} className="lc-arrow" />
-                  </a>
-
-                  <a href="https://wa.me/5533999999999" target="_blank" rel="noopener noreferrer" className="lc-link-item">
-                    <span className="lc-link-icon-name">
-                      <Phone className="lc-link-icon lc-link-icon-whatsapp" />
-                      WhatsApp Direto
-                    </span>
-                    <ExternalLink size={14} className="lc-arrow" />
-                  </a>
-
-                  <a href="https://goo.gl/maps/multicell-almenara" target="_blank" rel="noopener noreferrer" className="lc-link-item">
-                    <span className="lc-link-icon-name">
-                      <Smartphone className="lc-link-icon lc-link-icon-multicell" />
-                      Visite a Multicell Almenara
-                    </span>
-                    <ExternalLink size={14} className="lc-arrow" />
-                  </a>
-                </div>
-              </div>
-
-              <div className="hub-details">
-                <h3 className="hub-heading">Diálogo Aberto e Transparente</h3>
-                <p className="hub-text">
-                  Acreditamos em uma política moderna, pautada na verdade e no contato direto. Através das nossas redes sociais compartilhamos propostas de fiscalização, reuniões públicas e relatos sobre as cidades de Almenara, Jordânia, Jacinto, Salto da Divisa, Bandeira e todo o Vale. Escolha seu canal preferido e venha participar!
-                </p>
-                <div style={{ marginTop: '24px' }}>
-                  <a href="https://wa.me/5533999999999" target="_blank" rel="noopener noreferrer" className="btn-orange">
-                    Entrar no Grupo de Apoio
-                    <ArrowRight size={18} />
-                  </a>
-                </div>
-              </div>
-
-            </div>
-          </div>
-        </section>
-
-        {/* Campaign Pillars & Compromissos Section (Placed last) */}
-        <section id="compromissos" className="section">
-          <div className="container">
-            <div className="section-title-wrapper">
-              <span className="section-tag">A Força das Ideias</span>
-              <h2 className="section-title">Nossos Pilares de <span>Mudança</span></h2>
-              <p className="section-subtitle">
-                Propostas sólidas construídas a partir das reais necessidades que ouvimos todos os dias na nossa região. Clique nos cartões para ler as propostas detalhadas.
-              </p>
-            </div>
-
-            <div className="pillars-grid">
-              {/* Pillar 1 */}
-              <div 
-                className={`pillar-card ${activePillarIndex === 0 ? 'pillar-card-active' : ''}`}
-                onClick={() => setActivePillarIndex(activePillarIndex === 0 ? null : 0)}
-              >
-                <div className="pillar-header-group">
-                  <div className="pillar-icon-wrapper">
-                    <TrendingUp size={28} />
-                  </div>
-                  <h3>Desenvolvimento & Comércio</h3>
-                </div>
-                <p>
-                  Estímulo para micro e pequenas empresas regionais, geração de emprego de verdade e incentivos fiscais para o Norte e Nordeste de Minas Gerais.
-                </p>
-                <button className="pillar-toggle-btn">
-                  {activePillarIndex === 0 ? 'Ver menos' : 'Ver propostas completas'}
-                  <ChevronRight size={16} className={`pillar-chevron ${activePillarIndex === 0 ? 'rotate-90' : ''}`} />
-                </button>
-              </div>
-
-              {/* Pillar 2 */}
-              <div 
-                className={`pillar-card ${activePillarIndex === 1 ? 'pillar-card-active' : ''}`}
-                onClick={() => setActivePillarIndex(activePillarIndex === 1 ? null : 1)}
-              >
-                <div className="pillar-header-group">
-                  <div className="pillar-icon-wrapper">
-                    <Activity size={28} />
-                  </div>
-                  <h3>Saúde Preventiva & Esporte</h3>
-                </div>
-                <p>
-                  Apoio à saúde básica nas comunidades rurais, exames de rotina e projetos esportivos para guiar jovens por caminhos produtivos.
-                </p>
-                <button className="pillar-toggle-btn">
-                  {activePillarIndex === 1 ? 'Ver menos' : 'Ver propostas completas'}
-                  <ChevronRight size={16} className={`pillar-chevron ${activePillarIndex === 1 ? 'rotate-90' : ''}`} />
-                </button>
-              </div>
-
-              {/* Pillar 3 */}
-              <div 
-                className={`pillar-card ${activePillarIndex === 2 ? 'pillar-card-active' : ''}`}
-                onClick={() => setActivePillarIndex(activePillarIndex === 2 ? null : 2)}
-              >
-                <div className="pillar-header-group">
-                  <div className="pillar-icon-wrapper">
-                    <BookOpen size={28} />
-                  </div>
-                  <h3>Educação & Tecnologia</h3>
-                </div>
-                <p>
-                  Valorização dos estudantes locais, segurança nos transportes escolares intermunicipais e inserção no mercado digital de trabalho.
-                </p>
-                <button className="pillar-toggle-btn">
-                  {activePillarIndex === 2 ? 'Ver menos' : 'Ver propostas completas'}
-                  <ChevronRight size={16} className={`pillar-chevron ${activePillarIndex === 2 ? 'rotate-90' : ''}`} />
-                </button>
-              </div>
-            </div>
-
-            {/* Expansible Detailed Pillars Drawer */}
-            {activePillarIndex !== null && (
-              <div className="pillar-details-drawer animate-slide-in">
-                <div className="pillar-details-header">
-                  <h4>{PILLARS_DETAILS[activePillarIndex].title}</h4>
-                  <button className="pillar-details-close" onClick={(e) => { e.stopPropagation(); setActivePillarIndex(null); }}>
-                    <X size={20} />
-                  </button>
-                </div>
-                <div className="pillar-details-body">
-                  <p className="pillar-intro-text">{PILLARS_DETAILS[activePillarIndex].description}</p>
-                  <ul className="pillar-points-list">
-                    {PILLARS_DETAILS[activePillarIndex].points.map((pt, i) => (
-                      <li key={i} className="pillar-point-item">
-                        <Check size={18} className="pillar-point-check" />
-                        <span>{pt}</span>
-                      </li>
-                    ))}
-                  </ul>
-                  <div className="pillar-drawer-cta">
-                    <a href="https://wa.me/5533999999999" target="_blank" rel="noopener noreferrer" className="btn-orange">
-                      Quero Apoiar Esta Proposta
-                      <ArrowRight size={16} />
-                    </a>
-                  </div>
-                </div>
-              </div>
-            )}
-          </div>
-        </section>
       </main>
 
       {/* Footer */}
@@ -1453,14 +1130,12 @@ function App() {
                 <li><a href="#revista" className="footer-link">Revista & Serviços</a></li>
                 <li><a href="#biografia" className="footer-link">Quem é Thenperson</a></li>
                 <li><a href="#videos" className="footer-link">Vídeos e Podcast</a></li>
-                <li><a href="#compromissos" className="footer-link">Pilares & Bandeiras</a></li>
               </ul>
             </div>
-
+            
             <div className="footer-links-col">
               <h4>Engajamento</h4>
               <ul>
-                <li><a href="#agenda" className="footer-link">Agenda de Eventos</a></li>
                 <li><a href="#sugestao" className="footer-link">Deixar Sugestão</a></li>
                 <li><a href="https://www.tse.jus.br" target="_blank" rel="noopener noreferrer" className="footer-link">Legislação Eleitoral</a></li>
               </ul>
