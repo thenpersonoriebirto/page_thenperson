@@ -619,66 +619,75 @@ function App() {
       </section>
 
       <main>
-        {/* Hero Section */}
-        <section id="inicio" className="hero">
-          <div className="container hero-grid">
-            <div className="hero-content">
-              <div className="hero-badge">
-                <span className="hero-badge-dot" aria-hidden="true"></span>
-                <span>Pré-candidato a Deputado Federal - MG</span>
-              </div>
-              
-              <h1 className="hero-title">
-                Liderança de palavra para defender o <span>Vale do Jequitinhonha</span>
-              </h1>
-              
-              <p className="hero-description">
-                Thenperson é comerciante local em Almenara, fundador da tradicional <strong>Multicell</strong>. Diferente de políticos tradicionais que só aparecem de quatro em quatro anos, ele vive, trabalha e caminha diariamente com a comunidade.
-              </p>
-              
-              <div className="hero-buttons">
-                <a href="https://wa.me/5533999999999" target="_blank" rel="noopener noreferrer" className="btn-orange">
-                  Apoiar Pré-Campanha
-                  <ArrowRight size={18} />
-                </a>
-                <a href="#revista" className="btn-primary">
-                  Revista & Serviços
-                </a>
-                <a href="#sugestao" className="btn-secondary">
-                  Dar Sugestão
-                </a>
-              </div>
-            </div>
-            
-            <div className="hero-image-wrapper">
-              <div className="hero-image-glow" aria-hidden="true"></div>
-              <div className="hero-image-frame">
+        {/* YouTube Channel Hub Header (Hero) */}
+        <section id="inicio" className="channel-hub-header">
+          <div className="channel-banner-container">
+            <img 
+              src="/images/jequitinhonha_landscape.png" 
+              alt="Paisagem do Vale do Jequitinhonha" 
+              className="channel-banner-img" 
+            />
+            <div className="channel-banner-overlay"></div>
+          </div>
+          
+          <div className="container">
+            <div className="channel-profile-area">
+              <div className="channel-avatar-wrapper">
                 <img 
                   src="/images/foto01.jpg" 
                   alt="Thenperson" 
-                  className="hero-image"
-                  loading="eager"
+                  className="channel-avatar-img" 
                 />
+                <div className="channel-avatar-ring"></div>
               </div>
-
-              {/* Floating badges */}
-              <div className="floating-badge badge-left scale-hover">
-                <div className="floating-badge-icon badge-icon-blue">
-                  <Activity size={18} />
+              
+              <div className="channel-info-block">
+                <div className="channel-badge">
+                  <Shield size={14} style={{ marginRight: '6px', color: 'var(--color-laranja)' }} />
+                  <span>Pré-candidato a Deputado Federal</span>
                 </div>
-                <div className="floating-badge-text">
-                  <h4>Saúde e Esporte</h4>
-                  <p>Foco na Prevenção</p>
+                
+                <h1 className="channel-title">Thenperson</h1>
+                
+                <div className="channel-meta-row">
+                  <span className="channel-handle">@thenperson</span>
+                  <span className="channel-dot">•</span>
+                  <span className="channel-stat">Almenara - MG</span>
+                  <span className="channel-dot">•</span>
+                  <span className="channel-stat">Fundador da Multicell</span>
+                  <span className="channel-dot">•</span>
+                  <span className="channel-stat-badge">100% Presente</span>
                 </div>
-              </div>
-
-              <div className="floating-badge badge-right scale-hover">
-                <div className="floating-badge-icon badge-icon-orange">
-                  <Smartphone size={18} />
-                </div>
-                <div className="floating-badge-text">
-                  <h4>Empreendedorismo</h4>
-                  <p>Multicell Almenara</p>
+                
+                <p className="channel-description">
+                  Comerciante local de Almenara, pautado no trabalho sério, na defesa dos valores cristãos, da saúde preventiva e do incentivo ao esporte juvenil. Uma liderança real que caminha diariamente ao lado de nossa gente.
+                </p>
+                
+                <div className="channel-actions-row">
+                  <div className="channel-buttons">
+                    <a href="https://wa.me/5533999999999" target="_blank" rel="noopener noreferrer" className="btn-orange">
+                      Apoiar Pré-Campanha
+                      <ArrowRight size={16} />
+                    </a>
+                    <a href="#revista" className="btn-primary">
+                      Revista & Serviços
+                    </a>
+                    <a href="#sugestao" className="btn-secondary">
+                      Dar Sugestão
+                    </a>
+                  </div>
+                  
+                  <div className="channel-social-links">
+                    <a href="https://instagram.com/thenperson" target="_blank" rel="noopener noreferrer" className="channel-social-btn" title="Instagram">
+                      <Instagram size={18} />
+                    </a>
+                    <a href="https://www.youtube.com/@janeladovalepodcast" target="_blank" rel="noopener noreferrer" className="channel-social-btn" title="YouTube">
+                      <Youtube size={18} />
+                    </a>
+                    <a href="https://wa.me/5533999999999" target="_blank" rel="noopener noreferrer" className="channel-social-btn" title="WhatsApp Direct">
+                      <Phone size={18} />
+                    </a>
+                  </div>
                 </div>
               </div>
             </div>
