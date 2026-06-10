@@ -456,9 +456,9 @@ function App() {
           {/* Responsive Nav */}
           <nav className={`nav-menu ${mobileMenuOpen ? 'nav-menu-open' : ''}`} role="navigation">
             <a href="#inicio" className="nav-link" onClick={handleNavLinkClick}>Início</a>
-            <a href="#videos" className="nav-link" onClick={handleNavLinkClick}>Vídeos</a>
-            <a href="#biografia" className="nav-link" onClick={handleNavLinkClick}>Trajetória</a>
             <a href="#revista" className="nav-link" onClick={handleNavLinkClick}>Revista & Serviços</a>
+            <a href="#biografia" className="nav-link" onClick={handleNavLinkClick}>Trajetória</a>
+            <a href="#videos" className="nav-link" onClick={handleNavLinkClick}>Vídeos</a>
             <a href="#agenda" className="nav-link" onClick={handleNavLinkClick}>Agenda</a>
             <a href="#sugestao" className="nav-link nav-link-special" onClick={handleNavLinkClick}>Deixe Sua Voz</a>
             <a href="#compromissos" className="nav-link" onClick={handleNavLinkClick}>Pilares</a>
@@ -588,191 +588,6 @@ function App() {
                   <span className="stat-number">Valores</span>
                   <span className="stat-label">Família e Princípios Cristãos</span>
                 </div>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Masterclass Podcast Video Section */}
-        <section id="videos" className="section">
-          <div className="container">
-            <div className="section-title-wrapper">
-              <span className="section-tag">Janela do Vale Podcast</span>
-              <h2 className="section-title">A Voz das <span>Nossas Cidades</span></h2>
-              <p className="section-subtitle">
-                Assista a episódios fundamentais sobre o Vale do Jequitinhonha, debatendo desafios reais da saúde, inovação estudantil e histórias locais.
-              </p>
-            </div>
-            
-            <div className="desktop-video-layout">
-              {/* Main player component */}
-              <div className="main-video-container">
-                <div className="main-video-wrapper">
-                  <iframe 
-                    width="100%" 
-                    height="100%" 
-                    src={`https://www.youtube.com/embed/${activeVideo.youtubeId}?autoplay=0&rel=0`}
-                    title={activeVideo.title}
-                    frameBorder="0"
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
-                    allowFullScreen
-                    style={{ border: 'none' }}
-                  ></iframe>
-                </div>
-                
-                {/* Details under active video */}
-                <div className="active-video-details">
-                  <div className="active-video-meta">
-                    <span className="active-video-tag">{activeVideo.category}</span>
-                    <span className="active-video-duration">
-                      <Clock size={14} style={{ marginRight: '4px' }} />
-                      {activeVideo.duration}
-                    </span>
-                  </div>
-                  <h3 className="active-video-title">{activeVideo.title}</h3>
-                  <p className="active-video-desc">{activeVideo.description}</p>
-                </div>
-              </div>
-              
-              {/* Playlist Selector */}
-              <div className="other-videos-section">
-                <h3 className="other-videos-heading">Outros Episódios</h3>
-                <div className="other-videos-grid">
-                  {PLAYLIST.map((video, idx) => (
-                    <button 
-                      key={video.id} 
-                      className={`other-video-card ${idx === activeVideoIndex ? 'other-video-card-active' : ''}`}
-                      onClick={() => setActiveVideoIndex(idx)}
-                    >
-                      <div className="other-video-thumb">
-                        <img src="/images/imagempequena.png" alt="" className="other-video-thumb-img" />
-                        <div className="play-overlay">
-                          <Video size={20} />
-                        </div>
-                        <span className="other-video-duration">{video.duration}</span>
-                      </div>
-                      <div className="other-video-info">
-                        <span className="other-video-tag-card">{video.category}</span>
-                        <h4>{video.title}</h4>
-                      </div>
-                    </button>
-                  ))}
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Biography Section */}
-        <section id="biografia" className="section section-alt">
-          <div className="container bio-grid">
-            <div className="bio-instagram-stack">
-              {/* Instagram Card 1 (Now standard-post) */}
-              <a 
-                href="https://instagram.com/thenperson" 
-                target="_blank" 
-                rel="noopener noreferrer" 
-                className="instagram-bio-card standard-post border-glow"
-              >
-                <div className="instagram-card-header">
-                  <img src="/images/foto01.jpg" alt="" className="instagram-avatar-tiny" />
-                  <div className="instagram-header-info">
-                    <span className="instagram-username">
-                      thenperson
-                      <Shield size={10} style={{ fill: 'var(--color-azul)', stroke: 'var(--color-azul)', marginLeft: '2px' }} />
-                    </span>
-                    <span className="instagram-location">Almenara, MG</span>
-                  </div>
-                  <span className="instagram-dots">•••</span>
-                </div>
-                <div className="instagram-card-img-wrapper standard">
-                  <img 
-                    src="/images/foto05perfil.png" 
-                    alt="Thenperson em Almenara" 
-                    className="instagram-card-img"
-                    loading="lazy"
-                    onError={(e) => {
-                      (e.target as HTMLImageElement).src = "/images/foto01.jpg";
-                    }}
-                  />
-                </div>
-                <div className="instagram-card-actions">
-                  <div className="instagram-actions-left">
-                    <Heart size={16} className="instagram-action-icon" />
-                    <MessageSquare size={16} className="instagram-action-icon" />
-                    <Send size={16} className="instagram-action-icon" />
-                  </div>
-                  <Bookmark size={16} className="instagram-action-icon" />
-                </div>
-                <div className="instagram-card-caption">
-                  <p><strong>thenperson</strong> Caminhando pelo Vale, ouvindo as reais necessidades da nossa gente e debatendo soluções concretas para o futuro de Minas Gerais. 🇧🇷🙌</p>
-                  <span className="instagram-cta-link">
-                    Ver no Instagram <ArrowRight size={10} />
-                  </span>
-                </div>
-              </a>
-
-              {/* Instagram Card 2 (Now standard-post) */}
-              <a 
-                href="https://instagram.com/thenperson" 
-                target="_blank" 
-                rel="noopener noreferrer" 
-                className="instagram-bio-card standard-post shadow-hover"
-              >
-                <div className="instagram-card-header">
-                  <img src="/images/foto01.jpg" alt="" className="instagram-avatar-tiny" />
-                  <div className="instagram-header-info">
-                    <span className="instagram-username">
-                      thenperson
-                      <Shield size={10} style={{ fill: 'var(--color-azul)', stroke: 'var(--color-azul)', marginLeft: '2px' }} />
-                    </span>
-                    <span className="instagram-location">Família</span>
-                  </div>
-                  <span className="instagram-dots">•••</span>
-                </div>
-                <div className="instagram-card-img-wrapper standard">
-                  <img 
-                    src="/images/foto02.png" 
-                    alt="Família Thenperson" 
-                    className="instagram-card-img"
-                    loading="lazy"
-                  />
-                </div>
-                <div className="instagram-card-actions">
-                  <div className="instagram-actions-left">
-                    <Heart size={16} className="instagram-action-icon" />
-                    <MessageSquare size={16} className="instagram-action-icon" />
-                    <Send size={16} className="instagram-action-icon" />
-                  </div>
-                  <Bookmark size={16} className="instagram-action-icon" />
-                </div>
-                <div className="instagram-card-caption">
-                  <p><strong>thenperson</strong> A família é a base de tudo, nosso principal pilar de princípios e valores cristãos. Um domingo abençoado a todos! 🙏✨</p>
-                  <span className="instagram-cta-link">
-                    Ver no Instagram <ArrowRight size={10} />
-                  </span>
-                </div>
-              </a>
-            </div>
-            
-            <div className="bio-content">
-              <span className="section-tag">Origens e Trajetória</span>
-              <h2>Quem é <span>Thenperson</span>?</h2>
-              
-              <blockquote className="bio-quote">
-                "O Vale não precisa de políticos que aparecem a cada quatro anos com promessas vazias. Precisamos de presença diária, trabalho real e valores sólidos."
-              </blockquote>
-              
-              <div className="bio-paragraphs">
-                <p>
-                  <strong>Thenperson</strong> representa as raízes honestas e batalhadoras do Vale do Jequitinhonha. Nascido, criado e estabelecido em Almenara, MG, ele é reconhecido na comunidade pelo seu trabalho sério de mais de uma década como comerciante local, sendo o fundador da tradicional loja <strong>Multicell Almenara</strong>.
-                </p>
-                <p>
-                  Seu compromisso com a região não vem de teorias de gabinete, mas da vivência diária. Por trás do balcão e no comércio local, Thenperson conhece as dificuldades do setor produtivo, a necessidade de capacitação para a juventude e a luta das famílias brasileiras por dignidade.
-                </p>
-                <p>
-                  Homem de firmes <strong>valores familiares e princípios cristãos</strong>, ele enxerga o esporte infanto-juvenil e a saúde básica como os principais eixos de blindagem social e desenvolvimento do Vale. Com honestidade, proximidade real com o povo e espírito de trabalho, ele propõe uma caminhada de renovação séria.
-                </p>
               </div>
             </div>
           </div>
@@ -962,6 +777,191 @@ function App() {
                 </div>
               </div>
             )}
+          </div>
+        </section>
+
+        {/* Biography Section */}
+        <section id="biografia" className="section section-alt">
+          <div className="container bio-grid">
+            <div className="bio-instagram-stack">
+              {/* Instagram Card 1 (Now standard-post) */}
+              <a 
+                href="https://instagram.com/thenperson" 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                className="instagram-bio-card standard-post border-glow"
+              >
+                <div className="instagram-card-header">
+                  <img src="/images/foto01.jpg" alt="" className="instagram-avatar-tiny" />
+                  <div className="instagram-header-info">
+                    <span className="instagram-username">
+                      thenperson
+                      <Shield size={10} style={{ fill: 'var(--color-azul)', stroke: 'var(--color-azul)', marginLeft: '2px' }} />
+                    </span>
+                    <span className="instagram-location">Almenara, MG</span>
+                  </div>
+                  <span className="instagram-dots">•••</span>
+                </div>
+                <div className="instagram-card-img-wrapper standard">
+                  <img 
+                    src="/images/foto05perfil.png" 
+                    alt="Thenperson em Almenara" 
+                    className="instagram-card-img"
+                    loading="lazy"
+                    onError={(e) => {
+                      (e.target as HTMLImageElement).src = "/images/foto01.jpg";
+                    }}
+                  />
+                </div>
+                <div className="instagram-card-actions">
+                  <div className="instagram-actions-left">
+                    <Heart size={16} className="instagram-action-icon" />
+                    <MessageSquare size={16} className="instagram-action-icon" />
+                    <Send size={16} className="instagram-action-icon" />
+                  </div>
+                  <Bookmark size={16} className="instagram-action-icon" />
+                </div>
+                <div className="instagram-card-caption">
+                  <p><strong>thenperson</strong> Caminhando pelo Vale, ouvindo as reais necessidades da nossa gente e debatendo soluções concretas para o futuro de Minas Gerais. 🇧🇷🙌</p>
+                  <span className="instagram-cta-link">
+                    Ver no Instagram <ArrowRight size={10} />
+                  </span>
+                </div>
+              </a>
+
+              {/* Instagram Card 2 (Now standard-post) */}
+              <a 
+                href="https://instagram.com/thenperson" 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                className="instagram-bio-card standard-post shadow-hover"
+              >
+                <div className="instagram-card-header">
+                  <img src="/images/foto01.jpg" alt="" className="instagram-avatar-tiny" />
+                  <div className="instagram-header-info">
+                    <span className="instagram-username">
+                      thenperson
+                      <Shield size={10} style={{ fill: 'var(--color-azul)', stroke: 'var(--color-azul)', marginLeft: '2px' }} />
+                    </span>
+                    <span className="instagram-location">Família</span>
+                  </div>
+                  <span className="instagram-dots">•••</span>
+                </div>
+                <div className="instagram-card-img-wrapper standard">
+                  <img 
+                    src="/images/foto02.png" 
+                    alt="Família Thenperson" 
+                    className="instagram-card-img"
+                    loading="lazy"
+                  />
+                </div>
+                <div className="instagram-card-actions">
+                  <div className="instagram-actions-left">
+                    <Heart size={16} className="instagram-action-icon" />
+                    <MessageSquare size={16} className="instagram-action-icon" />
+                    <Send size={16} className="instagram-action-icon" />
+                  </div>
+                  <Bookmark size={16} className="instagram-action-icon" />
+                </div>
+                <div className="instagram-card-caption">
+                  <p><strong>thenperson</strong> A família é a base de tudo, nosso principal pilar de princípios e valores cristãos. Um domingo abençoado a todos! 🙏✨</p>
+                  <span className="instagram-cta-link">
+                    Ver no Instagram <ArrowRight size={10} />
+                  </span>
+                </div>
+              </a>
+            </div>
+            
+            <div className="bio-content">
+              <span className="section-tag">Origens e Trajetória</span>
+              <h2>Quem é <span>Thenperson</span>?</h2>
+              
+              <blockquote className="bio-quote">
+                "O Vale não precisa de políticos que aparecem a cada quatro anos com promessas vazias. Precisamos de presença diária, trabalho real e valores sólidos."
+              </blockquote>
+              
+              <div className="bio-paragraphs">
+                <p>
+                  <strong>Thenperson</strong> representa as raízes honestas e batalhadoras do Vale do Jequitinhonha. Nascido, criado e estabelecido em Almenara, MG, ele é reconhecido na comunidade pelo seu trabalho sério de mais de uma década como comerciante local, sendo o fundador da tradicional loja <strong>Multicell Almenara</strong>.
+                </p>
+                <p>
+                  Seu compromisso com a região não vem de teorias de gabinete, mas da vivência diária. Por trás do balcão e no comércio local, Thenperson conhece as dificuldades do setor produtivo, a necessidade de capacitação para a juventude e a luta das famílias brasileiras por dignidade.
+                </p>
+                <p>
+                  Homem de firmes <strong>valores familiares e princípios cristãos</strong>, ele enxerga o esporte infanto-juvenil e a saúde básica como os principais eixos de blindagem social e desenvolvimento do Vale. Com honestidade, proximidade real com o povo e espírito de trabalho, ele propõe uma caminhada de renovação séria.
+                </p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Masterclass Podcast Video Section */}
+        <section id="videos" className="section">
+          <div className="container">
+            <div className="section-title-wrapper">
+              <span className="section-tag">Janela do Vale Podcast</span>
+              <h2 className="section-title">A Voz das <span>Nossas Cidades</span></h2>
+              <p className="section-subtitle">
+                Assista a episódios fundamentais sobre o Vale do Jequitinhonha, debatendo desafios reais da saúde, inovação estudantil e histórias locais.
+              </p>
+            </div>
+            
+            <div className="desktop-video-layout">
+              {/* Main player component */}
+              <div className="main-video-container">
+                <div className="main-video-wrapper">
+                  <iframe 
+                    width="100%" 
+                    height="100%" 
+                    src={`https://www.youtube.com/embed/${activeVideo.youtubeId}?autoplay=0&rel=0`}
+                    title={activeVideo.title}
+                    frameBorder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+                    allowFullScreen
+                    style={{ border: 'none' }}
+                  ></iframe>
+                </div>
+                
+                {/* Details under active video */}
+                <div className="active-video-details">
+                  <div className="active-video-meta">
+                    <span className="active-video-tag">{activeVideo.category}</span>
+                    <span className="active-video-duration">
+                      <Clock size={14} style={{ marginRight: '4px' }} />
+                      {activeVideo.duration}
+                    </span>
+                  </div>
+                  <h3 className="active-video-title">{activeVideo.title}</h3>
+                  <p className="active-video-desc">{activeVideo.description}</p>
+                </div>
+              </div>
+              
+              {/* Playlist Selector */}
+              <div className="other-videos-section">
+                <h3 className="other-videos-heading">Outros Episódios</h3>
+                <div className="other-videos-grid">
+                  {PLAYLIST.map((video, idx) => (
+                    <button 
+                      key={video.id} 
+                      className={`other-video-card ${idx === activeVideoIndex ? 'other-video-card-active' : ''}`}
+                      onClick={() => setActiveVideoIndex(idx)}
+                    >
+                      <div className="other-video-thumb">
+                        <img src="/images/imagempequena.png" alt="" className="other-video-thumb-img" />
+                        <div className="play-overlay">
+                          <Video size={20} />
+                        </div>
+                        <span className="other-video-duration">{video.duration}</span>
+                      </div>
+                      <div className="other-video-info">
+                        <span className="other-video-tag-card">{video.category}</span>
+                        <h4>{video.title}</h4>
+                      </div>
+                    </button>
+                  ))}
+                </div>
+              </div>
+            </div>
           </div>
         </section>
 
@@ -1411,9 +1411,9 @@ function App() {
               <h4>Navegação</h4>
               <ul>
                 <li><a href="#inicio" className="footer-link">Início</a></li>
-                <li><a href="#videos" className="footer-link">Vídeos e Podcast</a></li>
-                <li><a href="#biografia" className="footer-link">Quem é Thenperson</a></li>
                 <li><a href="#revista" className="footer-link">Revista & Serviços</a></li>
+                <li><a href="#biografia" className="footer-link">Quem é Thenperson</a></li>
+                <li><a href="#videos" className="footer-link">Vídeos e Podcast</a></li>
                 <li><a href="#compromissos" className="footer-link">Pilares & Bandeiras</a></li>
               </ul>
             </div>
