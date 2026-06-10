@@ -304,8 +304,6 @@ function App() {
   // Database States
   const [agenda, setAgenda] = useState<AgendaItem[]>([]);
   const [loadingAgenda, setLoadingAgenda] = useState<boolean>(true);
-  const [news, setNews] = useState<NewsItem[]>([]);
-  const [loadingNews, setLoadingNews] = useState<boolean>(true);
   
   // UI States
   const [activeVideoIndex, setActiveVideoIndex] = useState<number>(0);
@@ -382,14 +380,7 @@ function App() {
         setLoadingAgenda(false);
       }
 
-      try {
-        const newsData = await db.getNews();
-        setNews(newsData);
-        setLoadingNews(false);
-      } catch (err) {
-        console.error('Failed to load news', err);
-        setLoadingNews(false);
-      }
+
     };
 
     fetchData();
