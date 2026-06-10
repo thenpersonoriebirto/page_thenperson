@@ -258,7 +258,7 @@ function App() {
   const [agendaFilter, setAgendaFilter] = useState<string>('todos');
   
   // Revista / Magazine States
-  const [activeRevistaTab, setActiveRevistaTab] = useState<string>('noticias');
+  const [activeRevistaTab, setActiveRevistaTab] = useState<string>('videos');
   const [selectedArticle, setSelectedArticle] = useState<MagazineArticle | null>(null);
   const [expandedServiceId, setExpandedServiceId] = useState<string | null>(null);
   
@@ -731,6 +731,12 @@ function App() {
             {/* Revista Tabs */}
             <div className="revista-tabs">
               <button 
+                className={`revista-tab-btn ${activeRevistaTab === 'videos' ? 'active' : ''}`}
+                onClick={() => setActiveRevistaTab('videos')}
+              >
+                O Vale em Vídeo
+              </button>
+              <button 
                 className={`revista-tab-btn ${activeRevistaTab === 'noticias' ? 'active' : ''}`}
                 onClick={() => setActiveRevistaTab('noticias')}
               >
@@ -741,12 +747,6 @@ function App() {
                 onClick={() => setActiveRevistaTab('beneficios')}
               >
                 Guia de Benefícios Sociais
-              </button>
-              <button 
-                className={`revista-tab-btn ${activeRevistaTab === 'videos' ? 'active' : ''}`}
-                onClick={() => setActiveRevistaTab('videos')}
-              >
-                O Vale em Vídeo
               </button>
             </div>
 
