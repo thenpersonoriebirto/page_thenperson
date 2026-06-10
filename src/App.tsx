@@ -568,12 +568,12 @@ function App() {
           {/* Responsive Nav */}
           <nav className={`nav-menu ${mobileMenuOpen ? 'nav-menu-open' : ''}`} role="navigation">
             <a href="#inicio" className="nav-link" onClick={handleNavLinkClick}>Início</a>
-            <a href="#revista" className="nav-link" onClick={handleNavLinkClick}>Revista & Serviços</a>
-            <a href="#compromissos" className="nav-link" onClick={handleNavLinkClick}>Pilares</a>
             <a href="#videos" className="nav-link" onClick={handleNavLinkClick}>Vídeos</a>
+            <a href="#revista" className="nav-link" onClick={handleNavLinkClick}>Revista & Serviços</a>
             <a href="#biografia" className="nav-link" onClick={handleNavLinkClick}>Trajetória</a>
             <a href="#agenda" className="nav-link" onClick={handleNavLinkClick}>Agenda</a>
             <a href="#sugestao" className="nav-link nav-link-special" onClick={handleNavLinkClick}>Deixe Sua Voz</a>
+            <a href="#compromissos" className="nav-link" onClick={handleNavLinkClick}>Pilares</a>
             <a href="https://wa.me/5533999999999" target="_blank" rel="noopener noreferrer" className="btn-cta-header" onClick={handleNavLinkClick}>
               Faça Parte
               <ArrowRight size={14} style={{ marginLeft: '4px' }} />
@@ -729,8 +729,78 @@ function App() {
           </div>
         </section>
 
-        {/* Revista do Vale & Portal de Serviços ao Cidadão (NEW - Magazine Utility Style) */}
-        <section id="revista" className="section revista-section">
+        {/* Masterclass Podcast Video Section */}
+        <section id="videos" className="section">
+          <div className="container">
+            <div className="section-title-wrapper">
+              <span className="section-tag">Janela do Vale Podcast</span>
+              <h2 className="section-title">A Voz das <span>Nossas Cidades</span></h2>
+              <p className="section-subtitle">
+                Assista a episódios fundamentais sobre o Vale do Jequitinhonha, debatendo desafios reais da saúde, inovação estudantil e histórias locais.
+              </p>
+            </div>
+            
+            <div className="desktop-video-layout">
+              {/* Main player component */}
+              <div className="main-video-container">
+                <div className="main-video-wrapper">
+                  <iframe 
+                    width="100%" 
+                    height="100%" 
+                    src={`https://www.youtube.com/embed/${activeVideo.youtubeId}?autoplay=0&rel=0`}
+                    title={activeVideo.title}
+                    frameBorder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+                    allowFullScreen
+                    style={{ border: 'none' }}
+                  ></iframe>
+                </div>
+                
+                {/* Details under active video */}
+                <div className="active-video-details">
+                  <div className="active-video-meta">
+                    <span className="active-video-tag">{activeVideo.category}</span>
+                    <span className="active-video-duration">
+                      <Clock size={14} style={{ marginRight: '4px' }} />
+                      {activeVideo.duration}
+                    </span>
+                  </div>
+                  <h3 className="active-video-title">{activeVideo.title}</h3>
+                  <p className="active-video-desc">{activeVideo.description}</p>
+                </div>
+              </div>
+              
+              {/* Playlist Selector */}
+              <div className="other-videos-section">
+                <h3 className="other-videos-heading">Outros Episódios</h3>
+                <div className="other-videos-grid">
+                  {PLAYLIST.map((video, idx) => (
+                    <button 
+                      key={video.id} 
+                      className={`other-video-card ${idx === activeVideoIndex ? 'other-video-card-active' : ''}`}
+                      onClick={() => setActiveVideoIndex(idx)}
+                    >
+                      <div className="other-video-thumb">
+                        <img src="/images/imagempequena.png" alt="" className="other-video-thumb-img" />
+                        <div className="play-overlay">
+                          <Video size={20} />
+                        </div>
+                        <span className="other-video-duration">{video.duration}</span>
+                      </div>
+                      <div className="other-video-info">
+                        <span className="other-video-tag-card">{video.category}</span>
+                        <h4>{video.title}</h4>
+                      </div>
+                    </button>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Revista do Vale & Portal de Serviços ao Cidadão */}
+        <section id="revista" className="section section-alt revista-section">
           <div className="container">
             <div className="section-title-wrapper">
               <span className="section-tag">Portal do Cidadão</span>
@@ -766,7 +836,7 @@ function App() {
             {activeRevistaTab === 'noticias' && (
               <div className="revista-tab-content animate-slide-in">
                 <div className="revista-magazine-layout">
-                  {/* Main Featured Article (Left/Top) */}
+                  {/* Main Featured Article */}
                   <div className="magazine-featured-card" onClick={() => setSelectedArticle(MAGAZINE_ARTICLES[0])}>
                     <div className="magazine-featured-img-wrapper">
                       <img src={MAGAZINE_ARTICLES[0].image} alt="" className="magazine-featured-img" />
@@ -783,7 +853,7 @@ function App() {
                     </div>
                   </div>
 
-                  {/* Secondary Articles List (Right) */}
+                  {/* Secondary Articles List */}
                   <div className="magazine-side-list">
                     {MAGAZINE_ARTICLES.slice(1).map((article) => (
                       <div 
@@ -916,182 +986,8 @@ function App() {
           </div>
         </section>
 
-        {/* Campaign Pillars & Compromissos Section */}
-        <section id="compromissos" className="section section-alt">
-          <div className="container">
-            <div className="section-title-wrapper">
-              <span className="section-tag">A Força das Ideias</span>
-              <h2 className="section-title">Nossos Pilares de <span>Mudança</span></h2>
-              <p className="section-subtitle">
-                Propostas sólidas construídas a partir das reais necessidades que ouvimos todos os dias na nossa região. Clique nos cartões para ler as propostas detalhadas.
-              </p>
-            </div>
-
-            <div className="pillars-grid">
-              {/* Pillar 1 */}
-              <div 
-                className={`pillar-card ${activePillarIndex === 0 ? 'pillar-card-active' : ''}`}
-                onClick={() => setActivePillarIndex(activePillarIndex === 0 ? null : 0)}
-              >
-                <div className="pillar-header-group">
-                  <div className="pillar-icon-wrapper">
-                    <TrendingUp size={28} />
-                  </div>
-                  <h3>Desenvolvimento & Comércio</h3>
-                </div>
-                <p>
-                  Estímulo para micro e pequenas empresas regionais, geração de emprego de verdade e incentivos fiscais para o Norte e Nordeste de Minas Gerais.
-                </p>
-                <button className="pillar-toggle-btn">
-                  {activePillarIndex === 0 ? 'Ver menos' : 'Ver propostas completas'}
-                  <ChevronRight size={16} className={`pillar-chevron ${activePillarIndex === 0 ? 'rotate-90' : ''}`} />
-                </button>
-              </div>
-
-              {/* Pillar 2 */}
-              <div 
-                className={`pillar-card ${activePillarIndex === 1 ? 'pillar-card-active' : ''}`}
-                onClick={() => setActivePillarIndex(activePillarIndex === 1 ? null : 1)}
-              >
-                <div className="pillar-header-group">
-                  <div className="pillar-icon-wrapper">
-                    <Activity size={28} />
-                  </div>
-                  <h3>Saúde Preventiva & Esporte</h3>
-                </div>
-                <p>
-                  Apoio à saúde básica nas comunidades rurais, exames de rotina e projetos esportivos para guiar jovens por caminhos produtivos.
-                </p>
-                <button className="pillar-toggle-btn">
-                  {activePillarIndex === 1 ? 'Ver menos' : 'Ver propostas completas'}
-                  <ChevronRight size={16} className={`pillar-chevron ${activePillarIndex === 1 ? 'rotate-90' : ''}`} />
-                </button>
-              </div>
-
-              {/* Pillar 3 */}
-              <div 
-                className={`pillar-card ${activePillarIndex === 2 ? 'pillar-card-active' : ''}`}
-                onClick={() => setActivePillarIndex(activePillarIndex === 2 ? null : 2)}
-              >
-                <div className="pillar-header-group">
-                  <div className="pillar-icon-wrapper">
-                    <BookOpen size={28} />
-                  </div>
-                  <h3>Educação & Tecnologia</h3>
-                </div>
-                <p>
-                  Valorização dos estudantes locais, segurança nos transportes escolares intermunicipais e inserção no mercado digital de trabalho.
-                </p>
-                <button className="pillar-toggle-btn">
-                  {activePillarIndex === 2 ? 'Ver menos' : 'Ver propostas completas'}
-                  <ChevronRight size={16} className={`pillar-chevron ${activePillarIndex === 2 ? 'rotate-90' : ''}`} />
-                </button>
-              </div>
-            </div>
-
-            {/* Expansible Detailed Pillars Drawer */}
-            {activePillarIndex !== null && (
-              <div className="pillar-details-drawer animate-slide-in">
-                <div className="pillar-details-header">
-                  <h4>{PILLARS_DETAILS[activePillarIndex].title}</h4>
-                  <button className="pillar-details-close" onClick={(e) => { e.stopPropagation(); setActivePillarIndex(null); }}>
-                    <X size={20} />
-                  </button>
-                </div>
-                <div className="pillar-details-body">
-                  <p className="pillar-intro-text">{PILLARS_DETAILS[activePillarIndex].description}</p>
-                  <ul className="pillar-points-list">
-                    {PILLARS_DETAILS[activePillarIndex].points.map((pt, i) => (
-                      <li key={i} className="pillar-point-item">
-                        <Check size={18} className="pillar-point-check" />
-                        <span>{pt}</span>
-                      </li>
-                    ))}
-                  </ul>
-                  <div className="pillar-drawer-cta">
-                    <a href="https://wa.me/5533999999999" target="_blank" rel="noopener noreferrer" className="btn-orange">
-                      Quero Apoiar Esta Proposta
-                      <ArrowRight size={16} />
-                    </a>
-                  </div>
-                </div>
-              </div>
-            )}
-          </div>
-        </section>
-
-        {/* Masterclass Podcast Video Section */}
-        <section id="videos" className="section">
-          <div className="container">
-            <div className="section-title-wrapper">
-              <span className="section-tag">Janela do Vale Podcast</span>
-              <h2 className="section-title">A Voz das <span>Nossas Cidades</span></h2>
-              <p className="section-subtitle">
-                Assista a episódios fundamentais sobre o Vale do Jequitinhonha, debatendo desafios reais da saúde, inovação estudantil e histórias locais.
-              </p>
-            </div>
-            
-            <div className="desktop-video-layout">
-              {/* Main player component */}
-              <div className="main-video-container">
-                <div className="main-video-wrapper">
-                  <iframe 
-                    width="100%" 
-                    height="100%" 
-                    src={`https://www.youtube.com/embed/${activeVideo.youtubeId}?autoplay=0&rel=0`}
-                    title={activeVideo.title}
-                    frameBorder="0"
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
-                    allowFullScreen
-                    style={{ border: 'none' }}
-                  ></iframe>
-                </div>
-                
-                {/* Details under active video */}
-                <div className="active-video-details">
-                  <div className="active-video-meta">
-                    <span className="active-video-tag">{activeVideo.category}</span>
-                    <span className="active-video-duration">
-                      <Clock size={14} style={{ marginRight: '4px' }} />
-                      {activeVideo.duration}
-                    </span>
-                  </div>
-                  <h3 className="active-video-title">{activeVideo.title}</h3>
-                  <p className="active-video-desc">{activeVideo.description}</p>
-                </div>
-              </div>
-              
-              {/* Playlist Selector */}
-              <div className="other-videos-section">
-                <h3 className="other-videos-heading">Outros Episódios</h3>
-                <div className="other-videos-grid">
-                  {PLAYLIST.map((video, idx) => (
-                    <button 
-                      key={video.id} 
-                      className={`other-video-card ${idx === activeVideoIndex ? 'other-video-card-active' : ''}`}
-                      onClick={() => setActiveVideoIndex(idx)}
-                    >
-                      <div className="other-video-thumb">
-                        <img src="/images/imagempequena.png" alt="" className="other-video-thumb-img" />
-                        <div className="play-overlay">
-                          <Video size={20} />
-                        </div>
-                        <span className="other-video-duration">{video.duration}</span>
-                      </div>
-                      <div className="other-video-info">
-                        <span className="other-video-tag-card">{video.category}</span>
-                        <h4>{video.title}</h4>
-                      </div>
-                    </button>
-                  ))}
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-
         {/* Biography Section */}
-        <section id="biografia" className="section section-alt">
+        <section id="biografia" className="section">
           <div className="container bio-grid">
             <div className="bio-images-grid">
               <div className="bio-img-wrapper bio-img-wrapper-tall border-glow">
@@ -1460,6 +1356,110 @@ function App() {
             </div>
           </div>
         </section>
+
+        {/* Campaign Pillars & Compromissos Section (Placed last) */}
+        <section id="compromissos" className="section">
+          <div className="container">
+            <div className="section-title-wrapper">
+              <span className="section-tag">A Força das Ideias</span>
+              <h2 className="section-title">Nossos Pilares de <span>Mudança</span></h2>
+              <p className="section-subtitle">
+                Propostas sólidas construídas a partir das reais necessidades que ouvimos todos os dias na nossa região. Clique nos cartões para ler as propostas detalhadas.
+              </p>
+            </div>
+
+            <div className="pillars-grid">
+              {/* Pillar 1 */}
+              <div 
+                className={`pillar-card ${activePillarIndex === 0 ? 'pillar-card-active' : ''}`}
+                onClick={() => setActivePillarIndex(activePillarIndex === 0 ? null : 0)}
+              >
+                <div className="pillar-header-group">
+                  <div className="pillar-icon-wrapper">
+                    <TrendingUp size={28} />
+                  </div>
+                  <h3>Desenvolvimento & Comércio</h3>
+                </div>
+                <p>
+                  Estímulo para micro e pequenas empresas regionais, geração de emprego de verdade e incentivos fiscais para o Norte e Nordeste de Minas Gerais.
+                </p>
+                <button className="pillar-toggle-btn">
+                  {activePillarIndex === 0 ? 'Ver menos' : 'Ver propostas completas'}
+                  <ChevronRight size={16} className={`pillar-chevron ${activePillarIndex === 0 ? 'rotate-90' : ''}`} />
+                </button>
+              </div>
+
+              {/* Pillar 2 */}
+              <div 
+                className={`pillar-card ${activePillarIndex === 1 ? 'pillar-card-active' : ''}`}
+                onClick={() => setActivePillarIndex(activePillarIndex === 1 ? null : 1)}
+              >
+                <div className="pillar-header-group">
+                  <div className="pillar-icon-wrapper">
+                    <Activity size={28} />
+                  </div>
+                  <h3>Saúde Preventiva & Esporte</h3>
+                </div>
+                <p>
+                  Apoio à saúde básica nas comunidades rurais, exames de rotina e projetos esportivos para guiar jovens por caminhos produtivos.
+                </p>
+                <button className="pillar-toggle-btn">
+                  {activePillarIndex === 1 ? 'Ver menos' : 'Ver propostas completas'}
+                  <ChevronRight size={16} className={`pillar-chevron ${activePillarIndex === 1 ? 'rotate-90' : ''}`} />
+                </button>
+              </div>
+
+              {/* Pillar 3 */}
+              <div 
+                className={`pillar-card ${activePillarIndex === 2 ? 'pillar-card-active' : ''}`}
+                onClick={() => setActivePillarIndex(activePillarIndex === 2 ? null : 2)}
+              >
+                <div className="pillar-header-group">
+                  <div className="pillar-icon-wrapper">
+                    <BookOpen size={28} />
+                  </div>
+                  <h3>Educação & Tecnologia</h3>
+                </div>
+                <p>
+                  Valorização dos estudantes locais, segurança nos transportes escolares intermunicipais e inserção no mercado digital de trabalho.
+                </p>
+                <button className="pillar-toggle-btn">
+                  {activePillarIndex === 2 ? 'Ver menos' : 'Ver propostas completas'}
+                  <ChevronRight size={16} className={`pillar-chevron ${activePillarIndex === 2 ? 'rotate-90' : ''}`} />
+                </button>
+              </div>
+            </div>
+
+            {/* Expansible Detailed Pillars Drawer */}
+            {activePillarIndex !== null && (
+              <div className="pillar-details-drawer animate-slide-in">
+                <div className="pillar-details-header">
+                  <h4>{PILLARS_DETAILS[activePillarIndex].title}</h4>
+                  <button className="pillar-details-close" onClick={(e) => { e.stopPropagation(); setActivePillarIndex(null); }}>
+                    <X size={20} />
+                  </button>
+                </div>
+                <div className="pillar-details-body">
+                  <p className="pillar-intro-text">{PILLARS_DETAILS[activePillarIndex].description}</p>
+                  <ul className="pillar-points-list">
+                    {PILLARS_DETAILS[activePillarIndex].points.map((pt, i) => (
+                      <li key={i} className="pillar-point-item">
+                        <Check size={18} className="pillar-point-check" />
+                        <span>{pt}</span>
+                      </li>
+                    ))}
+                  </ul>
+                  <div className="pillar-drawer-cta">
+                    <a href="https://wa.me/5533999999999" target="_blank" rel="noopener noreferrer" className="btn-orange">
+                      Quero Apoiar Esta Proposta
+                      <ArrowRight size={16} />
+                    </a>
+                  </div>
+                </div>
+              </div>
+            )}
+          </div>
+        </section>
       </main>
 
       {/* Footer */}
@@ -1488,10 +1488,10 @@ function App() {
               <h4>Navegação</h4>
               <ul>
                 <li><a href="#inicio" className="footer-link">Início</a></li>
-                <li><a href="#revista" className="footer-link">Revista & Serviços</a></li>
-                <li><a href="#compromissos" className="footer-link">Pilares & Bandeiras</a></li>
                 <li><a href="#videos" className="footer-link">Vídeos e Podcast</a></li>
+                <li><a href="#revista" className="footer-link">Revista & Serviços</a></li>
                 <li><a href="#biografia" className="footer-link">Quem é Thenperson</a></li>
+                <li><a href="#compromissos" className="footer-link">Pilares & Bandeiras</a></li>
               </ul>
             </div>
 
