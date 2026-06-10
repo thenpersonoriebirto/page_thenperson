@@ -66,63 +66,7 @@ const PLAYLIST: VideoItem[] = [
   }
 ];
 
-interface StoryItem {
-  id: string;
-  title: string;
-  image: string;
-  headline: string;
-  text: string;
-  link: string;
-  actionLabel: string;
-}
 
-const STORIES: StoryItem[] = [
-  {
-    id: 'origens',
-    title: 'Origens',
-    image: '/images/foto02.png',
-    headline: 'Minha Família, Minha Base',
-    text: 'Nascido e criado em Almenara, Thenperson tem suas raízes firmadas no trabalho, na honestidade familiar e na vida comunitária.',
-    link: '#biografia',
-    actionLabel: 'Conhecer História'
-  },
-  {
-    id: 'multicell',
-    title: 'Emprego',
-    image: '/images/foto01.jpg',
-    headline: 'Empreendedorismo Real',
-    text: 'Como comerciante e fundador da Multicell, Thenperson entende a importância de gerar empregos de verdade para Almenara e região.',
-    link: '#compromissos',
-    actionLabel: 'Ver Propostas'
-  },
-  {
-    id: 'juventude',
-    title: 'Juventude',
-    image: '/images/estudantes.png',
-    headline: 'Apoio aos Estudantes',
-    text: 'Estudantes do IFNMG Almenara e outras escolas merecem suporte. Luta contínua por transporte intermunicipal seguro e alimentação decente.',
-    link: '#educacao',
-    actionLabel: 'Aliança Estudantil'
-  },
-  {
-    id: 'saude',
-    title: 'Saúde',
-    image: '/images/foto04vale.png',
-    headline: 'Saúde e Prevenção',
-    text: 'Apoio à saúde básica preventiva e ao esporte infanto-juvenil como ferramentas essenciais para a qualidade de vida e futuro das famílias.',
-    link: '#compromissos',
-    actionLabel: 'Ver Pilares'
-  },
-  {
-    id: 'podcast',
-    title: 'Podcast',
-    image: '/images/imagempequena.png',
-    headline: 'Janela do Vale',
-    text: 'O podcast que traz as vozes autênticas do nosso povo. Diálogos sobre os reais problemas e belezas de nossas cidades.',
-    link: '#videos',
-    actionLabel: 'Assista Agora'
-  }
-];
 
 interface PillarDetail {
   title: string;
@@ -318,10 +262,7 @@ function App() {
   const [selectedArticle, setSelectedArticle] = useState<MagazineArticle | null>(null);
   const [expandedServiceId, setExpandedServiceId] = useState<string | null>(null);
   
-  // Stories States
-  const [activeStoryIndex, setActiveStoryIndex] = useState<number | null>(null);
-  const [storyProgress, setStoryProgress] = useState<number>(0);
-  const [storyPaused, setStoryPaused] = useState<boolean>(false);
+
 
   // News Modal State
   const [activeNewsItem, setActiveNewsItem] = useState<NewsItem | null>(null);
@@ -396,62 +337,7 @@ function App() {
     }
   }, [toast.show]);
 
-  // Stories Navigation Helpers
-  const handlePrevStory = () => {
-    if (activeStoryIndex === null) return;
-    if (activeStoryIndex > 0) {
-      setActiveStoryIndex(activeStoryIndex - 1);
-      setStoryProgress(0);
-    } else {
-      setStoryProgress(0);
-    }
-  };
 
-  const handleNextStory = () => {
-    if (activeStoryIndex === null) return;
-    if (activeStoryIndex < STORIES.length - 1) {
-      setActiveStoryIndex(activeStoryIndex + 1);
-      setStoryProgress(0);
-    } else {
-      setActiveStoryIndex(null);
-    }
-  };
-
-  const handleStoryCTA = (link: string) => {
-    setActiveStoryIndex(null);
-    setTimeout(() => {
-      if (link.startsWith('#')) {
-        const element = document.getElementById(link.substring(1));
-        if (element) {
-          element.scrollIntoView({ behavior: 'smooth', block: 'center' });
-        }
-      } else {
-        window.open(link, '_blank', 'noopener,noreferrer');
-      }
-    }, 100);
-  };
-
-  // Auto-advance Stories
-  useEffect(() => {
-    if (activeStoryIndex === null || storyPaused) return;
-
-    const timer = setInterval(() => {
-      setStoryProgress(prev => {
-        if (prev >= 100) {
-          if (activeStoryIndex < STORIES.length - 1) {
-            setActiveStoryIndex(activeStoryIndex + 1);
-            return 0;
-          } else {
-            setActiveStoryIndex(null);
-            return 0;
-          }
-        }
-        return prev + 1;
-      });
-    }, 50);
-
-    return () => clearInterval(timer);
-  }, [activeStoryIndex, storyPaused]);
 
   const handleNavLinkClick = () => {
     setMobileMenuOpen(false);
@@ -592,31 +478,7 @@ function App() {
         </div>
       </header>
 
-      {/* Stories Tray Section */}
-      <section className="stories-section">
-        <div className="container">
-          <div className="stories-tray-container">
-            <h4 className="stories-tray-label">Destaques da Semana</h4>
-            <div className="stories-tray">
-              {STORIES.map((story, idx) => (
-                <button 
-                  key={story.id} 
-                  className="story-bubble-wrapper"
-                  onClick={() => {
-                    setActiveStoryIndex(idx);
-                    setStoryProgress(0);
-                  }}
-                >
-                  <div className="story-bubble-ring">
-                    <img src={story.image} alt={story.title} className="story-bubble-img" />
-                  </div>
-                  <span className="story-bubble-title">{story.title}</span>
-                </button>
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
+
 
       <main>
         {/* YouTube Channel Hub Header (Hero) */}
@@ -1516,63 +1378,7 @@ function App() {
         </div>
       </footer>
 
-      {/* Fullscreen Stories Card Popup Viewer */}
-      {activeStoryIndex !== null && (
-        <div 
-          className="story-viewer"
-          onTouchStart={() => setStoryPaused(true)}
-          onTouchEnd={() => setStoryPaused(false)}
-          onMouseDown={() => setStoryPaused(true)}
-          onMouseUp={() => setStoryPaused(false)}
-        >
-          <div className="story-viewer-container">
-            {/* Story header progress bars */}
-            <div className="story-progress-container">
-              {STORIES.map((_, idx) => (
-                <div key={idx} className="story-progress-bar-bg">
-                  <div 
-                    className="story-progress-bar-fg" 
-                    style={{ 
-                      width: idx < activeStoryIndex ? '100%' : idx === activeStoryIndex ? `${storyProgress}%` : '0%' 
-                    }}
-                  ></div>
-                </div>
-              ))}
-            </div>
 
-            <div className="story-header-info">
-              <div className="story-profile">
-                <img src="/images/foto01.jpg" alt="" className="story-avatar" />
-                <span className="story-username">thenperson</span>
-              </div>
-              <button className="story-close-btn" onClick={() => setActiveStoryIndex(null)} aria-label="Fechar Story">
-                <X size={20} />
-              </button>
-            </div>
-
-            {/* Tap areas to navigate */}
-            <div className="story-tap-areas">
-              <button className="story-tap-left" onClick={handlePrevStory} aria-label="Story anterior"></button>
-              <button className="story-tap-right" onClick={handleNextStory} aria-label="Próximo story"></button>
-            </div>
-
-            <div className="story-card-body">
-              <img src={STORIES[activeStoryIndex].image} alt="" className="story-image" />
-              <div className="story-content-overlay">
-                <h3 className="story-headline">{STORIES[activeStoryIndex].headline}</h3>
-                <p className="story-text">{STORIES[activeStoryIndex].text}</p>
-                <button 
-                  className="story-cta-btn" 
-                  onClick={() => handleStoryCTA(STORIES[activeStoryIndex].link)}
-                >
-                  <span>{STORIES[activeStoryIndex].actionLabel}</span>
-                  <ArrowRight size={14} style={{ marginLeft: '4px' }} />
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
 
       {/* Magazine Fullscreen Article Reader Modal */}
       {selectedArticle !== null && (
