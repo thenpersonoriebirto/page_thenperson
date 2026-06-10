@@ -25,7 +25,9 @@ import {
   ChevronRight,
   Clock,
   User,
-  Check
+  Check,
+  Send,
+  Bookmark
 } from 'lucide-react';
 import { db, isSupabaseConfigured } from './supabaseClient';
 import type { AgendaItem, NewsItem } from './supabaseClient';
@@ -665,33 +667,134 @@ function App() {
         <section id="biografia" className="section section-alt">
           <div className="container bio-grid">
             <div className="bio-images-grid">
-              <div className="bio-img-wrapper bio-img-wrapper-tall border-glow">
-                <img 
-                  src="/images/foto05perfil.png" 
-                  alt="Thenperson em Almenara" 
-                  className="bio-img"
-                  loading="lazy"
-                  onError={(e) => {
-                    (e.target as HTMLImageElement).src = "/images/foto01.jpg";
-                  }}
-                />
-              </div>
-              <div className="bio-img-wrapper shadow-hover">
-                <img 
-                  src="/images/fotovalecima.png" 
-                  alt="Paisagem Jequitinhonha" 
-                  className="bio-img"
-                  loading="lazy"
-                />
-              </div>
-              <div className="bio-img-wrapper shadow-hover">
-                <img 
-                  src="/images/foto02.png" 
-                  alt="Família Thenperson" 
-                  className="bio-img"
-                  loading="lazy"
-                />
-              </div>
+              {/* Instagram Card 1 (Tall / left) */}
+              <a 
+                href="https://instagram.com/thenperson" 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                className="instagram-bio-card tall-post border-glow"
+              >
+                <div className="instagram-card-header">
+                  <img src="/images/foto01.jpg" alt="" className="instagram-avatar-tiny" />
+                  <div className="instagram-header-info">
+                    <span className="instagram-username">
+                      thenperson
+                      <Shield size={10} style={{ fill: 'var(--color-azul)', stroke: 'var(--color-azul)', marginLeft: '2px' }} />
+                    </span>
+                    <span className="instagram-location">Almenara, MG</span>
+                  </div>
+                  <span className="instagram-dots">•••</span>
+                </div>
+                <div className="instagram-card-img-wrapper tall">
+                  <img 
+                    src="/images/foto05perfil.png" 
+                    alt="Thenperson em Almenara" 
+                    className="instagram-card-img"
+                    loading="lazy"
+                    onError={(e) => {
+                      (e.target as HTMLImageElement).src = "/images/foto01.jpg";
+                    }}
+                  />
+                </div>
+                <div className="instagram-card-actions">
+                  <div className="instagram-actions-left">
+                    <Heart size={16} className="instagram-action-icon" />
+                    <MessageSquare size={16} className="instagram-action-icon" />
+                    <Send size={16} className="instagram-action-icon" />
+                  </div>
+                  <Bookmark size={16} className="instagram-action-icon" />
+                </div>
+                <div className="instagram-card-caption">
+                  <p><strong>thenperson</strong> Caminhando pelo Vale, ouvindo as reais necessidades da nossa gente e debatendo soluções concretas para o futuro de Minas Gerais. 🇧🇷🙌</p>
+                  <span className="instagram-cta-link">
+                    Ver no Instagram <ArrowRight size={10} />
+                  </span>
+                </div>
+              </a>
+
+              {/* Instagram Card 2 (Top right) */}
+              <a 
+                href="https://instagram.com/thenperson" 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                className="instagram-bio-card square-post shadow-hover"
+              >
+                <div className="instagram-card-header">
+                  <img src="/images/foto01.jpg" alt="" className="instagram-avatar-tiny" />
+                  <div className="instagram-header-info">
+                    <span className="instagram-username">
+                      thenperson
+                      <Shield size={10} style={{ fill: 'var(--color-azul)', stroke: 'var(--color-azul)', marginLeft: '2px' }} />
+                    </span>
+                    <span className="instagram-location">Almenara, MG</span>
+                  </div>
+                  <span className="instagram-dots">•••</span>
+                </div>
+                <div className="instagram-card-img-wrapper square">
+                  <img 
+                    src="/images/fotovalecima.png" 
+                    alt="Paisagem Jequitinhonha" 
+                    className="instagram-card-img"
+                    loading="lazy"
+                  />
+                </div>
+                <div className="instagram-card-actions">
+                  <div className="instagram-actions-left">
+                    <Heart size={16} className="instagram-action-icon" />
+                    <MessageSquare size={16} className="instagram-action-icon" />
+                    <Send size={16} className="instagram-action-icon" />
+                  </div>
+                  <Bookmark size={16} className="instagram-action-icon" />
+                </div>
+                <div className="instagram-card-caption">
+                  <p><strong>thenperson</strong> O Vale do Jequitinhonha tem belezas incomparáveis, mas acima de tudo, um povo batalhador que merece voz ativa e representação. 🏞️❤️</p>
+                  <span className="instagram-cta-link">
+                    Ver no Instagram <ArrowRight size={10} />
+                  </span>
+                </div>
+              </a>
+
+              {/* Instagram Card 3 (Bottom right) */}
+              <a 
+                href="https://instagram.com/thenperson" 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                className="instagram-bio-card square-post shadow-hover"
+              >
+                <div className="instagram-card-header">
+                  <img src="/images/foto01.jpg" alt="" className="instagram-avatar-tiny" />
+                  <div className="instagram-header-info">
+                    <span className="instagram-username">
+                      thenperson
+                      <Shield size={10} style={{ fill: 'var(--color-azul)', stroke: 'var(--color-azul)', marginLeft: '2px' }} />
+                    </span>
+                    <span className="instagram-location">Família</span>
+                  </div>
+                  <span className="instagram-dots">•••</span>
+                </div>
+                <div className="instagram-card-img-wrapper square">
+                  <img 
+                    src="/images/foto02.png" 
+                    alt="Família Thenperson" 
+                    className="instagram-card-img"
+                    loading="lazy"
+                  />
+                </div>
+                <div className="instagram-card-actions">
+                  <div className="instagram-actions-left">
+                    <Heart size={16} className="instagram-action-icon" />
+                    <MessageSquare size={16} className="instagram-action-icon" />
+                    <Send size={16} className="instagram-action-icon" />
+                  </div>
+                  <Bookmark size={16} className="instagram-action-icon" />
+                </div>
+                <div className="instagram-card-caption">
+                  <p><strong>thenperson</strong> A família é a base de tudo, nosso principal pilar de princípios e valores cristãos. Um domingo abençoado a todos! 🙏✨</p>
+                  <span className="instagram-cta-link">
+                    Ver no Instagram <ArrowRight size={10} />
+                  </span>
+                </div>
+              </a>
             </div>
             
             <div className="bio-content">
