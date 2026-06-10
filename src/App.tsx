@@ -163,6 +163,133 @@ const PILLARS_DETAILS: PillarDetail[] = [
   }
 ];
 
+interface MagazineArticle {
+  id: string;
+  category: string;
+  title: string;
+  date: string;
+  summary: string;
+  image: string;
+  content: string;
+}
+
+const MAGAZINE_ARTICLES: MagazineArticle[] = [
+  {
+    id: 'art-1',
+    category: 'Educação & Inovação',
+    title: 'Mentes do Vale: Estudantes do IFNMG conquistam destaque nacional',
+    date: '09 de Junho, 2026',
+    summary: 'Alunos de Almenara desenvolvem soluções tecnológicas inovadoras, provando que o talento da nossa juventude só precisa de infraestrutura e apoio para decolar.',
+    image: '/images/estudantes.png',
+    content: 'O Vale do Jequitinhonha abriga algumas das mentes mais brilhantes de Minas Gerais. Recentemente, um grupo de estudantes do Instituto Federal do Norte de Minas (IFNMG - Campus Almenara) conquistou premiação de destaque em uma feira nacional de tecnologia.\n\nContudo, a jornada desses estudantes expõe o descaso público crônico: transporte escolar precário e falta de subsídio para alimentação quase impediram a participação do grupo. \n\nThenperson, que acompanha de perto a realidade dos alunos, defende que a qualificação tecnológica é a principal ponte para empregos modernos: "Não basta os jovens serem brilhantes, o poder público precisa dar o suporte básico para que eles não tenham que desistir de estudar por falta de um ônibus seguro ou merenda de qualidade".'
+  },
+  {
+    id: 'art-2',
+    category: 'Cultura & Barro',
+    title: 'Mulheres de Argila: A arte das paneleiras que sustenta famílias no Vale',
+    date: '07 de Junho, 2026',
+    summary: 'Moldando a identidade do Jequitinhonha com as próprias mãos, artesãs de Almenara e arredores geram renda e mantêm viva a tradição da cerâmica.',
+    image: '/images/fotovalecima.png',
+    content: 'O barro moldado à mão pelas artesãs do Vale do Jequitinhonha é reconhecido internacionalmente pela beleza e identidade única. Em Almenara, a produção de cerâmica e panelas de argila vai além da arte: é o sustento de dezenas de lares.\n\nApesar da importância cultural e econômica, as artesãs locais enfrentam enormes dificuldades para comercializar suas peças fora do Vale, esbarrando na falta de apoio logístico e taxas tributárias abusivas. \n\nThenperson defende a criação de uma cooperativa estruturada com incentivos fiscais para escoamento do artesanato: "Nossa cultura é nossa maior riqueza e orgulho. O governo precisa facilitar as vendas e desburocratizar a vida dessas mulheres guerreiras".'
+  },
+  {
+    id: 'art-3',
+    category: 'Agricultura & Água',
+    title: 'Cisternas de Placas: A luta da agricultura familiar no combate à seca',
+    date: '04 de Junho, 2026',
+    summary: 'Produtores rurais debatem estratégias de convivência com o semiárido e a importância do Pronaf para pequenas lavouras de Almenara e Jordânia.',
+    image: '/images/fotovalebaixo.png',
+    content: 'A convivência com o clima semiárido é o desafio diário dos agricultores do Vale do Jequitinhonha. A implementação de cisternas de placas e poços artesianos comunitários é vital para a sobrevivência das pequenas plantações que abastecem as feiras locais.\n\nDurante encontros com associações de produtores rurais em Almenara, Jacinto e Jordânia, as famílias relataram a complexidade burocrática para conseguir crédito agrícola pelo Pronaf (Programa Nacional de Fortalecimento da Agricultura Familiar).\n\n"A agricultura familiar põe comida na mesa de Almenara. Precisamos de assistência técnica eficiente da Emater, poços artesianos que funcionem e crédito simplificado, sem papelada sem fim que assusta o produtor", pontua Thenperson.'
+  }
+];
+
+interface CitizenService {
+  id: string;
+  title: string;
+  badge: string;
+  badgeType: 'estudante' | 'familia' | 'produtor';
+  shortDesc: string;
+  howToApply: string;
+  documents: string[];
+  link: string;
+}
+
+const CITIZEN_SERVICES: CitizenService[] = [
+  {
+    id: 'serv-pe-de-meia',
+    title: 'Poupança Estudantil - Programa Pé-de-Meia',
+    badge: 'Estudantes',
+    badgeType: 'estudante',
+    shortDesc: 'Incentivo financeiro-educacional, na modalidade de poupança, destinado a estudantes do ensino médio público.',
+    howToApply: 'A seleção é realizada automaticamente cruzando dados de matrícula escolar pública com o Cadastro Único (CadÚnico). As escolas enviam os dados diretamente ao Ministério da Educação. Certifique-se de que o CPF do estudante está regularizado.',
+    documents: [
+      'CPF regularizado do estudante (obrigatório)',
+      'Inscrição ativa e atualizada no CadÚnico',
+      'Matrícula ativa no Ensino Médio público',
+      'Frequência escolar mínima de 80% registrada mensalmente'
+    ],
+    link: 'https://www.gov.br/mec/pt-br/pe-de-meia'
+  },
+  {
+    id: 'serv-cadunico',
+    title: 'Inscrição e Atualização do Cadastro Único (CadÚnico)',
+    badge: 'Famílias',
+    badgeType: 'familia',
+    shortDesc: 'Acesso a programas federais como Bolsa Família, Tarifa Social de Energia Elétrica e isenção de taxas em concursos.',
+    howToApply: 'Agende um atendimento no CRAS (Centro de Referência de Assistência Social) de Almenara ou procure a sede municipal do Cadastro Único. O cadastro deve ser atualizado obrigatoriamente a cada 2 anos.',
+    documents: [
+      'Documento com foto (RG) e CPF do Responsável Familiar',
+      'Comprovante de residência atualizado (preferência conta de água ou luz)',
+      'Documento de identificação de todos que moram na casa (RG, CPF ou Certidão)',
+      'Comprovante de matrícula escolar recente das crianças e adolescentes'
+    ],
+    link: 'https://www.gov.br/mds/pt-br/acoes-e-programas/cadastro-unico'
+  },
+  {
+    id: 'serv-pronaf',
+    title: 'Crédito Pronaf para Pequenos Agricultores',
+    badge: 'Produtores Rurais',
+    badgeType: 'produtor',
+    shortDesc: 'Financiamento com juros subsidiados para custeio de lavouras e investimentos na propriedade rural.',
+    howToApply: 'Dirija-se ao escritório local da Emater-MG em Almenara para emissão do CAF (Cadastro Nacional da Agricultura Familiar) e desenvolvimento do projeto técnico de crédito para apresentação no banco.',
+    documents: [
+      'CAF (Cadastro Nacional da Agricultura Familiar) ativo',
+      'Documento de identidade (RG) e CPF do produtor e do cônjuge',
+      'Documento de propriedade da terra ou contrato de arrendamento/parceria',
+      'Projeto técnico de viabilidade financeira (elaborado pela Emater)'
+    ],
+    link: 'https://www.gov.br/agricultura/pt-br/assuntos/mda/pronaf'
+  }
+];
+
+interface YoutubeVideo {
+  id: string;
+  youtubeId: string;
+  title: string;
+  category: string;
+}
+
+const REGIONAL_VIDEOS: YoutubeVideo[] = [
+  {
+    id: 'v1',
+    youtubeId: 'NoyobbBU16Y',
+    title: 'Entrevista sobre Gestão, Comércio e Desafios de Almenara e Região',
+    category: 'Gestão e Comércio'
+  },
+  {
+    id: 'v2',
+    youtubeId: 'X3mGpVnPMHk',
+    title: 'Visita de Apoio e Diálogo com Estudantes do IFNMG Almenara',
+    category: 'Educação Técnica'
+  },
+  {
+    id: 'v3',
+    youtubeId: '1R3OHWWx1SE',
+    title: 'Painel sobre Inclusão Social e Educação para Pessoas com Autismo',
+    category: 'Ação Social'
+  }
+];
+
 function App() {
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
 
@@ -187,6 +314,11 @@ function App() {
   const [scrolled, setScrolled] = useState<boolean>(false);
   const [activePillarIndex, setActivePillarIndex] = useState<number | null>(null);
   const [agendaFilter, setAgendaFilter] = useState<string>('todos');
+  
+  // Revista / Magazine States
+  const [activeRevistaTab, setActiveRevistaTab] = useState<string>('noticias');
+  const [selectedArticle, setSelectedArticle] = useState<MagazineArticle | null>(null);
+  const [expandedServiceId, setExpandedServiceId] = useState<string | null>(null);
   
   // Stories States
   const [activeStoryIndex, setActiveStoryIndex] = useState<number | null>(null);
@@ -273,7 +405,7 @@ function App() {
     }
   }, [toast.show]);
 
-  // Stories Navigation Helper: Prev
+  // Stories Navigation Helpers
   const handlePrevStory = () => {
     if (activeStoryIndex === null) return;
     if (activeStoryIndex > 0) {
@@ -284,7 +416,6 @@ function App() {
     }
   };
 
-  // Stories Navigation Helper: Next
   const handleNextStory = () => {
     if (activeStoryIndex === null) return;
     if (activeStoryIndex < STORIES.length - 1) {
@@ -295,7 +426,6 @@ function App() {
     }
   };
 
-  // Stories CTA Handler
   const handleStoryCTA = (link: string) => {
     setActiveStoryIndex(null);
     setTimeout(() => {
@@ -327,7 +457,7 @@ function App() {
         }
         return prev + 1;
       });
-    }, 50); // 100 steps * 50ms = 5000ms (5s) per story
+    }, 50);
 
     return () => clearInterval(timer);
   }, [activeStoryIndex, storyPaused]);
@@ -365,7 +495,6 @@ function App() {
         message: 'Ideia enviada com sucesso! Obrigado por somar na nossa caminhada.',
         type: 'success'
       });
-      // Reset fields
       setFormName('');
       setFormEmail('');
       setFormPhone('');
@@ -448,10 +577,10 @@ function App() {
           {/* Responsive Nav */}
           <nav className={`nav-menu ${mobileMenuOpen ? 'nav-menu-open' : ''}`} role="navigation">
             <a href="#inicio" className="nav-link" onClick={handleNavLinkClick}>Início</a>
+            <a href="#revista" className="nav-link" onClick={handleNavLinkClick}>Revista & Serviços</a>
             <a href="#compromissos" className="nav-link" onClick={handleNavLinkClick}>Pilares</a>
             <a href="#videos" className="nav-link" onClick={handleNavLinkClick}>Vídeos</a>
             <a href="#biografia" className="nav-link" onClick={handleNavLinkClick}>Trajetória</a>
-            <a href="#noticias" className="nav-link" onClick={handleNavLinkClick}>Notícias</a>
             <a href="#agenda" className="nav-link" onClick={handleNavLinkClick}>Agenda</a>
             <a href="#sugestao" className="nav-link nav-link-special" onClick={handleNavLinkClick}>Deixe Sua Voz</a>
             <a href="https://wa.me/5533999999999" target="_blank" rel="noopener noreferrer" className="btn-cta-header" onClick={handleNavLinkClick}>
@@ -513,7 +642,7 @@ function App() {
               </h1>
               
               <p className="hero-description">
-                Thenperson é comerciante local em Almenara, fundador da <strong>Multicell</strong>. Diferente de políticos tradicionais que só aparecem de quatro em quatro anos em época eleitoral, ele vive, trabalha e caminha diariamente com a comunidade.
+                Thenperson é comerciante local em Almenara, fundador da tradicional <strong>Multicell</strong>. Diferente de políticos tradicionais que só aparecem de quatro em quatro anos, ele vive, trabalha e caminha diariamente com a comunidade.
               </p>
               
               <div className="hero-buttons">
@@ -521,8 +650,8 @@ function App() {
                   Apoiar Pré-Campanha
                   <ArrowRight size={18} />
                 </a>
-                <a href="#compromissos" className="btn-primary">
-                  Nossas Bandeiras
+                <a href="#revista" className="btn-primary">
+                  Revista & Serviços
                 </a>
                 <a href="#sugestao" className="btn-secondary">
                   Dar Sugestão
@@ -534,13 +663,10 @@ function App() {
               <div className="hero-image-glow" aria-hidden="true"></div>
               <div className="hero-image-frame">
                 <img 
-                  src="/images/thenperson_portrait.png" 
+                  src="/images/foto01.jpg" 
                   alt="Thenperson" 
                   className="hero-image"
                   loading="eager"
-                  onError={(e) => {
-                    (e.target as HTMLImageElement).src = "/images/foto01.jpg";
-                  }}
                 />
               </div>
 
@@ -600,6 +726,193 @@ function App() {
                 </div>
               </div>
             </div>
+          </div>
+        </section>
+
+        {/* Revista do Vale & Portal de Serviços ao Cidadão (NEW - Magazine Utility Style) */}
+        <section id="revista" className="section revista-section">
+          <div className="container">
+            <div className="section-title-wrapper">
+              <span className="section-tag">Portal do Cidadão</span>
+              <h2 className="section-title">Revista do Vale & <span>Serviços</span></h2>
+              <p className="section-subtitle">
+                Mais do que política, compromisso com a verdade. Acompanhe notícias da nossa gente, guias de utilidade pública para acesso a benefícios do governo e vídeos da nossa região.
+              </p>
+            </div>
+
+            {/* Revista Tabs */}
+            <div className="revista-tabs">
+              <button 
+                className={`revista-tab-btn ${activeRevistaTab === 'noticias' ? 'active' : ''}`}
+                onClick={() => setActiveRevistaTab('noticias')}
+              >
+                Notícias da Nossa Gente
+              </button>
+              <button 
+                className={`revista-tab-btn ${activeRevistaTab === 'beneficios' ? 'active' : ''}`}
+                onClick={() => setActiveRevistaTab('beneficios')}
+              >
+                Guia de Benefícios Sociais
+              </button>
+              <button 
+                className={`revista-tab-btn ${activeRevistaTab === 'videos' ? 'active' : ''}`}
+                onClick={() => setActiveRevistaTab('videos')}
+              >
+                O Vale em Vídeo
+              </button>
+            </div>
+
+            {/* TAB CONTENT: NOTICIAS DA NOSSA GENTE */}
+            {activeRevistaTab === 'noticias' && (
+              <div className="revista-tab-content animate-slide-in">
+                <div className="revista-magazine-layout">
+                  {/* Main Featured Article (Left/Top) */}
+                  <div className="magazine-featured-card" onClick={() => setSelectedArticle(MAGAZINE_ARTICLES[0])}>
+                    <div className="magazine-featured-img-wrapper">
+                      <img src={MAGAZINE_ARTICLES[0].image} alt="" className="magazine-featured-img" />
+                      <span className="magazine-category-badge">{MAGAZINE_ARTICLES[0].category}</span>
+                    </div>
+                    <div className="magazine-featured-info">
+                      <span className="magazine-date">{MAGAZINE_ARTICLES[0].date}</span>
+                      <h3>{MAGAZINE_ARTICLES[0].title}</h3>
+                      <p>{MAGAZINE_ARTICLES[0].summary}</p>
+                      <button className="magazine-read-btn">
+                        Ler Reportagem Completa
+                        <ArrowRight size={14} style={{ marginLeft: '6px' }} />
+                      </button>
+                    </div>
+                  </div>
+
+                  {/* Secondary Articles List (Right) */}
+                  <div className="magazine-side-list">
+                    {MAGAZINE_ARTICLES.slice(1).map((article) => (
+                      <div 
+                        key={article.id} 
+                        className="magazine-side-card"
+                        onClick={() => setSelectedArticle(article)}
+                      >
+                        <div className="magazine-side-img-wrapper">
+                          <img src={article.image} alt="" className="magazine-side-img" />
+                        </div>
+                        <div className="magazine-side-info">
+                          <span className="magazine-side-category">{article.category}</span>
+                          <h4>{article.title}</h4>
+                          <span className="magazine-side-date">{article.date}</span>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {/* TAB CONTENT: GUIA DE BENEFÍCIOS SOCIAIS */}
+            {activeRevistaTab === 'beneficios' && (
+              <div className="revista-tab-content animate-slide-in">
+                <div className="services-intro-box">
+                  <h4>Utilidade Pública: Conheça seus Direitos</h4>
+                  <p>Facilitamos o acesso à informação para que o cidadão de Almenara e do Vale do Jequitinhonha saiba como solicitar e consultar os principais programas sociais e linhas de fomento rural do Estado e União.</p>
+                </div>
+                
+                <div className="services-accordion-grid">
+                  {CITIZEN_SERVICES.map((service) => {
+                    const isExpanded = expandedServiceId === service.id;
+                    return (
+                      <div 
+                        key={service.id} 
+                        className={`service-accordion-card ${isExpanded ? 'active' : ''}`}
+                        onClick={() => setExpandedServiceId(isExpanded ? null : service.id)}
+                      >
+                        <div className="service-card-header">
+                          <div className="service-card-title-group">
+                            <span className={`service-badge-pill badge-${service.badgeType}`}>
+                              {service.badge}
+                            </span>
+                            <h3>{service.title}</h3>
+                          </div>
+                          <span className="service-expand-trigger">
+                            {isExpanded ? 'Ocultar' : 'Como Acessar'}
+                            <ChevronRight size={16} className={`service-chevron ${isExpanded ? 'rotate-90' : ''}`} />
+                          </span>
+                        </div>
+                        
+                        {isExpanded && (
+                          <div className="service-card-body animate-slide-in" onClick={(e) => e.stopPropagation()}>
+                            <p className="service-short-desc">{service.shortDesc}</p>
+                            
+                            <div className="service-section-block">
+                              <h5>Como funciona a solicitação:</h5>
+                              <p>{service.howToApply}</p>
+                            </div>
+
+                            <div className="service-section-block">
+                              <h5>Documentos e Requisitos Principais:</h5>
+                              <ul className="service-docs-list">
+                                {service.documents.map((doc, idx) => (
+                                  <li key={idx}>
+                                    <Check size={16} className="service-doc-check" />
+                                    <span>{doc}</span>
+                                  </li>
+                                ))}
+                              </ul>
+                            </div>
+
+                            <div className="service-card-footer">
+                              <a 
+                                href={service.link} 
+                                target="_blank" 
+                                rel="noopener noreferrer" 
+                                className="btn-primary"
+                              >
+                                Visitar Canal Oficial do Governo
+                                <ExternalLink size={14} style={{ marginLeft: '6px' }} />
+                              </a>
+                              <a 
+                                href={`https://wa.me/5533999999999?text=Ol%C3%A1%20Thenperson%2C%20estava%20lendo%20o%20Guia%20de%20Servi%C3%A7os%20do%20site%20e%20fiquei%20com%20d%C3%BAvida%20sobre%20o%20${encodeURIComponent(service.title)}`}
+                                target="_blank" 
+                                rel="noopener noreferrer" 
+                                className="btn-secondary"
+                              >
+                                Dúvidas no WhatsApp
+                                <Phone size={14} style={{ marginLeft: '6px' }} />
+                              </a>
+                            </div>
+                          </div>
+                        )}
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+            )}
+
+            {/* TAB CONTENT: O VALE EM VÍDEO */}
+            {activeRevistaTab === 'videos' && (
+              <div className="revista-tab-content animate-slide-in">
+                <div className="videos-tab-grid">
+                  {REGIONAL_VIDEOS.map((video) => (
+                    <div key={video.id} className="youtube-magazine-card">
+                      <div className="youtube-magazine-iframe-wrapper">
+                        <iframe 
+                          width="100%" 
+                          height="100%" 
+                          src={`https://www.youtube.com/embed/${video.youtubeId}?autoplay=0&rel=0`}
+                          title={video.title}
+                          frameBorder="0"
+                          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+                          allowFullScreen
+                          style={{ border: 'none' }}
+                        ></iframe>
+                      </div>
+                      <div className="youtube-magazine-info">
+                        <span className="youtube-magazine-category">{video.category}</span>
+                        <h4>{video.title}</h4>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
           </div>
         </section>
 
@@ -861,52 +1174,6 @@ function App() {
                 </div>
               </div>
             </div>
-          </div>
-        </section>
-
-        {/* Latest News / Notícias do Vale Section */}
-        <section id="noticias" className="section">
-          <div className="container">
-            <div className="section-title-wrapper">
-              <span className="section-tag">Acontece no Vale</span>
-              <h2 className="section-title">Últimas <span>Notícias</span></h2>
-              <p className="section-subtitle">
-                Acompanhe os nossos posicionamentos, discussões públicas e artigos informativos sobre o futuro das nossas cidades.
-              </p>
-            </div>
-
-            {loadingNews ? (
-              <div style={{ textAlign: 'center', padding: '40px', color: 'var(--text-secondary)' }}>
-                Buscando artigos do Vale...
-              </div>
-            ) : news.length === 0 ? (
-              <div style={{ textAlign: 'center', padding: '40px', color: 'var(--text-secondary)' }}>
-                Nenhuma novidade publicada recentemente.
-              </div>
-            ) : (
-              <div className="news-grid">
-                {news.map((item) => (
-                  <article key={item.id} className="news-card">
-                    <div className="news-card-img-wrapper">
-                      <img src={item.image_url} alt={item.title} className="news-card-img" />
-                      <span className="news-card-category">{item.category}</span>
-                    </div>
-                    <div className="news-card-content">
-                      <span className="news-card-date">{item.date}</span>
-                      <h3 className="news-card-title">{item.title}</h3>
-                      <p className="news-card-summary">{item.summary}</p>
-                      <button 
-                        className="btn-read-news"
-                        onClick={() => setActiveNewsItem(item)}
-                      >
-                        Ler Matéria Completa
-                        <ArrowRight size={14} style={{ marginLeft: '4px' }} />
-                      </button>
-                    </div>
-                  </article>
-                ))}
-              </div>
-            )}
           </div>
         </section>
 
@@ -1221,6 +1488,7 @@ function App() {
               <h4>Navegação</h4>
               <ul>
                 <li><a href="#inicio" className="footer-link">Início</a></li>
+                <li><a href="#revista" className="footer-link">Revista & Serviços</a></li>
                 <li><a href="#compromissos" className="footer-link">Pilares & Bandeiras</a></li>
                 <li><a href="#videos" className="footer-link">Vídeos e Podcast</a></li>
                 <li><a href="#biografia" className="footer-link">Quem é Thenperson</a></li>
@@ -1230,7 +1498,6 @@ function App() {
             <div className="footer-links-col">
               <h4>Engajamento</h4>
               <ul>
-                <li><a href="#noticias" className="footer-link">Últimas Notícias</a></li>
                 <li><a href="#agenda" className="footer-link">Agenda de Eventos</a></li>
                 <li><a href="#sugestao" className="footer-link">Deixar Sugestão</a></li>
                 <li><a href="https://www.tse.jus.br" target="_blank" rel="noopener noreferrer" className="footer-link">Legislação Eleitoral</a></li>
@@ -1307,7 +1574,67 @@ function App() {
         </div>
       )}
 
-      {/* Fullscreen News Reader Modal */}
+      {/* Magazine Fullscreen Article Reader Modal */}
+      {selectedArticle !== null && (
+        <div className="news-modal-overlay" onClick={() => setSelectedArticle(null)}>
+          <div className="news-modal-container" onClick={(e) => e.stopPropagation()}>
+            <div className="news-modal-header">
+              <span className="news-modal-category">{selectedArticle.category}</span>
+              <button 
+                className="news-modal-close-btn" 
+                onClick={() => setSelectedArticle(null)}
+                aria-label="Fechar artigo"
+              >
+                <X size={24} />
+              </button>
+            </div>
+            <div className="news-modal-scroll-body">
+              <div className="news-modal-image-wrapper">
+                <img src={selectedArticle.image} alt="" className="news-modal-img" />
+              </div>
+              <div className="news-modal-content-details">
+                <span className="news-modal-date">{selectedArticle.date}</span>
+                <h1 className="news-modal-title">{selectedArticle.title}</h1>
+                <p className="news-modal-summary-italic">"{selectedArticle.summary}"</p>
+                <div className="news-modal-text-paragraphs">
+                  {selectedArticle.content.split('\n\n').map((paragraph, index) => (
+                    <p key={index}>{paragraph}</p>
+                  ))}
+                </div>
+              </div>
+              <div className="news-modal-footer">
+                <h4>O que você acha disso?</h4>
+                <p>Contribua com suas propostas para o escoamento cultural e melhoria do Vale.</p>
+                <div className="news-modal-footer-buttons">
+                  <a 
+                    href={`https://wa.me/5533999999999?text=Ol%C3%A1%20Thenperson%2C%20li%20a%20mat%C3%A9ria%20"${encodeURIComponent(selectedArticle.title)}"%20na%20sua%20Revista%20do%20Vale%20e%20gostaria%20de%20conversar.`}
+                    target="_blank" 
+                    rel="noopener noreferrer" 
+                    className="btn-orange"
+                  >
+                    Conversar no WhatsApp
+                    <Phone size={16} style={{ marginLeft: '6px' }} />
+                  </a>
+                  <button 
+                    className="btn-secondary" 
+                    onClick={() => {
+                      const element = document.getElementById('sugestao');
+                      setSelectedArticle(null);
+                      if (element) {
+                        setTimeout(() => element.scrollIntoView({ behavior: 'smooth', block: 'center' }), 100);
+                      }
+                    }}
+                  >
+                    Enviar uma Sugestão
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Fullscreen News Reader Modal (Keep original list support if needed) */}
       {activeNewsItem !== null && (
         <div className="news-modal-overlay" onClick={() => setActiveNewsItem(null)}>
           <div className="news-modal-container" onClick={(e) => e.stopPropagation()}>
@@ -1333,33 +1660,6 @@ function App() {
                   {activeNewsItem.content.split('\n').map((paragraph, index) => (
                     <p key={index}>{paragraph}</p>
                   ))}
-                </div>
-              </div>
-              <div className="news-modal-footer">
-                <h4>Ficou com alguma dúvida ou quer debater essa pauta?</h4>
-                <p>Mande sua mensagem e colabore com as propostas do Vale.</p>
-                <div className="news-modal-footer-buttons">
-                  <a 
-                    href={`https://wa.me/5533999999999?text=Ol%C3%A1%20Thenperson%2C%20li%20a%20mat%C3%A9ria%20"${encodeURIComponent(activeNewsItem.title)}"%20e%20gostaria%20de%20conversar%20sobre.`}
-                    target="_blank" 
-                    rel="noopener noreferrer" 
-                    className="btn-orange"
-                  >
-                    Conversar sobre este tema
-                    <Phone size={16} style={{ marginLeft: '6px' }} />
-                  </a>
-                  <button 
-                    className="btn-secondary" 
-                    onClick={() => {
-                      const element = document.getElementById('sugestao');
-                      setActiveNewsItem(null);
-                      if (element) {
-                        setTimeout(() => element.scrollIntoView({ behavior: 'smooth', block: 'center' }), 100);
-                      }
-                    }}
-                  >
-                    Deixar uma sugestão
-                  </button>
                 </div>
               </div>
             </div>

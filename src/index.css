@@ -217,7 +217,7 @@ a {
 .nav-menu {
   display: flex;
   align-items: center;
-  gap: 30px;
+  gap: 24px;
 }
 
 .nav-link {
@@ -253,7 +253,7 @@ a {
 
 .btn-cta-header {
   background-color: var(--color-laranja);
-  color: #ffffff;
+  color: #ffffff !important;
   padding: 10px 22px;
   border-radius: 50px;
   font-weight: 700;
@@ -715,7 +715,7 @@ a {
 
 /* Stats Section */
 .stats-section {
-  padding: 40px 0;
+  padding: 40px 0 10px;
   position: relative;
   z-index: 4;
 }
@@ -777,6 +777,425 @@ a {
   font-size: 0.85rem;
   font-weight: 600;
   color: var(--text-muted);
+}
+
+/* Revista do Vale Section Styles */
+.revista-section {
+  background-color: var(--bg-primary);
+  border-top: 1px solid var(--border-color);
+  border-bottom: 1px solid var(--border-color);
+}
+
+.revista-tabs {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  margin-bottom: 40px;
+  border-bottom: 2px solid var(--border-color);
+  padding-bottom: 16px;
+  flex-wrap: wrap;
+}
+
+.revista-tab-btn {
+  background: none;
+  border: none;
+  color: var(--color-azul);
+  padding: 10px 24px;
+  font-family: var(--font-heading);
+  font-weight: 800;
+  font-size: 1.1rem;
+  cursor: pointer;
+  position: relative;
+  transition: var(--transition-fast);
+}
+
+.revista-tab-btn::after {
+  content: '';
+  position: absolute;
+  bottom: -18px;
+  left: 0;
+  width: 0;
+  height: 4px;
+  background-color: var(--color-primary);
+  transition: var(--transition-normal);
+}
+
+.revista-tab-btn:hover {
+  color: var(--color-primary);
+}
+
+.revista-tab-btn.active {
+  color: var(--color-primary);
+}
+
+.revista-tab-btn.active::after {
+  width: 100%;
+}
+
+/* Magazine Layout */
+.revista-magazine-layout {
+  display: grid;
+  grid-template-columns: 1.15fr 0.85fr;
+  gap: 40px;
+}
+
+.magazine-featured-card {
+  background-color: var(--bg-primary);
+  border: 1px solid var(--border-color);
+  border-radius: 24px;
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+  display: flex;
+  flex-direction: column;
+  cursor: pointer;
+  transition: var(--transition-normal);
+}
+
+.magazine-featured-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-md);
+  border-color: var(--border-glow);
+}
+
+.magazine-featured-img-wrapper {
+  aspect-ratio: 16/9;
+  overflow: hidden;
+  position: relative;
+  background-color: var(--bg-secondary);
+}
+
+.magazine-featured-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: var(--transition-slow);
+}
+
+.magazine-featured-card:hover .magazine-featured-img {
+  transform: scale(1.03);
+}
+
+.magazine-category-badge {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  background-color: var(--color-azul);
+  color: #ffffff;
+  padding: 6px 16px;
+  border-radius: 50px;
+  font-size: 0.75rem;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.magazine-featured-info {
+  padding: 30px;
+}
+
+.magazine-date {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  font-weight: 700;
+  display: block;
+  margin-bottom: 10px;
+}
+
+.magazine-featured-info h3 {
+  font-size: 1.8rem;
+  font-weight: 800;
+  color: var(--color-azul);
+  margin-bottom: 12px;
+  line-height: 1.25;
+}
+
+.magazine-featured-info p {
+  font-size: 1rem;
+  line-height: 1.6;
+  color: var(--text-secondary);
+  margin-bottom: 20px;
+}
+
+.magazine-read-btn {
+  background: none;
+  border: none;
+  font-weight: 700;
+  color: var(--color-primary);
+  font-size: 0.9rem;
+  display: inline-flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+.magazine-read-btn:hover {
+  color: var(--color-primary-hover);
+}
+
+.magazine-side-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.magazine-side-card {
+  display: grid;
+  grid-template-columns: 100px 1fr;
+  gap: 16px;
+  background-color: var(--bg-primary);
+  border: 1px solid var(--border-color);
+  border-radius: 16px;
+  padding: 16px;
+  cursor: pointer;
+  transition: var(--transition-normal);
+}
+
+.magazine-side-card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-sm);
+  border-color: var(--border-glow);
+}
+
+.magazine-side-img-wrapper {
+  aspect-ratio: 1;
+  border-radius: 10px;
+  overflow: hidden;
+  background-color: var(--bg-secondary);
+}
+
+.magazine-side-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.magazine-side-info {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.magazine-side-category {
+  font-size: 0.7rem;
+  font-weight: 800;
+  color: var(--color-primary);
+  text-transform: uppercase;
+  margin-bottom: 4px;
+}
+
+.magazine-side-info h4 {
+  font-size: 0.95rem;
+  font-weight: 800;
+  color: var(--color-azul);
+  line-height: 1.35;
+  margin-bottom: 6px;
+}
+
+.magazine-side-date {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+/* Services / Benefits Guide */
+.services-intro-box {
+  background-color: var(--bg-tertiary);
+  border: 1px solid var(--border-color);
+  border-radius: 20px;
+  padding: 24px 30px;
+  margin-bottom: 30px;
+  text-align: center;
+  max-width: 900px;
+  margin-left: 0 auto;
+}
+
+.services-intro-box h4 {
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: var(--color-azul);
+  margin-bottom: 8px;
+}
+
+.services-intro-box p {
+  font-size: 0.95rem;
+  color: var(--text-secondary);
+}
+
+.services-accordion-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.service-accordion-card {
+  background-color: var(--bg-primary);
+  border: 1px solid var(--border-color);
+  border-radius: 16px;
+  overflow: hidden;
+  transition: var(--transition-normal);
+  cursor: pointer;
+}
+
+.service-accordion-card:hover {
+  border-color: var(--border-glow);
+  box-shadow: var(--shadow-sm);
+}
+
+.service-accordion-card.active {
+  border-color: var(--color-primary);
+  box-shadow: var(--shadow-sm);
+}
+
+.service-card-header {
+  padding: 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.service-card-title-group {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.service-badge-pill {
+  padding: 4px 12px;
+  border-radius: 50px;
+  font-size: 0.7rem;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.badge-estudante { background-color: rgba(30, 78, 140, 0.1); color: var(--color-azul); }
+.badge-familia { background-color: rgba(165, 90, 58, 0.1); color: var(--color-primary); }
+.badge-produtor { background-color: rgba(228, 124, 44, 0.1); color: var(--color-laranja); }
+
+.service-card-header h3 {
+  font-size: 1.15rem;
+  font-weight: 800;
+  color: var(--color-azul);
+}
+
+.service-expand-trigger {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--color-primary);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.service-chevron {
+  transition: transform var(--transition-fast);
+}
+
+.service-card-body {
+  padding: 0 24px 24px;
+  border-top: 1px dashed var(--border-color);
+  cursor: default;
+}
+
+.service-short-desc {
+  font-size: 0.95rem;
+  font-style: italic;
+  color: var(--color-primary-hover);
+  margin: 16px 0;
+}
+
+.service-section-block {
+  margin-bottom: 20px;
+}
+
+.service-section-block h5 {
+  font-size: 0.85rem;
+  font-weight: 800;
+  color: var(--color-azul);
+  text-transform: uppercase;
+  margin-bottom: 6px;
+  letter-spacing: 0.5px;
+}
+
+.service-section-block p {
+  font-size: 0.95rem;
+  line-height: 1.5;
+  color: var(--text-secondary);
+}
+
+.service-docs-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.service-docs-list li {
+  display: flex;
+  gap: 8px;
+  align-items: flex-start;
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+}
+
+.service-doc-check {
+  color: var(--color-primary);
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.service-card-footer {
+  display: flex;
+  gap: 12px;
+  margin-top: 24px;
+  flex-wrap: wrap;
+}
+
+.service-card-footer .btn-primary, 
+.service-card-footer .btn-secondary {
+  padding: 10px 20px;
+  font-size: 0.85rem;
+  border-radius: 10px;
+}
+
+/* Youtube Magazine Tab Content */
+.videos-tab-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 30px;
+}
+
+.youtube-magazine-card {
+  background-color: var(--bg-primary);
+  border: 1px solid var(--border-color);
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+}
+
+.youtube-magazine-iframe-wrapper {
+  aspect-ratio: 16/9;
+  background-color: #000;
+}
+
+.youtube-magazine-info {
+  padding: 20px;
+}
+
+.youtube-magazine-category {
+  font-size: 0.65rem;
+  font-weight: 800;
+  color: var(--color-primary);
+  text-transform: uppercase;
+  margin-bottom: 6px;
+  display: block;
+}
+
+.youtube-magazine-info h4 {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--color-azul);
+  line-height: 1.35;
 }
 
 /* Pillars Section */
@@ -1249,106 +1668,6 @@ a {
   background-color: rgba(245, 240, 232, 0.08);
   color: var(--text-on-dark);
   border-color: rgba(245, 240, 232, 0.2);
-}
-
-/* News Section */
-.news-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 30px;
-}
-
-.news-card {
-  background-color: var(--bg-primary);
-  border: 1px solid var(--border-color);
-  border-radius: 20px;
-  overflow: hidden;
-  display: flex;
-  flex-direction: column;
-  box-shadow: var(--shadow-sm);
-  transition: var(--transition-normal);
-}
-
-.news-card:hover {
-  transform: translateY(-6px);
-  box-shadow: var(--shadow-md);
-  border-color: var(--border-glow);
-}
-
-.news-card-img-wrapper {
-  position: relative;
-  aspect-ratio: 16/10;
-  overflow: hidden;
-  background-color: var(--bg-secondary);
-}
-
-.news-card-img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  transition: var(--transition-slow);
-}
-
-.news-card:hover .news-card-img {
-  transform: scale(1.05);
-}
-
-.news-card-category {
-  position: absolute;
-  top: 16px;
-  left: 16px;
-  background-color: var(--color-azul);
-  color: #ffffff;
-  padding: 4px 12px;
-  border-radius: 50px;
-  font-size: 0.7rem;
-  font-weight: 800;
-  text-transform: uppercase;
-}
-
-.news-card-content {
-  padding: 24px;
-  display: flex;
-  flex-direction: column;
-  flex-grow: 1;
-}
-
-.news-card-date {
-  font-size: 0.8rem;
-  color: var(--text-muted);
-  font-weight: 600;
-  margin-bottom: 8px;
-}
-
-.news-card-title {
-  font-size: 1.15rem;
-  font-weight: 800;
-  color: var(--color-azul);
-  margin-bottom: 12px;
-  line-height: 1.3;
-}
-
-.news-card-summary {
-  font-size: 0.9rem;
-  color: var(--text-secondary);
-  line-height: 1.5;
-  margin-bottom: 20px;
-  flex-grow: 1;
-}
-
-.btn-read-news {
-  background: none;
-  border: none;
-  color: var(--color-primary);
-  font-weight: 700;
-  font-size: 0.85rem;
-  display: inline-flex;
-  align-items: center;
-  cursor: pointer;
-}
-
-.btn-read-news:hover {
-  color: var(--color-primary-hover);
 }
 
 /* Event Agenda */
@@ -2111,7 +2430,7 @@ a {
   transform: translateY(-2px);
 }
 
-/* Fullscreen News Reader Modal */
+/* Fullscreen News/Article Reader Modal */
 .news-modal-overlay {
   position: fixed;
   top: 0;
@@ -2337,22 +2656,6 @@ a {
   transform: translateY(-4px);
 }
 
-.animate-pulse-light {
-  animation: pulse-ring-orange 2.5s infinite;
-}
-
-@keyframes pulse-ring-orange {
-  0% {
-    box-shadow: 0 0 0 0 rgba(228, 124, 44, 0.25);
-  }
-  70% {
-    box-shadow: 0 0 0 8px rgba(228, 124, 44, 0);
-  }
-  100% {
-    box-shadow: 0 0 0 0 rgba(228, 124, 44, 0);
-  }
-}
-
 /* Responsive Breakpoints */
 @media (max-width: 1024px) {
   .hero-title {
@@ -2369,6 +2672,10 @@ a {
   .suggestion-grid,
   .hub-grid {
     gap: 40px;
+  }
+  .revista-magazine-layout {
+    grid-template-columns: 1fr;
+    gap: 30px;
   }
 }
 
@@ -2435,9 +2742,6 @@ a {
     max-width: 500px;
     margin: 0 auto;
   }
-  .news-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
   .suggestion-grid {
     grid-template-columns: 1fr;
   }
@@ -2458,6 +2762,9 @@ a {
   }
   .footer-socials {
     justify-content: center;
+  }
+  .videos-tab-grid {
+    grid-template-columns: repeat(2, 1fr);
   }
 }
 
@@ -2495,9 +2802,6 @@ a {
   .stories-tray {
     justify-content: flex-start;
   }
-  .news-grid {
-    grid-template-columns: 1fr;
-  }
   .form-row {
     grid-template-columns: 1fr;
     gap: 16px;
@@ -2525,5 +2829,33 @@ a {
   }
   .agenda-location {
     margin-left: 0;
+  }
+  .videos-tab-grid {
+    grid-template-columns: 1fr;
+  }
+  .revista-tabs {
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+  }
+  .revista-tab-btn::after {
+    display: none;
+  }
+  .revista-tab-btn.active {
+    background-color: rgba(165, 90, 58, 0.1);
+    border-radius: 8px;
+    width: 100%;
+    text-align: center;
+  }
+  .service-card-header h3 {
+    font-size: 1rem;
+  }
+  .service-card-title-group {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 6px;
+  }
+  .magazine-side-card {
+    grid-template-columns: 80px 1fr;
   }
 }
