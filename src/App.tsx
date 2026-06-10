@@ -446,7 +446,9 @@ function App() {
       <header className={`header ${scrolled ? 'header-scrolled' : ''}`}>
         <div className="container header-container">
           <a href="#inicio" className="logo" aria-label="Thenperson Home">
-            <Shield className="logo-icon" />
+            <div className="logo-avatar-wrapper">
+              <img src="/images/foto01.jpg" alt="Thenperson" className="logo-avatar-img" />
+            </div>
             <div className="logo-text">
               <span className="logo-title">THENPERSON</span>
               <span className="logo-subtitle">PRÉ-CANDIDATO</span>
@@ -495,39 +497,28 @@ function App() {
           </div>
           
           <div className="container">
-            <div className="channel-profile-area">
-              <div className="channel-avatar-wrapper">
-                <img 
-                  src="/images/foto01.jpg" 
-                  alt="Thenperson" 
-                  className="channel-avatar-img" 
-                />
-                <div className="channel-avatar-ring"></div>
-              </div>
-              
-              <div className="channel-info-block">
-                <div className="channel-badge">
-                  <Shield size={14} style={{ marginRight: '6px', color: 'var(--color-laranja)' }} />
-                  <span>Pré-candidato a Deputado Federal</span>
+            <div className="channel-profile-area-new">
+              <div className="profile-top-row">
+                <div className="profile-left-info">
+                  <div className="channel-badge">
+                    <Shield size={14} style={{ marginRight: '6px', color: 'var(--color-laranja)' }} />
+                    <span>Pré-candidato a Deputado Federal</span>
+                  </div>
+                  
+                  <h1 className="channel-title">Thenperson</h1>
+                  
+                  <div className="channel-meta-row">
+                    <span className="channel-handle">@thenperson</span>
+                    <span className="channel-dot">•</span>
+                    <span className="channel-stat">Almenara - MG</span>
+                    <span className="channel-dot">•</span>
+                    <span className="channel-stat">Fundador da Multicell</span>
+                    <span className="channel-dot">•</span>
+                    <span className="channel-stat-badge">100% Presente</span>
+                  </div>
                 </div>
                 
-                <h1 className="channel-title">Thenperson</h1>
-                
-                <div className="channel-meta-row">
-                  <span className="channel-handle">@thenperson</span>
-                  <span className="channel-dot">•</span>
-                  <span className="channel-stat">Almenara - MG</span>
-                  <span className="channel-dot">•</span>
-                  <span className="channel-stat">Fundador da Multicell</span>
-                  <span className="channel-dot">•</span>
-                  <span className="channel-stat-badge">100% Presente</span>
-                </div>
-                
-                <p className="channel-description">
-                  <strong>100% presente no Vale do Jequitinhonha</strong>. Comerciante e fundador da tradicional loja <strong>Multicell Almenara</strong>, Thenperson atua de forma independente e ativa pelo progresso regional. Sua caminhada é pautada na <strong>defesa intransigente dos valores cristãos, da família, da saúde preventiva e do incentivo ao esporte para nossa juventude</strong>. Uma liderança real que caminha diariamente ao lado de nossa gente.
-                </p>
-                
-                <div className="channel-actions-row">
+                <div className="profile-right-actions">
                   <div className="channel-buttons">
                     <a href="https://wa.me/5533999999999" target="_blank" rel="noopener noreferrer" className="btn-orange">
                       Apoiar Pré-Campanha
@@ -553,6 +544,12 @@ function App() {
                     </a>
                   </div>
                 </div>
+              </div>
+              
+              <div className="profile-bottom-description">
+                <p className="channel-description">
+                  <strong>100% presente no Vale do Jequitinhonha</strong>. Comerciante e fundador da tradicional loja <strong>Multicell Almenara</strong>, Thenperson atua de forma independente e ativa pelo progresso regional. Sua caminhada é pautada na <strong>defesa intransigente dos valores cristãos, da família, da saúde preventiva e do incentivo ao esporte para nossa juventude</strong>. Uma trajetória de trabalho real, lado a lado com a nossa gente.
+                </p>
               </div>
             </div>
           </div>
